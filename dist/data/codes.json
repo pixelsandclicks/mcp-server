@@ -1,0 +1,1230 @@
+[
+  {
+    "slug": "amazon-asn-accuracy-chargeback",
+    "retailer": "Amazon",
+    "code": "ASN-ACC",
+    "codeName": "ASN Accuracy",
+    "title": "Amazon 1P Chargeback: ASN Accuracy",
+    "description": "Amazon's ASN Accuracy chargeback fires when your Advance Ship Notice doesn't match what the FC receives. Sub-types, fees, dispute path, and prevention.",
+    "pubDate": "2026-08-08T00:00:00.000Z",
+    "draft": false,
+    "family": "ASN/EDI",
+    "penalty": "Vendor sources report 2-6% of COGS, varying by severity and region",
+    "disputableStatus": "Disputable within 30 days",
+    "answer": "Amazon's ASN Accuracy chargeback fires when the Advance Ship Notice transmitted via EDI doesn't match what the fulfillment center physically receives. The comparison runs at the unit level: wrong quantities, missing expiration dates, invalid tracking numbers, or a late submission all trigger it. Vendors can dispute through Vendor Central within 30 days of the chargeback notification.",
+    "answerQualifier": "Sourced from Amazon's publicly referenced chargeback categories via SupplyPike/SPS Commerce and Consulterce, August 2026. Fee percentages are vendor-reported and may shift between regions and program updates.",
+    "meaning": "If one bad field slips into your Advance Ship Notice, you rarely take a single hit.\nAmazon's ASN Accuracy chargeback applies per shipment, not per PO, so one shipping error can multiply into a charge for every PO folded into that shipment.\n",
+    "meaningPoints": [
+      "Amazon compares what your ASN declared against what the fulfillment center physically counted, at the unit level. That comparison is broader than a simple quantity mismatch.",
+      "A missing Amazon Reference Number, a missing expiration date, or a wrong tracking number all trigger an ASN Accuracy chargeback, the same as a quantity error.",
+      "Amazon groups several distinct failure modes under the ASN Accuracy umbrella. Each one you miss on a shipment adds its own charge on top of the others.",
+      "Because the chargeback applies per shipment, a multi-PO delivery built on one bad ASN can generate a separate charge for every PO it carries."
+    ],
+    "rootCauseCategories": {
+      "physical": "The warehouse picked or packed a quantity that doesn't match what the ASN declared. The most common version: the ASN was built from the order quantity, but the actual pick came up short or substituted a different pack configuration.",
+      "carrier": "A carrier-side tracking mismatch. Two patterns show up. The ASN carries a PRO or BOL number Amazon's receiving system doesn't expect. Or the shipment arrives at a different fulfillment center than the one the ASN was routed to.",
+      "erp": "The ASN was generated from the sales order or PO confirmation rather than the confirmed pick-and-ship event. Vendors report this as the most common root cause. The ERP fires the 856 before the warehouse has finished confirming what actually went on the truck."
+    },
+    "evidenceRequired": [
+      "The EDI 856 ASN transmission log, showing exactly what was declared per unit and per carton",
+      "Warehouse pick-confirm or ship-confirm records showing the actual quantity that left the dock",
+      "Carrier PRO/BOL documentation matching the shipment to the correct fulfillment center and tracking number",
+      "For expiration-date chargebacks: lot and expiration records from the warehouse management system for the specific units shipped"
+    ],
+    "disputable": "Amazon allows disputes through Vendor Central within 30 days of the chargeback notification. The path runs through Reports, then Operational Performance, then the defect list for the specific shipment. Select the transaction and submit supporting documentation.\nYou get two dispute attempts per chargeback. If the first is denied, you can file again with additional evidence within 30 days of the denial. Multiple vendor sources confirm this 30-day window and the two-attempt limit.\n",
+    "prevention": [
+      "Build the ASN from the confirmed pick, not the order. The order says what should ship. The pick confirms what did. If those two numbers disagree, the ASN built from the order is wrong before it transmits.",
+      "Submit the ASN to Amazon within 30 minutes of the shipment leaving your facility. Or at least 6 hours before the scheduled delivery appointment at the fulfillment center. Miss either window and you trigger On-Time Non-Compliance, a distinct ASN Accuracy sub-type. That penalty applies whether or not the rest of the ASN was accurate.",
+      "Include expiration dates on every consumable or perishable SKU you ship to Amazon. A missing expiration date is its own ASN Accuracy sub-type, not an optional field Amazon ignores.",
+      "Validate the ARN (Amazon Reference Number) and PRO/BOL tracking numbers against what your carrier assigned before you transmit the ASN. A reference-field error triggers the same chargeback as a wrong quantity."
+    ],
+    "erpPrevention": {
+      "system": "NetSuite / Business Central",
+      "blueprint": "When your ERP fires the ASN from the sales order instead of the confirmed pick, it generates Amazon's ASN Accuracy chargeback on the next shipment. Vendor sources describe this as the most common root cause.\nClose it by gating EDI 856 generation behind the warehouse ship-confirm event, not the sales order confirmation or pick release. That way, your ASN payload (the unit quantity in the SN1 segment) pulls from the confirmed-pick record instead of the original PO quantity.\nAdd a pre-transmission validation that compares the 856's declared quantity against the ship-confirm quantity and blocks transmission on any mismatch. For consumables, require a non-null expiration date on every item line before the 856 can generate.\n"
+    },
+    "faq": [
+      {
+        "q": "How much does an Amazon ASN Accuracy chargeback cost?",
+        "a": "Vendor sources report Amazon's ASN Accuracy chargeback runs 2-6% of COGS, varying by region and severity. The range is wide because Amazon groups several sub-types under the same umbrella: a late ASN and a unit count mismatch carry different penalties. Specific fee schedules are visible in your account's Operational Performance reports in Vendor Central."
+      },
+      {
+        "q": "What's the difference between an ASN Accuracy chargeback and a PO On-Time Accuracy chargeback?",
+        "a": "Both are Amazon vendor chargebacks, but they measure different things. ASN Accuracy measures whether your Advance Ship Notice matches what physically arrived. PO On-Time Accuracy measures whether you shipped on time and in full against the purchase order. You can pass one and fail the other. A shipment that arrives on schedule but whose ASN declares the wrong unit count triggers ASN Accuracy, not PO On-Time."
+      },
+      {
+        "q": "How long do I have to dispute an Amazon ASN chargeback?",
+        "a": "You get 30 days from the ASN Accuracy chargeback notification in Vendor Central to dispute it. You also get two dispute attempts per chargeback. If the first is denied, you can refile with additional documentation within 30 days of the denial."
+      },
+      {
+        "q": "Does Amazon send an 824 or rejection notice for a bad ASN?",
+        "a": "Not the way traditional EDI retailers do. Amazon accepts your ASN and compares it against the physical receipt at the fulfillment center afterward. The ASN Accuracy chargeback shows up in Vendor Central's Operational Performance reports, not as a real-time EDI rejection. By the time you see it, the shipment is long received."
+      }
+    ],
+    "verification": {
+      "status": "source-verified",
+      "verifiedBy": "Pixels and Clicks Editorial",
+      "verifiedOn": "2026-08-08T00:00:00.000Z",
+      "sources": [
+        {
+          "label": "SupplyPike / SPS Commerce — What Are Amazon's Compliance Chargebacks?",
+          "url": "https://www.spscommerce.com/community/articles/what-are-amazons-compliance-chargebacks",
+          "note": "SECONDARY. Deduction-management vendor content. Identifies five ASN Accuracy sub-types (OTNC, Unit Count Mismatch, Invalid/Missing ARN, Missing Expiration Date, PRO/BOL Mismatch) and describes the unit-level measurement basis."
+        },
+        {
+          "label": "Consulterce — The Complete Guide to Amazon Chargebacks in 2026",
+          "url": "https://consulterce.com/insights/amazon-chargebacks",
+          "note": "SECONDARY. Independent vendor source. Reports 2-6% of COGS fee range across regions, confirms the 30-day dispute window and Vendor Central dispute path (Reports, Operational Performance, defect list). Provides the most complete cross-regional fee table found across sources."
+        },
+        {
+          "label": "SupplyPike / SPS Commerce — Amazon ASN Accuracy: Your #1 Defense Against Shipping Chargebacks",
+          "url": "https://www.spscommerce.com/community/articles/amazon-asn-accuracy-chargebacks",
+          "note": "SECONDARY. Same vendor family as source 1, separate article focused specifically on ASN prevention. Corroborates the 30-minute submission window, 30-day dispute deadline, and two-attempt dispute limit independently."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "amazon-net-ppm-avs-headwind-chargeback",
+    "retailer": "Amazon",
+    "code": "NETPPM",
+    "codeName": "Net PPM / AVS Headwind Clawback",
+    "title": "Amazon Net PPM / AVS Headwind Clawback",
+    "description": "Amazon deducts on shipments that arrived clean when your ASIN's Net PPM slips. The two mechanics (Price Protection deductions and AVN accrual increases), the dispute path, and how this differs from ASN and PO chargebacks.",
+    "pubDate": "2026-09-26T00:00:00.000Z",
+    "draft": false,
+    "family": "Pricing",
+    "penalty": "Variable. A Price Protection deduction posts at the price-drop delta against on-hand and in-transit inventory. An AVN accrual increase lifts co-op funding on every remittance for the next year.",
+    "disputableStatus": "Disputable through Vendor Central Dispute Management",
+    "answer": "Amazon's Net PPM clawback shows up two ways. A Price Protection deduction auto-creates after any ASIN cost or price drop. Or your vendor manager raises the co-op accrual rate at Annual Vendor Negotiations under a 'margin headwind' pitch. Both trace to Net PPM, Amazon's per-ASIN profit metric. Dispute Price Protection deductions through Vendor Central.",
+    "answerQualifier": "Sourced from four independent public vendor references: SPS Commerce AVN guide, SPS Commerce Co-Op guide, Amalytix Net PPM primer, and iNymbus Net PPM formula. All four agree on the Net PPM formula, the Price Protection auto-creation mechanic, and the AVN accrual dynamic. 'Headwind' is vendor-community shorthand for how Amazon frames the AVN margin conversation, not a term in Amazon's own public policy.",
+    "meaning": "This deduction family shows up on shipments that arrived clean and sold through at a cost that matched the PO. Nothing failed at the dock.\nAmazon says your product's margin slipped, and the money still comes off your check.\n",
+    "meaningPoints": [
+      "Net PPM (Net Pure Product Margin) is the per-ASIN profit percentage Amazon calculates for your catalog. The formula, per Amalytix and iNymbus: shipped revenue, minus shipped COGS, plus vendor terms, minus sales discount, divided by shipped revenue.",
+      "When an ASIN's Net PPM slips, the vendor manager calls the gap a margin headwind at Annual Vendor Negotiations. The ask is a higher co-op accrual rate, a larger damage allowance, or a straight price concession. SPS Commerce documents the pattern directly: a 40% Net PPM target moves to 45% in a subsequent cycle.",
+      "The automated version is the Price Protection deduction. When an ASIN's cost or price drops, Amazon auto-creates a Price Protection agreement. It deducts the delta against on-hand inventory. SPS Commerce documents the auto-creation trigger.",
+      "Both levers land in the same place. A Price Protection deduction takes money off this month's remittance. An accrual bump lifts co-op funding on every remittance for the next twelve months."
+    ],
+    "rootCauseCategories": {
+      "physical": "Not applicable. This is a margin and terms family, not a physical shipment defect.",
+      "carrier": "Not applicable.",
+      "erp": "Cost changes hit Vendor Central out of sequence with the shipping schedule. If your ERP transmits a lower cost while Amazon still holds high-cost inventory, the auto-created Price Protection agreement bills you for the delta across every unit on hand."
+    },
+    "evidenceRequired": [
+      "The Price Protection agreement itself. Export it from Vendor Central under Agreements > Accepted/Rejected. It carries the effective date and the ASINs covered.",
+      "Your own buybox tracking data or a third-party price monitor. This is what you need to challenge an AVS headwind narrative when no matching competitor price drop exists.",
+      "Cost change confirmation from your ERP with the effective date. Cross-reference it against Amazon's on-hand inventory as of that date.",
+      "Your Net PPM report from Vendor Central (Reports > Analytics > Net PPM) at the ASIN level. This is the trajectory the vendor manager is citing."
+    ],
+    "disputable": "Dispute Price Protection deductions through Vendor Central's Dispute Management, per SPS Commerce. Two paths work. From Payments > Co-Op, select the invoice, then click Dispute deductions. Or from Payments > Dispute management, click Create new dispute, then select Co-Op.\nFind the agreement itself under Agreements > Accepted/Rejected. Backup reports are not provided for Price Protection agreements. You have to audit the cost-change trigger and the deduction date against your own inventory reports and cost history.\nAVN accrual increases are a different mechanic. They are not a chargeback on a specific remittance line, so no dispute ticket applies. The pushback happens inside the Annual Vendor Negotiation itself.\nBring buybox tracking data, an ASIN-level Net PPM report, and a documented list of the operational improvements (packaging weight reductions, return-rate drops, freight consolidation) that carry margin Amazon does not auto-credit into Net PPM.\n",
+    "prevention": [
+      "Track your own buybox and competitor pricing on every top ASIN, independent of Amazon. When the vendor manager opens AVN with a headwind claim, you want dated screenshots per ASIN. A rebuttal reconstructed from memory does not carry the room.",
+      "Time every cost change against Amazon's on-hand inventory in Vendor Central. A cost drop transmitted while Amazon holds four to six weeks of stock at the old price becomes a Price Protection deduction on every one of those units.",
+      "Reconcile your Net PPM report at the ASIN level every month, not once a year. The AVN margin conversation goes better when you already know which specific ASINs Amazon is ratcheting on. Then you can propose a targeted trade-term adjustment on those three ASINs instead of a blanket accrual increase.",
+      "Review every auto-created Price Protection agreement under Agreements > Accepted/Rejected. If the trigger does not match your cost history, dispute the underlying deduction through Payments > Dispute management, per SPS Commerce's co-op guide."
+    ],
+    "erpPrevention": {
+      "system": "NetSuite / Business Central",
+      "blueprint": "Export Amazon's on-hand ASIN inventory from Vendor Central into your ERP on a schedule. Key the export against Amazon's item numbers, not your internal SKUs.\nBefore your ERP pushes a cost change to the Vendor Central item file, check the export. If Amazon still holds inventory bought at the current price, hold the cost drop until that inventory clears. Or accept the Price Protection deduction as a known cost with a specific dollar figure your finance team signed off on.\nEither way, the deduction becomes a decision your team makes on purpose. It is not a surprise on next month's remittance. Feed the same export into a monthly Net PPM reconciliation saved search so the AVN conversation runs on ASIN-level data, not account averages.\n"
+    },
+    "faq": [
+      {
+        "q": "What is Amazon Net PPM, and why does Amazon claw back margin against it?",
+        "a": "Net PPM is Amazon's per-ASIN profit percentage. The formula: (shipped revenue - shipped COGS + vendor terms - sales discount) / shipped revenue. Amalytix and iNymbus document it. Amazon uses Net PPM to decide advertising eligibility, buy box control, and PO growth. When an ASIN's Net PPM slips below Amazon's internal target, your vendor manager calls the gap a margin headwind and pushes for a co-op accrual increase, a damage allowance bump, or a cost concession."
+      },
+      {
+        "q": "How is this different from an ASN Accuracy or PO On-Time chargeback?",
+        "a": "ASN Accuracy and PO On-Time chargebacks are per-shipment penalties for compliance failures, billed at a fixed percentage against the affected units. The Net PPM clawback is a margin adjustment on shipments that shipped clean. It arrives either as a Price Protection deduction against on-hand inventory after a cost drop, or as an accrual-rate increase that lifts every remittance for the next twelve months. The trigger is your product's margin, not the shipment's compliance."
+      },
+      {
+        "q": "Can I dispute a Price Protection deduction?",
+        "a": "Yes. Per SPS Commerce, Price Protection deductions dispute through Vendor Central. Two paths work. From Payments > Co-Op, select the invoice and click Dispute deductions. Or from Payments > Dispute management, click Create new dispute and select Co-Op. Backup reports are not provided for Price Protection agreements. You have to audit the cost-change trigger and the deduction date against your own inventory reports and cost history."
+      },
+      {
+        "q": "Where do I find the Price Protection agreement itself?",
+        "a": "Per SPS Commerce's Amazon Co-Op guide, an auto-created Price Protection agreement appears under Agreements > Accepted/Rejected in Vendor Central. That is where the agreement's terms live: which ASINs it covers, the effective date, and the cost change that triggered it. The same page is where you audit whether the deduction that later posts on your remittance matches what the agreement actually covers."
+      },
+      {
+        "q": "How does an AVN accrual increase translate to dollars per year?",
+        "a": "Every 100 basis points of co-op accrual on a $10 million Amazon 1P revenue base costs $100,000 in incremental co-op funding per year. Every dollar of that funding lifts Amazon's calculated Net PPM on your catalog, per iNymbus. That is the arithmetic behind the AVN conversation: the accrual rate agreed at negotiation sets the incremental cost for every remittance for the following twelve months."
+      }
+    ],
+    "verification": {
+      "status": "source-verified",
+      "verifiedBy": "Pixels and Clicks Editorial",
+      "verifiedOn": "2026-09-26T00:00:00.000Z",
+      "sources": [
+        {
+          "label": "SPS Commerce / SupplierWiki — Winning Your Amazon AVN: A Vendor's Guide to Margin Protection",
+          "url": "https://www.spscommerce.com/community/articles/amazon-vendor-negotiation-guide",
+          "note": "SECONDARY. Deduction-management vendor content. Documents the Net PPM target ratcheting Amazon uses at AVN (the 40% to 45% target progression), the accrual-based funding model that boosts Amazon's Net PPM without incremental service, and the strategy of tying AVS funding to a written SLA rather than granting unconditional fees."
+        },
+        {
+          "label": "SPS Commerce / SupplierWiki — A Comprehensive Guide to Amazon Co-Op Deductions",
+          "url": "https://www.spscommerce.com/community/articles/what-is-amazon-co-op",
+          "note": "SECONDARY. Same vendor family, separate article. Confirms 'a price protection agreement is auto-created when there is a drop in the ASIN price,' documents the two Vendor Central dispute paths (Payments > Co-Op > Dispute deductions, or Payments > Dispute management > Create new dispute > Co-Op), and confirms that agreement terms live under Agreements > Accepted/Rejected. Notes that backup reports are not provided for Price Protection agreements, so the vendor audits the cost-change trigger and deduction date against their own inventory and cost history."
+        },
+        {
+          "label": "Amalytix — Amazon Net PPM Explained",
+          "url": "https://www.amalytix.com/en/knowledge/strategy/amazon-net-ppm/",
+          "note": "SECONDARY. Independent European vendor-analytics source. Confirms the Net PPM formula at both the ASIN level (Average Selling Price - Cost Price + Vendor Terms - Sales Discount) and account level (Shipped Revenue - Shipped COGS + Vendor Terms - Sales Discount). Names it as the primary profitability metric Amazon uses to evaluate vendor performance."
+        },
+        {
+          "label": "iNymbus — Net PPM Formula: Why Vendors Must Track This Metric",
+          "url": "https://blog.inymbus.com/net-ppm-formula-amazon-vendors-must-track-this-metric",
+          "note": "SECONDARY. Independent deduction-management vendor source. Corroborates the Net PPM formula and adds the operational point: every dollar of co-op a vendor funds directly increases Amazon's calculated Net PPM on that catalog. That mechanic is what makes the accrual-rate lever such an effective margin-recovery tool for Amazon."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "amazon-po-on-time-accuracy-chargeback",
+    "retailer": "Amazon",
+    "code": "PO-OTA",
+    "codeName": "PO On-Time Accuracy",
+    "title": "Amazon 1P Chargeback: PO On-Time Accuracy",
+    "description": "Amazon's PO On-Time Accuracy chargeback fires when a shipment misses its PO window or ships short. Sub-types, fees, the dispute path, and how it compares to Walmart OTIF.",
+    "pubDate": "2026-08-14T00:00:00.000Z",
+    "draft": false,
+    "family": "Compliance",
+    "penalty": "Vendor sources report 3% of product cost, rising to 10% if units are never shipped",
+    "disputableStatus": "Disputable within 30 days",
+    "answer": "Amazon's PO On-Time Accuracy chargeback kicks in when a shipment misses its purchase order window or ships fewer units than confirmed. Vendor sources report a 3% penalty on product cost for late or reduced shipments, rising to 10% for units never shipped. Amazon reportedly waives the charge when a supplier's trailing four-week on-time rate exceeds 90%.",
+    "answerQualifier": "Sourced from three independent vendor references (SupplierWiki/SPS Commerce, Amazowl, Consulterce). They agree on the measurement basis and penalty structure but differ on the exact fee range. Not drawn from Amazon's own Vendor Central documentation, August 2026.",
+    "meaning": "Amazon says your shipment missed its purchase order window. Maybe the truck arrived late, or maybe you shipped fewer units than you confirmed.\nEither way, Amazon bills you a percentage of the product cost for the gap.\n",
+    "meaningPoints": [
+      "Vendor sources describe two core failure types. NotOnTime means the shipment arrives outside the PO's ship or delivery window. NotFilled means some or all confirmed units never shipped.",
+      "Amazowl's course material names a third sub-type: DownConfirmed. This applies when a supplier cuts its confirmed unit count five or more days after the PO window opens.",
+      "Amazon measures prepaid shipments against the Carrier Requested Delivery Date (CRDD). It measures collect shipments against the Freight Ready Date (FRD). Both SupplierWiki and Amazowl confirm this.",
+      "Per Amazowl, Amazon waives the chargeback for a week when a supplier's trailing four-week on-time rate stays above 90%."
+    ],
+    "rootCauseCategories": {
+      "physical": "Warehouse pick-pack timing pushes the ship date past the FRD or CRDD window. Or a pick shortfall forces a reduced unit count.",
+      "carrier": "A missed carrier tender response or appointment on a collect PO. The freight never leaves ready by the FRD, even though the warehouse finished on schedule.",
+      "erp": "Your ERP confirmed a PO quantity your warehouse can't ship by the date. This usually happens because PO confirmation checks available-to-promise inventory, not real warehouse capacity."
+    },
+    "evidenceRequired": [
+      "The PO confirmation record showing the confirmed ship/delivery window and confirmed unit count",
+      "Carrier pickup or tender documentation showing the freight ready date (collect) or delivery date (prepaid)",
+      "Warehouse ship-confirm or pick-confirm records showing the actual ship date and quantity that left the dock",
+      "The EDI 856 ASN transmission log tying the declared quantity and ship date to what the carrier actually picked up"
+    ],
+    "disputable": "Per Amazowl, Amazon's dispute workflow lets you contest the charge if you believe the underlying data is wrong.\nVendor sources agree on a 30-day window from the chargeback notification, the same window Amazon uses for other chargeback types. None of the sources describe a separate dispute process specific to PO On-Time Accuracy.\n",
+    "prevention": [
+      "Confirm only the PO quantity you can ship by the assigned window. Do not confirm on an available-to-promise check alone. If your warehouse cannot hit the date, you are booking the chargeback in advance.",
+      "For collect POs, confirm carrier tender acceptance and appointment booking against the freight ready date. Run this as a scheduled check, not an assumption. A missed tender response fails the window even when the warehouse finished on time.",
+      "Track your trailing four-week on-time rate as its own metric. Vendor sources say this number decides whether Amazon waives a borderline week. Watch it independently of any single PO.",
+      "Cut any unit-count reduction inside the first five days of the PO window. Per Amazowl, a reduction after day five becomes a DownConfirmed chargeback, billed at the same rate as a late shipment."
+    ],
+    "erpPrevention": {
+      "system": "NetSuite / Business Central",
+      "blueprint": "Gate PO confirmation behind a warehouse capacity check. Before your ERP confirms a quantity to Amazon, check it against the ship/delivery window, not just available-to-promise inventory. Available-to-promise alone is what generates a PO you can't actually hit.\nAdd a scheduled comparison between confirmed PO quantity and pick-confirm status, run with enough lead time to catch a real shortfall inside the five-day grace window. That way a DownConfirmed reduction is a decision your team makes on purpose, not a chargeback that fires because the clock ran out unwatched.\n"
+    },
+    "faq": [
+      {
+        "q": "What's the difference between PO On-Time Accuracy and ASN Accuracy chargebacks?",
+        "a": "PO On-Time Accuracy measures two things: whether your shipment arrives inside the PO's ship or delivery window, and whether you shipped the full confirmed quantity. ASN Accuracy measures something different: whether your Advance Ship Notice matches what the fulfillment center actually receives. A shipment can be on time and still fail ASN Accuracy if the ASN data is wrong, and the reverse can happen too. See the ASN Accuracy chargeback entry for the sibling program."
+      },
+      {
+        "q": "How much does an Amazon PO On-Time Accuracy chargeback cost?",
+        "a": "Amazowl puts it at 3% of product cost for late shipments or reduced units, rising to 10% for units never shipped. Consulterce reports a broader 3-10% range for North America. Both sources agree on the 3% baseline. They disagree only on how high the range runs."
+      },
+      {
+        "q": "Can an Amazon PO On-Time Accuracy chargeback be waived?",
+        "a": "Per Amazowl, Amazon waives the chargeback for a week when a supplier's trailing four-week average on-time rate is above 90%. This isn't confirmed against Amazon's own documentation. Treat the 90% figure as vendor-reported, not official policy."
+      },
+      {
+        "q": "How does Amazon's PO On-Time Accuracy compare to Walmart's OTIF program?",
+        "a": "Both measure on-time shipping performance, but the mechanics differ. Amazon evaluates each PO against its own ship/delivery window and charges per confirmed unit. Walmart's OTIF is a blended scorecard rate measured against an aggregate threshold over a period, not a per-PO charge. See the comparison table below."
+      },
+      {
+        "q": "How long do I have to dispute this chargeback?",
+        "a": "You get 30 days from the chargeback notification in Vendor Central. That's the same general window Amazon uses for other chargeback types. None of the vendor sources describe a different window specific to PO On-Time Accuracy."
+      }
+    ],
+    "verification": {
+      "status": "source-verified",
+      "verifiedBy": "Pixels and Clicks Editorial",
+      "verifiedOn": "2026-08-14T00:00:00.000Z",
+      "sources": [
+        {
+          "label": "SupplierWiki / SPS Commerce — What Are Amazon's Compliance Chargebacks?",
+          "url": "https://www.spscommerce.com/community/articles/what-are-amazons-compliance-chargebacks",
+          "note": "SECONDARY. Deduction-management vendor content. Names the NotOnTime and NotFilled sub-types and the CRDD (prepaid) / FRD (collect) measurement basis. Distinguishes PO On-Time Accuracy from ASN Accuracy explicitly."
+        },
+        {
+          "label": "Amazowl — Chargebacks: PO On-Time Accuracy (Vendor Central course)",
+          "url": "https://www.amazowl.com/courses/vendor-central-contesting-chargebacks-and-invoice-reconciliation/lessons/3-avoiding-chargebacks-in-the-purchase-order-cycle/topic/chargebacks-po-on-time-accuracy/",
+          "note": "SECONDARY. Independent vendor-education source. Most detailed on penalty structure: names a third sub-type (DownConfirmed), gives the 3% / 10% fee split, the five-day DownConfirmed grace period, and the 90% trailing four-week waiver threshold."
+        },
+        {
+          "label": "Consulterce — The Complete Guide to Amazon Chargebacks in 2026",
+          "url": "https://consulterce.com/insights/amazon-chargebacks",
+          "note": "SECONDARY. Independent vendor source. Corroborates the on-time-window mechanic. Reports a broader 3-9% (EU/UK) to 3-10% (North America) of COGS fee range. Does not break out sub-types or the waiver threshold. Figures diverge from Amazowl's exact 3%/10% split, noted as a disagreement in this entry's FAQ."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "target-asn-accuracy-violation",
+    "retailer": "Target",
+    "code": "ASN",
+    "codeName": "ASN Availability / Accuracy Violation",
+    "title": "Target ASN Accuracy Violation: EDI 856 Compliance",
+    "description": "Target's ASN accuracy violation fires when the EDI 856 doesn't match what the DC receives, or when it arrives after the shipment. Penalty, dispute path, and the ERP fix.",
+    "pubDate": "2026-09-11T00:00:00.000Z",
+    "draft": false,
+    "family": "ASN/EDI",
+    "penalty": "Distribution Alternatives reports 3% of COGS, single-sourced",
+    "disputableStatus": "Disputable through Synergy",
+    "answer": "Target's ASN violation fires on two axes: availability (the EDI 856 must arrive before the shipment) and accuracy (the ASN must match the physical receipt at item, quantity, and carton level). Distribution Alternatives reports a 3% of COGS penalty. The requirement became enforceable under Target's Perfect Order Program in May 2025.",
+    "answerQualifier": "Sourced from four independent vendor references (SPS Commerce, WarehouseQuote, Distribution Alternatives, Productiv), September 2026. The 3% penalty figure is single-sourced (Distribution Alternatives). Not drawn from Target's own Partners Online documentation.",
+    "meaning": "Target says your Advance Ship Notice did not match the shipment, or it arrived after the truck did. Either failure triggers an ASN compliance violation, tracked independently from on-time and fill-rate metrics.\n",
+    "meaningPoints": [
+      "Target tracks two ASN metrics under one umbrella: ASN Availability (was the 856 submitted before the in-yard date?) and ASN Accuracy (does the 856 match the physical shipment at item, quantity, and carton level?). SPS Commerce names both explicitly.",
+      "WarehouseQuote describes Target's Perfect Order Program, launched May 2025, as the enforcement mechanism. The ASN must match the physical shipment at item, quantity, and carton level exactly.",
+      "Submitting an ASN after the shipment arrives at the DC triggers a compliance defect even if the data itself is accurate, per WarehouseQuote.",
+      "Productiv describes four failure modes: quantity mismatches, timing violations, item reference errors, and multi-format PO handling failures on promotional or seasonal POs."
+    ],
+    "rootCauseCategories": {
+      "physical": "A quantity mismatch between what was packed and what the ASN declared. Cartons added or removed after the ASN was transmitted but before the truck left.",
+      "carrier": "A carrier that arrives ahead of schedule, so the shipment reaches the DC before the ASN transmission window closes. The ASN is on time by the transmission schedule but late relative to the physical receipt.",
+      "erp": "The ASN generated from the sales order or PO confirmation rather than the confirmed pick and ship event. The order quantity and the picked quantity diverge, and the ASN inherits the wrong number. Same root cause as Amazon's ASN Accuracy chargeback."
+    },
+    "evidenceRequired": [
+      "The EDI 856 ASN transmission log showing the timestamp and declared quantities",
+      "Warehouse pick-confirm or ship-confirm records showing the actual quantity that left the dock",
+      "Carrier delivery receipt with timestamp, showing actual arrival vs the in-yard window",
+      "Photographs of labeling and carton content, for disputes where the item data is at issue (per Productiv)"
+    ],
+    "disputable": "The same two-step process applies: request an exemption within the two-week violation window before the chargeback posts, or file a formal dispute through Synergy after it does.\nSPS Commerce reports a domestic dispute window of three months from the chargeback date, and six months for import orders. Distribution Alternatives reports different windows: 18 months for prepaid and 9 months for collect, from the ship date.\nConfirm your deadline in Synergy.\n",
+    "prevention": [
+      "Generate the ASN from the warehouse ship-confirm event, not the sales order or PO confirmation. The order quantity and the picked quantity are different numbers. If the ASN inherits the order quantity, it is wrong before it transmits.",
+      "Transmit the ASN before the shipment's in-yard date and time. Not just before the carrier leaves your dock. A late ASN is a compliance defect even if the data is correct, per WarehouseQuote.",
+      "Validate item references (GTIN/UPC) against Target's item file before transmitting the 856. Productiv names item-reference mismatches as a distinct failure mode, separate from a quantity error.",
+      "For promotional or seasonal POs, confirm the PO format and any special configuration before building the ASN. Productiv reports multi-format PO handling failures as a separate trigger."
+    ],
+    "erpPrevention": {
+      "system": "NetSuite / Business Central",
+      "blueprint": "Gate EDI 856 generation behind the warehouse ship-confirm event, not the sales order confirmation or pick release. The ASN payload (item quantities, carton counts) must pull from the confirmed-pick record, not from the original PO quantity.\nAdd a pre-transmission validation that compares the 856's declared quantity against the ship-confirm quantity and blocks transmission on any mismatch.\nFor Target specifically, add a date check: the 856 must transmit before the shipment's in-yard date. Schedule transmission with enough lead time that a carrier arriving early does not beat the ASN to the DC.\n"
+    },
+    "faq": [
+      {
+        "q": "What is the difference between ASN Availability and ASN Accuracy at Target?",
+        "a": "ASN Availability measures whether the EDI 856 was submitted before the shipment arrived at the DC. ASN Accuracy measures whether the data in the 856 matches the physical shipment at the item, quantity, and carton level. You can fail one and pass the other. A late but accurate ASN triggers an availability violation only. An on-time ASN with a wrong quantity triggers an accuracy violation only."
+      },
+      {
+        "q": "How much does a Target ASN violation cost?",
+        "a": "Distribution Alternatives reports a 3% of COGS penalty for ASN violations, separate from the general compliance rate. That figure is single-sourced on this page. WarehouseQuote describes the ASN requirement under the Perfect Order Program but does not break out a specific ASN penalty. Confirm the fee on your own chargeback detail in Partners Online."
+      },
+      {
+        "q": "When did Target start enforcing ASN accuracy as a chargeback?",
+        "a": "WarehouseQuote and Distribution Alternatives both report that Target's ASN compliance requirements became enforceable in May 2025 under the Perfect Order Program. Before that date, ASN issues reportedly generated warnings rather than chargebacks."
+      },
+      {
+        "q": "How is Target's ASN violation different from Amazon's ASN Accuracy chargeback?",
+        "a": "Both measure whether the EDI 856 matches the physical shipment. Amazon runs five named sub-types (unit count mismatch, late submission, invalid ARN, missing expiration date, PRO/BOL mismatch) and charges 2-6% of COGS. Target runs two axes (availability and accuracy) and reportedly charges 3% of COGS. The ERP root cause is the same: an ASN built from the order instead of the confirmed pick. See the Amazon ASN Accuracy entry for the sibling program."
+      }
+    ],
+    "verification": {
+      "status": "source-verified",
+      "verifiedBy": "Pixels and Clicks Editorial",
+      "verifiedOn": "2026-09-11T00:00:00.000Z",
+      "sources": [
+        {
+          "label": "SPS Commerce — Target Compliance Deductions",
+          "url": "https://www.spscommerce.com/community/articles/target-compliance-deductions",
+          "note": "SECONDARY. Deduction-management vendor content. Names ASN Availability and ASN Accuracy as separate metrics under Target's compliance program. Reports the two-week violation window and domestic/import dispute timelines."
+        },
+        {
+          "label": "Distribution Alternatives — Target Vendor Compliance Guide",
+          "url": "https://daserv.com/target-vendor-compliance-guide",
+          "note": "SECONDARY. Independent 3PL content. Only source for the 3% COGS ASN penalty figure. Reports ASN requirements became enforceable May 2025 and that ASN data must match Target's item data exactly including casepack, store ship pack, and barcode."
+        },
+        {
+          "label": "WarehouseQuote — Target Supplier Compliance Guide",
+          "url": "https://warehousequote.com/resources/target-supplier-compliance-guide",
+          "note": "SECONDARY. Independent 3PL content. Describes the Perfect Order Program (May 2025), the item/quantity/carton-level matching requirement, and the rule that a post-arrival ASN is a defect regardless of data accuracy."
+        },
+        {
+          "label": "Productiv — Target Compliance: ASN Accuracy",
+          "url": "https://getproductiv.com/target-compliance-asn-accuracy",
+          "note": "SECONDARY. Independent vendor content. Names four failure modes (quantity, timing, item reference, multi-format PO handling) and describes Target's DC receiving cross-reference process."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "target-on-time-shipping-violation",
+    "retailer": "Target",
+    "code": "OTS-OTA",
+    "codeName": "On-Time Ship / On-Time Arrival Violation",
+    "title": "Target On-Time Shipping Violation: Collect and Prepaid",
+    "description": "Target's on-time shipping violations fire when collect freight isn't ready by the VRS window or prepaid freight misses the in-yard delivery window. Penalty rates, dispute paths, and the ERP fix.",
+    "pubDate": "2026-09-11T00:00:00.000Z",
+    "draft": false,
+    "family": "Compliance",
+    "penalty": "Vendor sources disagree: 5% of COGS with $150 minimum (SPS Commerce, Distribution Alternatives) or a tiered 1.5-3% (WarehouseQuote)",
+    "disputableStatus": "Disputable through Synergy",
+    "answer": "Target's on-time shipping violation fires in two forms: On-Time Ship for collect freight not ready within the VRS pickup window, and On-Time Arrival for prepaid freight that misses the in-yard delivery window. Both early and late prepaid arrivals count as non-compliant. Vendor sources disagree on the penalty: 5% of COGS (SPS Commerce) or 1.5-3% tiered (WarehouseQuote).",
+    "answerQualifier": "Sourced from three independent vendor references (SPS Commerce, WarehouseQuote, Distribution Alternatives), September 2026. Penalty percentages conflict between sources and are flagged inline. Not drawn from Target's own Partners Online documentation.",
+    "meaning": "Target says your shipment missed its delivery or pickup window.\nFor collect freight, the VRS entry was not submitted within the pickup window, or the goods were not ready when Target's carrier arrived. For prepaid freight, the truck arrived outside the in-yard delivery window at the DC.\n",
+    "meaningPoints": [
+      "Target tracks two separate on-time metrics: On-Time Ship (OTS) for collect shipments, measured against the Vendor Ready to Ship (VRS) window, and On-Time Arrival (OTA) for prepaid shipments, measured against the in-yard delivery window at the distribution center. SPS Commerce and WarehouseQuote confirm both.",
+      "Both early and late prepaid arrivals reportedly count as non-compliant, per Distribution Alternatives. A truck that arrives a day ahead of the window triggers the same violation as one that arrives a day late.",
+      "WarehouseQuote reports the VRS entry must be submitted by 11:00 AM Central Time, two business days before the scheduled carrier pickup. Missing that entry deadline can trigger a collect on-time violation even if the freight is physically ready on the dock.",
+      "Each on-time metric generates its own independent violation. A collect shipment that misses the VRS window while also carrying an inaccurate ASN triggers two violations, not one."
+    ],
+    "rootCauseCategories": {
+      "physical": "Warehouse pick-pack cycle runs past the VRS entry deadline on collect POs, or pallet staging falls behind the prepaid carrier appointment.",
+      "carrier": "A carrier arrival outside the in-yard window on a prepaid shipment. The vendor chose the carrier, so the liability is theirs, but the root cause is carrier transit performance, not warehouse execution.",
+      "erp": "PO confirmation against available-to-promise inventory without checking whether the warehouse can stage and tender within the VRS window. The order is accepted, but the ship-ready date slips past the deadline."
+    },
+    "evidenceRequired": [
+      "The PO with the assigned ship or delivery window, showing the VRS or in-yard date Target set",
+      "VRS entry timestamp or ShipIQ confirmation record showing when the collect freight was marked ready",
+      "Carrier pickup or delivery receipt with timestamp, for prepaid shipments showing actual arrival vs the assigned window",
+      "Any Target-initiated reschedule or appointment change that moved the window after the original assignment"
+    ],
+    "disputable": "Disputes file through Synergy Vendor Dispute (SVD) inside Partners Online (POL). Before the chargeback posts, you have a two-week violation window to request an exemption, a faster and earlier path than a formal dispute.\nSPS Commerce reports a domestic dispute window of three months from the chargeback date, and six months for import orders. Distribution Alternatives reports different windows: 18 months for prepaid suppliers and 9 months for collect suppliers, measured from the ship date.\nThe two sources use different starting points, so confirm your deadline in Synergy.\n",
+    "prevention": [
+      "For collect POs, submit the VRS entry in ShipIQ by 11:00 AM Central Time, two business days before the scheduled pickup, per WarehouseQuote. That entry deadline is the real compliance trigger, not the physical pickup.",
+      "For prepaid POs, build a transit-time buffer against the in-yard arrival window. Both early and late arrivals reportedly count as non-compliant, so the carrier appointment needs to land inside the window, not just before the deadline.",
+      "Gate PO confirmation behind a warehouse capacity check that includes the ship-ready date, not just the inventory quantity. A PO confirmed with enough stock but not enough staging time is a violation waiting to happen.",
+      "Request an exemption within the two-week violation window before the chargeback posts, if the miss was caused by a Target-side scheduling conflict, a carrier issue on a collect PO, or a data error."
+    ],
+    "erpPrevention": {
+      "system": "NetSuite / Business Central",
+      "blueprint": "Gate PO confirmation behind a date-feasibility check, not just an ATP quantity check. Before your ERP confirms a Target PO, compare the VRS or in-yard window against your warehouse's actual staging and ship-ready lead time for that DC.\nIf the window is tighter than your lead time, flag it for manual review or send an EDI 855 adjustment before confirmation closes.\nAdd a scheduled alert that fires when a confirmed collect PO's VRS entry deadline is approaching without a ShipIQ submission, so the team catches a missed entry before it becomes a violation.\n"
+    },
+    "faq": [
+      {
+        "q": "What is the difference between OTS and OTA at Target?",
+        "a": "OTS (On-Time Ship) applies to collect freight: goods must be ready for Target's carrier pickup within the VRS window. OTA (On-Time Arrival) applies to prepaid freight: the truck must arrive at the Target DC within the in-yard delivery window. Both metrics generate independent violations, and a supplier shipping both freight types can fail either or both."
+      },
+      {
+        "q": "How much does a Target on-time violation cost?",
+        "a": "Vendor sources disagree. SPS Commerce and Distribution Alternatives report 5% of COGS with a $150 minimum. WarehouseQuote reports a tiered structure: 3% of COGS for on-time collect and on-time prepaid violations, and 1.5% for a general performance-adherence miss. Confirm the rate on your own chargeback detail in Partners Online."
+      },
+      {
+        "q": "Does Target penalize early prepaid shipments?",
+        "a": "Yes, per Distribution Alternatives. Both early and late arrivals outside the in-yard delivery window reportedly count as non-compliant. Target's window has a start and an end, and missing either side triggers the same violation."
+      },
+      {
+        "q": "How long do I have to dispute a Target on-time chargeback?",
+        "a": "Sources disagree on the window. SPS Commerce reports three months from the chargeback date for domestic orders and six months for imports. Distribution Alternatives reports 18 months for prepaid and 9 months for collect, measured from the ship date. The two sources use different starting points, so confirm your deadline in Synergy."
+      }
+    ],
+    "verification": {
+      "status": "source-verified",
+      "verifiedBy": "Pixels and Clicks Editorial",
+      "verifiedOn": "2026-09-11T00:00:00.000Z",
+      "sources": [
+        {
+          "label": "SPS Commerce — Target Compliance Deductions",
+          "url": "https://www.spscommerce.com/community/articles/target-compliance-deductions",
+          "note": "SECONDARY. Deduction-management vendor content. Reports 5% COGS penalty for late OTA/S units, names On-Time Ship and On-Time Arrival as separate metrics, describes the two-week violation window and domestic/import dispute timelines (3 months domestic, 6 months import)."
+        },
+        {
+          "label": "WarehouseQuote — Target Supplier Compliance Guide",
+          "url": "https://warehousequote.com/resources/target-supplier-compliance-guide",
+          "note": "SECONDARY. Independent 3PL content. Reports tiered 1.5-3% penalty structure, the 11:00 AM CT VRS entry deadline two business days before pickup, and 100% on-time requirement for both collect and prepaid. Penalty figure conflicts with SPS Commerce's 5%."
+        },
+        {
+          "label": "Distribution Alternatives — Target Vendor Compliance Guide",
+          "url": "https://daserv.com/target-vendor-compliance-guide",
+          "note": "SECONDARY. Independent 3PL content. Reports 5% COGS with $150 minimum (agrees with SPS Commerce), confirms early prepaid arrivals count as non-compliant, describes 18-month prepaid / 9-month collect dispute windows measured from ship date."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "target-sifr-shortship",
+    "retailer": "Target",
+    "code": "SIFR",
+    "codeName": "Supplier Item Fill Rate (SIFR) Violation",
+    "title": "Target SIFR: Fill Rate Violation Chargeback Explained",
+    "description": "Target's SIFR chargeback penalizes vendors who ship below a fill-rate threshold. Vendor sources disagree on the exact penalty rate, unconfirmed against Target's own documentation.",
+    "pubDate": "2026-08-02T00:00:00.000Z",
+    "draft": false,
+    "family": "Compliance",
+    "penalty": "Vendor sources disagree: some report 3% of COGS, others 5%, on unfulfilled units. Unconfirmed.",
+    "disputableStatus": "Conditional (unconfirmed)",
+    "answer": "Target's SIFR (Supplier Item Fill Rate) chargeback penalizes vendors who ship below a fill-rate threshold most vendor sources put at 95%, measured against either the original or an EDI-860-revised PO quantity. The penalty rate itself is disputed: some sources report 3% of cost of goods, others 5%. Neither has been confirmed against Target's own documentation.",
+    "answerQualifier": "Sourced entirely from deduction-management vendor content, not Target's own documentation. Vendor sources actively disagree on the penalty percentage. That disagreement is itself a sign this needs Partners Online confirmation before publishing any figure as fact.",
+    "meaning": "Target's SIFR chargeback takes cost of goods off your remittance when your fill rate drops below a threshold.\nVendor sources don't even agree on how much it costs you.\n",
+    "meaningPoints": [
+      "Vendor sources describe Target's SIFR (Supplier Item Fill Rate) chargeback as a penalty for shipping below a fill-rate threshold. Target reportedly measures it item by item, comparing what a distribution center actually received against what the purchase order called for.",
+      "Target reportedly runs two versions of this measurement. The stricter \"Fill Rate Original\" checks against the PO as first placed. \"Fill Rate Revised\" checks against a quantity adjusted down via an EDI 860 before shipment.",
+      "Vendor sources vary on which version applies to your chargeback and on the exact rate it's calculated against. This page hasn't reconciled those differences.",
+      "The penalty rate itself is disputed: some vendor sources report 3% of cost of goods, others 5%. Neither figure has been confirmed against Target's own documentation."
+    ],
+    "rootCauseCategories": {
+      "physical": "Pick-face stockouts at ship time, or allocation conflicts where inventory earmarked for a Target PO gets pulled for another channel first, per vendor sources.",
+      "carrier": "Partial pallet rejection at the carrier or DC gate due to non-compliant pallet condition, reported by vendor sources as a secondary cause distinct from a genuine inventory shortfall.",
+      "erp": "PO acceptance logic that confirms an EDI 850 order without checking real-time available-to-promise inventory, so a shortfall isn't caught until the DC receiving count comes up short. This is a vendor-reported pattern, not confirmed as Target's actual measurement trigger."
+    },
+    "evidenceRequired": [
+      "PO acceptance records and any EDI 855 change/adjustment notices sent back to Target",
+      "Carrier bill of lading showing total loaded case count against what was picked",
+      "Target DC receiving discrepancy report showing original vs. accepted line-item quantities"
+    ],
+    "disputable": "Don't assume a Target SIFR chargeback is final. Vendor sources describe a formal exemption-request window you can use before a violation is even charged, and they describe different dispute windows depending on whether you ship prepaid or collect freight to Target.\nNone of those specifics have been checked against Target's own Partners Online documentation. Vendor sources can't even agree on the penalty rate, so don't treat any of this as reliable until it's confirmed there.\n",
+    "prevention": [
+      "Check your available-to-promise inventory before you accept a Target EDI 850 PO, not after. Per vendor sources, most fill-rate shortfalls that trigger a SIFR chargeback trace back to accepting an order your pick-face couldn't actually support.",
+      "Send Target an EDI 855 adjustment the moment you know a shortfall is coming, instead of letting the DC receiving count be the first place the gap shows up on your remittance as SIFR.",
+      "If allocation conflicts are a recurring problem for your business, keep Target-bound inventory separate from other sales channels during the PO window. That way, it can't get pulled before your SIFR-covered shipment goes out."
+    ],
+    "erpPrevention": {
+      "system": "NetSuite / Business Central",
+      "blueprint": "Add an automated ATP (available-to-promise) hard-check to your EDI 850 processing so a Target order never gets silently confirmed against inventory you don't actually have.\nIf your pick engine detects a stock deficit against the ordered quantity, have it trigger an EDI 855 adjustment or a buyer alert before order confirmation closes. That's better than finding out about the gap at the DC after it's already a SIFR chargeback on your remittance.\n"
+    },
+    "faq": [
+      {
+        "q": "Is Target's SIFR penalty 3% or 5% of cost of goods?",
+        "a": "Sources disagree. Some vendor-published guides cite 3%, others cite 5%, for what appears to be the same underlying program. That disagreement is itself a reason not to trust either figure until it's checked against Target's own Partners Online documentation. This page hasn't had access to that documentation."
+      },
+      {
+        "q": "What's the difference between Fill Rate Original and Fill Rate Revised?",
+        "a": "Per vendor sources, Fill Rate Original measures received quantity against the purchase order as it was first placed. Fill Rate Revised measures it against a quantity the supplier adjusted downward via an EDI 860 before shipment. This page hasn't independently confirmed which one governs a given chargeback, or under what conditions."
+      },
+      {
+        "q": "Why isn't this page marked verified?",
+        "a": "Every source in this research pass was deduction-management vendor content marketing. None of it was independent journalism, and none was Target primary documentation. (A public Target PDF was found, but it covers vendor conduct standards, not fill-rate mechanics.) This site's policy treats vendor content as \"what vendors claim,\" not fact. That matters here, since the vendor sources contradict each other on the actual number."
+      }
+    ],
+    "verification": {
+      "status": "in-review",
+      "sources": [
+        {
+          "label": "SPS Commerce / The Supply Chain Source — Target compliance and fill-rate articles",
+          "url": "https://www.spscommerce.com/community/articles/a-suppliers-guide-to-targets-compliance-policy",
+          "note": "SECONDARY. Deduction-management vendor content, not Target documentation. One of the sources reporting the 95% threshold and a chargeback rate — figures conflict with other vendor sources below."
+        },
+        {
+          "label": "SupplyPike / SupplierWiki — Compliance Deductions at Target",
+          "url": "https://supplierwiki.supplypike.com/articles/target-compliance-deductions",
+          "note": "SECONDARY. Same vendor-content category as SPS Commerce above; used to cross-check the fill-rate threshold, not as an independent confirmation of the penalty rate."
+        },
+        {
+          "label": "Target corporate site — \"Applying Target's Standards of Vendor Engagement\" PDF",
+          "url": "https://corporate.target.com/getmedia/3d34144b-bfc6-4962-993a-6f0ea8c7dcdb/Target_Applying-SOVE_English.pdf",
+          "note": "Checked and ruled out — this is Target's vendor-conduct/ethics document, not an operational fill-rate or chargeback policy. Kept here so the next person doesn't re-fetch it expecting SIFR numbers."
+        },
+        {
+          "label": "Target Partners Online — Vendor Income Program / fill-rate documentation",
+          "note": "PRIMARY, NOT YET ACCESSED. Requires supplier login. Needed to resolve the 3% vs 5% conflict and confirm which fill-rate variant (Original vs Revised) actually governs the chargeback."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "walmart-code-10-price-difference",
+    "retailer": "Walmart",
+    "code": "10",
+    "codeName": "Price Difference as Documented (Allowance Difference)",
+    "title": "Walmart Deduction Code 10: Price Difference (Allowance Difference)",
+    "description": "Walmart code 10 fires when the allowance, cost, or pack quantity on an invoice doesn't match the PO. Three independent vendor sources on the mechanic, evidence, and dispute path.",
+    "pubDate": "2026-08-11T00:00:00.000Z",
+    "draft": false,
+    "family": "Pricing",
+    "penalty": "Line-item deduction equal to the invoice-to-PO allowance or cost discrepancy",
+    "disputableStatus": "Disputable, split by claim type",
+    "answer": "Walmart deduction code 10, Price Difference as Documented (Allowance Difference), fires when the allowance, net cost, or pack quantity on an invoice doesn't match the purchase order. A PO with a 10% promotional allowance billed at 5% triggers the gap as a deduction. Store claims are disputable through the Accounts Payable Dispute Portal; other claims go through the buyer.",
+    "answerQualifier": "Sourced from three independent deduction-management vendor references (8th & Walton, SPS Commerce, Confido) that converge on the same mechanic and evidence requirements. One source uses a different internal label for the same code. Not drawn from Walmart's own documentation.",
+    "meaning": "Walmart code 10 can take money off your remittance even when your shipment arrived complete and on time.\n",
+    "meaningPoints": [
+      "Code 10 (Price Difference as Documented / Allowance Difference) fires when your invoice's cost, allowance, or pack quantity doesn't match the purchase order. That's true regardless of what actually showed up at the dock.",
+      "Three independent vendor sources (8th & Walton, SPS Commerce, Confido) converge on this mechanic. Confido uses a different internal label, \"Retailer - Pricing Variance,\" for the same trigger.",
+      "Code 10 is a Pricing-family code, not a Shortage-family one. It disputes a number that was billed wrong. Codes 22 and 25 are different: they dispute a quantity that did or didn't arrive.",
+      "Your shipment can be physically perfect and still generate a code 10 deduction if the invoiced cost or allowance doesn't match the PO."
+    ],
+    "rootCauseCategories": {
+      "physical": "Not applicable. Code 10 is a billing and paperwork discrepancy, not a receiving-count issue. A shipment can arrive complete and still generate this deduction on the invoice alone.",
+      "carrier": "Not applicable. Code 10 has no freight or carrier-side trigger in any of the vendor sources reviewed.",
+      "erp": "SPS Commerce names three specific patterns. An invalid pack quantity where the EDI invoice's pack size differs from the PO. A misapplied allowance where an item bills at gross cost instead of the net cost the PO reflects. Or a combination of both, requiring separate identification.\nConfido frames the same root cause as an ERP or item-file value drifting out of sync with what the buyer agreed.\n"
+    },
+    "evidenceRequired": [
+      "Supplier agreement or buyer correspondence documenting the agreed allowance, cost, or pack quantity",
+      "EDI 810 invoice showing the cost and allowance actually billed",
+      "Copy of the purchase order, or any PO maintenance notification, showing what was expected",
+      "Email correspondence with the buyer if the discrepancy traces to a cost change that was agreed but not yet reflected in the item file"
+    ],
+    "disputable": "Your dispute path splits by claim type, per Confido. Store claims go through Walmart's Accounts Payable Dispute Portal (APDP) in Retail Link, and other claims should be addressed directly with your buyer.\n8th & Walton confirms APDP as one valid channel and names the Merchant Team as the alternative. SPS Commerce adds that if your dispute through APDP is denied, you can still contact the buyer directly to request a payback.\nNone of this has been checked against Walmart's own APDP documentation.\n",
+    "prevention": [
+      "When your Walmart buyer agrees to a cost or allowance change, update your item file the same day. Vendor sources describe the most common cause of Walmart code 10 as an agreed change that never reached the item master before your next invoice went out.",
+      "Run a three-way match, your PO price and allowance, your item master value, and your invoice price, before every invoice transmits. A mismatch you catch pre-invoice never becomes a Walmart code 10 deduction on your remittance.",
+      "Check pack quantity alignment on your EDI invoice against the PO, not just cost. SPS Commerce lists invalid pack quantity as a standalone trigger for code 10, independent of any pricing error."
+    ],
+    "erpPrevention": {
+      "system": "NetSuite / Business Central",
+      "blueprint": "In your NetSuite or Business Central instance, add a pre-810 validation rule that compares three values before your invoice can generate: the PO price and allowance, your item master, and your invoice price. Block generation on any mismatch.\nThis is the pricing-family equivalent of the ASN-quantity gate that prevents shortage-family codes like Walmart code 22.\nA Walmart code 10 deduction only exists because a value drifted between your systems before the invoice went out. Close that gap in your ERP, and the deduction closes with it.\n"
+    },
+    "faq": [
+      {
+        "q": "Is Walmart code 10 about a wrong price, or something else?",
+        "a": "Broader than a simple wrong price. Vendor sources describe three triggers under the same code: a mismatched allowance or promotional discount, an item billed at gross cost instead of the net cost the PO reflects, or a pack quantity on the invoice that differs from the PO. Any one of the three can generate a code 10 on its own."
+      },
+      {
+        "q": "Can I dispute a Walmart code 10 deduction?",
+        "a": "Yes, per vendor sources, though the path depends on claim type. Confido describes store claims as going through the Accounts Payable Dispute Portal (APDP), with other claims handled directly with the buyer. Bring documentation of the agreed allowance, cost, or pack quantity, since that's what resolves the dispute."
+      },
+      {
+        "q": "What evidence do I need for a code 10 dispute?",
+        "a": "The supplier agreement or buyer correspondence showing the allowance, cost, or pack quantity that was actually agreed, the EDI 810 invoice as billed, and the PO itself. If the root cause is a buyer-approved cost change, the email or PO maintenance notice documenting that change is usually the deciding evidence."
+      },
+      {
+        "q": "Why does one vendor source call Walmart code 10 a different name than the others?",
+        "a": "Confido labels Walmart code 10 \"Retailer - Pricing Variance\" internally, while SPS Commerce and 8th & Walton both use Walmart's own documented label, \"Price Difference as Documented (Allowance Difference).\" The description of what triggers code 10 is identical across all three. This reads as a platform naming choice, not a disagreement about the underlying mechanic."
+      }
+    ],
+    "verification": {
+      "status": "source-verified",
+      "verifiedBy": "Pixels and Clicks Editorial",
+      "verifiedOn": "2026-08-11T00:00:00.000Z",
+      "sources": [
+        {
+          "label": "8th & Walton: List of Walmart Deduction Codes Defined",
+          "url": "https://www.8thandwalton.com/blog/walmart-deduction-codes",
+          "note": "Independent supplier-community vendor source. Describes code 10 as an allowance difference between the order and the bill, and names APDP and the Merchant Team as the two dispute channels."
+        },
+        {
+          "label": "SPS Commerce: Code 10, Price Difference as Documented (Allowance Difference)",
+          "url": "https://www.spscommerce.com/community/articles/code-10-price-difference-as-documented-allowance-difference",
+          "note": "Deduction-management vendor content, the most detailed source found. Names the three root-cause patterns (invalid pack quantity, misapplied allowance, combination) and the evidence list used in this entry."
+        },
+        {
+          "label": "Confido: Walmart Deduction Guide",
+          "url": "https://www.confidotech.com/resources/walmart-deduction-guide",
+          "note": "Third independent vendor source. Uses a different internal label (\"Retailer - Pricing Variance\") for the same code, and is the only source that specifies the store-claim-vs-other-claim split in the dispute path."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "walmart-code-21-concealed-shortage",
+    "retailer": "Walmart",
+    "code": "21",
+    "codeName": "Concealed Shortages",
+    "title": "Walmart Deduction Code 21: Concealed Shortages",
+    "description": "Walmart code 21 fires when damaged or missing product is found inside a sealed carton after delivery. What triggers it, why vendor sources disagree on disputability, and what evidence gives you a case.",
+    "pubDate": "2026-10-22T00:00:00.000Z",
+    "draft": false,
+    "family": "Shortage",
+    "penalty": "Line-item deduction at invoice cost for the shortage found inside the sealed carton",
+    "disputableStatus": "Disputed — vendor sources disagree",
+    "answer": "Walmart deduction code 21, Concealed Shortages, fires when the distribution center opens a sealed carton and finds contents short or damaged. The carton count at the dock was correct. The freight bill was signed clean. The shortage was hidden inside the case. Vendor sources disagree on disputability: SPS Commerce says typically not disputable, 8th & Walton says disputable through APDP.",
+    "answerQualifier": "Sourced from three independent vendor references (SPS Commerce, 8th & Walton, Confido). Vendor sources disagree on whether code 21 is disputable through APDP. Neither position has been confirmed against Walmart's own documentation. October 2026.",
+    "meaning": "Walmart code 21 targets a shortage that was invisible at the dock. The carton arrived sealed. The driver handed off the freight. The dock paperwork was clean. Then someone opened the carton and found it short.\n",
+    "meaningPoints": [
+      "Code 21 (Concealed Shortages) fires when damaged or missing product is discovered inside a sealed carton at the DC, after the freight bill was already signed clean.",
+      "Three independent vendor sources (SPS Commerce, 8th & Walton, Confido) confirm the same label and trigger. The shortage is hidden inside the case, not visible at the dock.",
+      "Code 21 is not the same as code 24. Code 24 fires when the freight bill is signed short at the dock, before any carton is opened. Code 21 fires after the carton is opened and contents are found short.",
+      "Vendor sources disagree on whether code 21 is disputable. SPS Commerce describes it as typically not disputable. 8th & Walton lists it as disputable through APDP."
+    ],
+    "rootCauseCategories": {
+      "physical": "Packing error at the warehouse. The carton was sealed with fewer units than the item master's pack size, or product was damaged inside the case before the carton was sealed. Your outbound process never caught it because the carton count was correct.",
+      "carrier": "Tampering or damage in transit that is not visible on the outside of the carton. Rare, but possible when a sealed carton is compromised and resealed during handling.",
+      "erp": "A pack-size mismatch between your item master and Walmart's. The physical product was correct, but Walmart's receiving system converted the scan to a different unit count. The result is a concealed 'shortage' with no physical shortage on any dock."
+    },
+    "evidenceRequired": [
+      "Carton weight records from your outbound process, showing each case left your dock at the expected weight for the item master's pack size",
+      "Packing verification logs or pick-and-pack records showing correct contents at seal time",
+      "Sealed-case photography with timestamps, showing the carton label and intact seal at your dock",
+      "EDI 856 ASN transmission log matching the shipped quantity"
+    ],
+    "disputable": "Vendor sources disagree on code 21 disputability, and neither position has been confirmed against Walmart's own APDP documentation.\nSPS Commerce describes code 21 as typically not disputable because the supplier has no proof of what was inside the sealed carton at delivery. The damage or shortage was concealed.\n8th & Walton lists code 21 as disputable through the Accounts Payable Dispute Portal (APDP).\nIf you have carton weight records, sealed-case photos, or packing verification logs that show correct contents at ship time, file through APDP and let Walmart adjudicate. Do not write off the claim without filing.\n",
+    "prevention": [
+      "Add a carton weight check to your outbound process. Weigh each case after packing against the expected weight from your item master. Log the result. A case that shipped light is a code 21 deduction you cannot dispute.",
+      "Add sealed-case photography for high-value or high-shortage SKUs. A timestamped photo of the sealed carton with the label visible, taken at your dock, gives you evidence that contents were intact at ship time.",
+      "Confirm pack-size alignment across Walmart's item file, your PO, and your invoice before shipment. A mismatch here can manufacture a concealed shortage deduction for product that was never physically short.",
+      "Track code 21 deductions by SKU, not just by DC. A shortage rate concentrated on specific items points to a packing process problem on your side, not a receiving error at Walmart."
+    ],
+    "erpPrevention": {
+      "system": "NetSuite / Business Central",
+      "blueprint": "If you're running NetSuite or Business Central, a Walmart code 21 deduction traces back to what was packed inside the carton, not what left the dock.\nAdd a pre-seal weight validation that compares actual carton weight against the expected weight from your item master before the carton is sealed and added to the shipment. Flag any case that falls outside tolerance.\nGate invoice generation behind a confirmed pick-and-pack record that matches the ASN declared quantity at the unit level, not just the carton level. This closes the gap between what your system says was packed and what was physically inside the case.\n"
+    },
+    "faq": [
+      {
+        "q": "What is the difference between Walmart codes 21 and 24?",
+        "a": "Both belong to the shortage family but fire at different moments. Code 24 fires at the dock when the freight bill is signed for fewer cartons than the BOL states. Code 21 fires later, after a sealed carton is opened and product inside is found short or damaged. A signed BOL disputes code 24. Code 21 requires evidence of what was inside the carton at ship time."
+      },
+      {
+        "q": "Can I dispute a Walmart code 21 deduction?",
+        "a": "Vendor sources disagree. SPS Commerce describes code 21 as typically not disputable because the supplier has no external proof of carton contents at delivery. 8th & Walton lists code 21 as disputable through the Accounts Payable Dispute Portal. If you have carton weight records or sealed-case photos from ship time, file through APDP and let Walmart adjudicate."
+      },
+      {
+        "q": "What evidence do I need for a code 21 dispute?",
+        "a": "Carton weight records from your outbound process, packing verification logs, and sealed-case photography with timestamps. A signed BOL confirms carton count, not carton contents. Code 21 requires proof of what was inside the case, not how many cases were on the truck."
+      },
+      {
+        "q": "Can a pack-size mismatch cause a code 21 deduction with no real shortage?",
+        "a": "Yes. A pack-size mismatch between your item master and Walmart's creates a quantity gap in the receiving system. You shipped the correct physical product. The scan counted correctly. The system converted the scan to a different unit count and flagged a concealed shortage that never happened on any dock. Confirm pack-size alignment before shipment."
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "verifiedBy": "Pixels and Clicks Editorial",
+      "verifiedOn": "2026-10-22T00:00:00.000Z",
+      "sources": [
+        {
+          "label": "SPS Commerce: Code 21, Concealed Shortages",
+          "url": "https://www.spscommerce.com/community/articles/code-21-concealed-shortages/",
+          "note": "Independent vendor source. Describes code 21 as Concealed Shortages, confirms trigger (damage or shortage found inside sealed carton after delivery), and describes it as typically not disputable."
+        },
+        {
+          "label": "8th & Walton: List of Walmart Deduction Codes Defined",
+          "url": "https://www.8thandwalton.com/blog/walmart-deduction-codes",
+          "note": "Independent supplier-community vendor source. Lists code 21 as disputable through the Accounts Payable Dispute Portal, contradicting SPS Commerce on disputability."
+        },
+        {
+          "label": "Confido: Walmart Deduction Guide",
+          "url": "https://www.confidotech.com/resources/walmart-deduction-guide",
+          "note": "Third independent vendor source. Confirms both codes 21 and 24 with matching mechanics. Used to cross-verify the label and trigger description."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "walmart-code-22-shortage",
+    "retailer": "Walmart",
+    "code": "22",
+    "codeName": "Merchandise Billed Not Shipped",
+    "title": "Walmart Code 22: Goods Billed Not Shipped",
+    "description": "Walmart code 22 fires when an invoice bills for more cases than the DC actually received. The mechanic and dispute path, per three vendor sources.",
+    "pubDate": "2026-08-02T00:00:00.000Z",
+    "draft": false,
+    "family": "Shortage",
+    "penalty": "Line-item deduction at invoice cost for the billed-but-unreceived quantity",
+    "disputableStatus": "Disputable with proof of delivery",
+    "answer": "Walmart deduction code 22, Merchandise Billed Not Shipped, fires when the invoiced case count is higher than what the distribution center recorded receiving. If a DC receives 40 cases against an invoice for 45, Walmart deducts for the 5-case gap. It's disputable with a freight bill, signed BOL, or proof of delivery through the Accounts Payable Dispute Portal.",
+    "answerQualifier": "Sourced from three independent deduction-management vendor references (8th & Walton, SPS Commerce, SupplyPike) that converge on the same label, mechanic, and evidence requirements. Not drawn from Walmart's own documentation. Independent convergence across three sources is the verification standard applied to this entry.",
+    "meaning": "Walmart code 22 takes money off your remittance before you know whether the shortage is real.\nIt's yours to lose until you can prove otherwise.\n",
+    "meaningPoints": [
+      "Code 22 (Merchandise Billed Not Shipped) fires when your invoiced case count is higher than what the distribution center's receiving scan recorded. Bill 45 cases. The DC receives 40. Walmart deducts for the 5-case gap.",
+      "Three independent vendor sources (8th & Walton, SPS Commerce, SupplyPike) confirm the same label and mechanic. Some call it Goods Billed Not Shipped.",
+      "Code 22 is not the same claim as code 24. Code 22 fires on invoice-to-receipt reconciliation. Code 24 fires when the freight bill itself is signed short at the dock.",
+      "It's disputable through Walmart's Accounts Payable Dispute Portal with a freight bill, signed BOL, or proof of delivery."
+    ],
+    "rootCauseCategories": {
+      "physical": "Vendor sources most often cite a receiving-side miscount, or a mismatch between the bill of lading and the invoiced quantity. The DC signs for a lower case count than what was billed.",
+      "carrier": "Barcode or label errors on cases that cause a scan to miss counting a unit that physically arrived, per the same vendor sources.",
+      "erp": "Pack-size or item-file mismatches between Walmart's item master, the PO, and the supplier's invoice. An ERP data-alignment issue rather than a physical shortage, according to vendor sources."
+    },
+    "evidenceRequired": [
+      "Freight bill or signed BOL showing the shipped case count matches the invoiced quantity (collect suppliers)",
+      "Signed POD including gate/dropship stamp where applicable (prepaid suppliers)",
+      "EDI 856 ASN transmission log showing the declared quantity matches what physically shipped"
+    ],
+    "disputable": "Code 22 is reversible through Walmart's Accounts Payable Dispute Portal (APDP) when the supplier produces a freight bill or signed BOL showing the full invoiced quantity actually shipped, per 8th & Walton and SPS Commerce.\nCollect suppliers submit a signed BOL with the PO number listed. Prepaid suppliers submit a signed POD with a gate stamp where applicable.\nWalmart's own guidance, per SPS Commerce, recommends against contacting your buyer for this claim code. The dispute goes through APDP, not the buyer relationship.\n",
+    "prevention": [
+      "Reconcile your ASN against the actual outbound count before the truck leaves, not after a code 22 deduction hits your remittance. This closes out most shortage-family codes, code 22 included.",
+      "Standardize barcode and case-label placement on your cartons. A scan that misses a case which physically arrived still costs you a code 22 deduction, and reversing it takes a fight.",
+      "Confirm pack-size alignment across Walmart's item file, the PO, and your invoice before shipment. A mismatch here can manufacture a code 22 shortage deduction for stock that never actually fell short on your dock."
+    ],
+    "erpPrevention": {
+      "system": "NetSuite / Business Central",
+      "blueprint": "If you're running NetSuite or Business Central, you can catch a Walmart code 22 deduction before it ever reaches your remittance.\nAdd a pre-shipment validation rule that blocks invoice generation (which drives the EDI 810) until the EDI 856 ASN has been transmitted and its declared quantity matches the confirmed pick.\nThis closes the gap vendor sources describe most often behind code 22: an invoice quantity that was never actually reconciled against what left your dock.\n"
+    },
+    "faq": [
+      {
+        "q": "Is Walmart code 22 the same as code 24 on this site?",
+        "a": "No, though both belong to the shortage family. Three independent vendor sources (8th & Walton, SPS Commerce, SupplyPike) converge on the same split: code 22 fires on invoice-to-receipt reconciliation, when the billed case count is higher than what the DC received. Code 24 fires when the freight bill itself is signed short at the dock. Different document, different moment, same family."
+      },
+      {
+        "q": "What evidence does a code 22 dispute need?",
+        "a": "A freight bill or signed BOL showing the full invoiced quantity shipped, for collect suppliers. A signed POD with a gate stamp, for prepaid suppliers. An EDI 856 ASN log that matches the invoiced quantity strengthens the case further. This is vendor-reported process description, not confirmed against Walmart's own APDP documentation."
+      },
+      {
+        "q": "Should I call my Walmart buyer about a code 22 deduction?",
+        "a": "No. SPS Commerce's guidance is explicit that Walmart recommends against contacting your buyer for this claim code. File through the Accounts Payable Dispute Portal instead."
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "verifiedBy": "Pixels and Clicks Editorial",
+      "verifiedOn": "2026-08-09T00:00:00.000Z",
+      "sources": [
+        {
+          "label": "8th & Walton: List of Walmart Deduction Codes Defined",
+          "url": "https://www.8thandwalton.com/blog/walmart-deduction-codes",
+          "note": "Independent supplier-community vendor source. States the code 22 label as \"Merchandise Billed Not Shipped\" and gives the 40-of-45-cases example used in this entry's answer field."
+        },
+        {
+          "label": "SPS Commerce / SupplierWiki: Code 22, Goods Billed not Shipped",
+          "url": "https://www.spscommerce.com/community/articles/code-22-goods-billed-not-shipped",
+          "note": "Deduction-management vendor content, independently corroborates the label, the BOL/POD evidence requirements, and the guidance against contacting the buyer directly."
+        },
+        {
+          "label": "SupplyPike / SupplierWiki: Walmart Deduction Codes (code list)",
+          "url": "https://help.supplypike.com/en/articles/3471485-walmart-deduction-codes",
+          "note": "Third independent vendor source; confirms code 22 as \"Goods Billed not Shipped\" and code 24 as \"Carton Shortage/Freight Bill Signed Short\" in the same reference list, resolving the earlier code 22 vs 24 ambiguity."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "walmart-code-25-no-merchandise",
+    "retailer": "Walmart",
+    "code": "25",
+    "codeName": "No Merchandise Received for Invoice",
+    "title": "Walmart Deduction Code 25: No Merchandise Received for Invoice",
+    "description": "Walmart code 25 means the DC's system shows zero receipt against your entire invoice, not a partial shortage. What triggers it, why it's usually a timing error, and how to dispute it.",
+    "pubDate": "2026-08-03T00:00:00.000Z",
+    "draft": false,
+    "family": "Shortage",
+    "penalty": "Reportedly the full invoice amount, a whole-invoice claim rather than a line-item variance",
+    "disputableStatus": "Disputable with proof of delivery",
+    "answer": "Walmart deduction code 25 fires when Walmart's system shows no receipt at all against an invoice: the entire shipment, not a partial count. Vendor sources describe the leading cause as timing. The invoice transmitted before the physical shipment reached the distribution center. It's disputable with a signed bill of lading or proof of delivery through the Accounts Payable Dispute Portal.",
+    "answerQualifier": "Sourced from two independent deduction-management vendor references (8th & Walton, SupplyPike/SPS Commerce), not Walmart's own documentation. Cross-checked against each other and converging on the same cause and dispute path.",
+    "meaning": "A Walmart code 25 deduction takes your entire invoice off the remittance.\nIt isn't a line-item variance you can argue down to a handful of cases.\n",
+    "meaningPoints": [
+      "Code 25 fires when Walmart's receiving system shows zero receipt against your invoice, not a reduced count. Because it's an absence rather than a shortfall, the deduction hits for the full invoice value.",
+      "Vendor sources describe the leading cause as timing. The EDI 810 invoice transmitted before the physical shipment reached the distribution center, so nothing existed yet for the receiving scan to match it against.",
+      "Code 25 is the whole-invoice counterpart to a partial shortage claim like code 22, which disputes a quantity that came up short rather than an invoice marked unfulfilled.",
+      "It's disputable through the Accounts Payable Dispute Portal with a signed bill of lading or proof of delivery. But resending a second invoice to \"fix\" it risks a separate code 30 duplicate-billing deduction."
+    ],
+    "rootCauseCategories": {
+      "physical": "Vendor sources describe the leading cause as sequencing, not a physical loss. The invoice (EDI 810) was generated and transmitted before the shipment physically left origin or arrived at the distribution center. Nothing exists yet for the DC's receiving system to match it against.",
+      "carrier": "A carrier delay that pushes physical arrival well past the invoice date. In rarer cases, a shipment that is lost or misrouted before it reaches the correct DC, per the same vendor sources.",
+      "erp": "An invoicing process that fires the 810 on order-confirm or ship-confirm rather than on an actual carrier pickup or delivery event. This is the ERP equivalent of billing for something before proving it moved. Vendor sources also flag accidental duplicate invoicing against a PO Walmart has already paid as a separate but related cause."
+    },
+    "evidenceRequired": [
+      "Signed bill of lading showing the full PO quantity was picked up, with the PO number clearly noted (collect freight)",
+      "Proof of delivery confirming full receipt, with the PO number clearly noted (prepaid freight)",
+      "The EDI 810 invoice itself, showing the order quantity billed",
+      "EDI 856 ASN transmission log, to show when the shipment was actually declared relative to the invoice date. Useful for demonstrating the sequencing error, per vendor sources"
+    ],
+    "disputable": "Vendor sources describe code 25 as disputable through Walmart's Accounts Payable Dispute Portal (APDP) in Retail Link, using a signed bill of lading or proof of delivery that shows the full invoiced quantity actually moved.\nOne source explicitly warns against sending a second invoice to \"fix\" an apparent code 25. Walmart reportedly treats that as duplicate billing, which can trigger a separate code 30 deduction on top of the original issue.\nNone of this has been checked against Walmart's own APDP documentation.\n",
+    "prevention": [
+      "Don't invoice before the shipment moves. That timing gap is the leading cause of a Walmart code 25 deduction on your remittance, per vendor sources. Schedule your invoice transmission to the Merchandise Available By Date (MABD) instead of generating it at order-confirm or pick-complete.",
+      "Check for an existing invoice against the same PO number before resending one. Vendor sources describe a duplicate invoice as a separate billing error, code 30, not a fix for a Walmart code 25. Resending can cost you twice.",
+      "Track the gap between ASN transmission and invoice transmission as a leading indicator. If your 810 is routinely generated before your 856, code 25 exposure is a timing problem in your own document sequence, not a Walmart receiving error."
+    ],
+    "erpPrevention": {
+      "system": "NetSuite / Business Central",
+      "blueprint": "If you're running NetSuite or Business Central, a Walmart code 25 deduction usually traces back to your invoice trigger firing before proof of movement exists.\nGate EDI 810 (invoice) generation behind a confirmed carrier pickup or ship-confirm event tied to the specific shipment reference, rather than firing it on order-confirm.\nAdd a duplicate-invoice check against PO number and invoice number before transmission. This blocks a resend against an already-invoiced PO automatically, instead of creating a second billing event that can trigger a follow-on code 30 deduction.\n"
+    },
+    "faq": [
+      {
+        "q": "What's the difference between Walmart code 25 and code 22?",
+        "a": "Vendor sources describe code 22 as a partial, line-level shortage: the DC received fewer units than invoiced. Code 25 is a whole-invoice claim. Walmart's system shows no receipt at all against that invoice. The deduction is for the full invoice amount, not a counted difference."
+      },
+      {
+        "q": "How do I dispute a Walmart code 25 deduction?",
+        "a": "Vendor sources describe disputing a Walmart code 25 deduction through the Accounts Payable Dispute Portal (APDP) in Retail Link. Use a signed bill of lading for collect freight, or proof of delivery for prepaid freight, showing the PO number and the full quantity that moved."
+      },
+      {
+        "q": "Can invoicing too early actually cause a code 25?",
+        "a": "Vendor sources describe early invoicing as the most common cause of a Walmart code 25 deduction. The invoice transmits before the shipment physically reaches the distribution center, so there's nothing yet for Walmart's receiving system to match it against. The fix is sequencing the invoice to the delivery window, not the order-confirm step."
+      },
+      {
+        "q": "If I get a code 25 by mistake, should I just send Walmart a new invoice?",
+        "a": "Vendor sources specifically warn against resending an invoice to fix a Walmart code 25. A second invoice against the same PO is reportedly treated as duplicate billing and can generate a separate code 30 deduction. Dispute the original code 25 through APDP with delivery proof instead of resending."
+      }
+    ],
+    "verification": {
+      "status": "verified",
+      "verifiedBy": "Pixels and Clicks Editorial",
+      "verifiedOn": "2026-08-02T00:00:00.000Z",
+      "sources": [
+        {
+          "label": "8th & Walton — List of Walmart Deduction Codes Defined",
+          "url": "https://www.8thandwalton.com/blog/walmart-deduction-codes",
+          "note": "Independent supplier-community vendor source. Describes code 25 as a full-invoice \"no merchandise received\" claim caused primarily by invoicing before physical arrival, and specifically warns that a resent invoice risks a Code 30 duplicate-billing deduction."
+        },
+        {
+          "label": "SupplyPike / SPS Commerce Help Center — Code 25: No Merchandise Received for Invoice",
+          "url": "https://help.supplypike.com/en/articles/3448860-code-25-no-merchandise-received-for-invoice",
+          "note": "Deduction-management vendor content, independently corroborates the timing-based cause, the Merchandise Available By Date (MABD) prevention practice, and the APDP dispute path with BOL/POD evidence requirements."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "walmart-code-59-defective-merchandise-allowance",
+    "retailer": "Walmart",
+    "code": "59",
+    "codeName": "Defective Merchandise Allowance (DM)",
+    "title": "Walmart Code 59: Defective Merchandise Allowance",
+    "description": "Walmart code 59 takes back a defective-goods allowance your invoice left off. Why it happens, why APDP rarely helps, and how to stop it.",
+    "pubDate": "2026-11-03T00:00:00.000Z",
+    "draft": false,
+    "family": "Pricing",
+    "penalty": "Walmart holds back the allowance amount set in your supplier agreement",
+    "disputableStatus": "Hard to win in APDP, settle with your buyer",
+    "answer": "Walmart code 59, Defective Merchandise Allowance, happens when an allowance in your supplier agreement is missing from the invoice. Walmart holds that money back from your check. The allowance covers defective goods that shoppers return to the store. You can dispute it in APDP, but Walmart rarely approves codes 50 to 59 there, so your buyer is the faster path.",
+    "answerQualifier": "Based on two independent vendor sources (SPS Commerce / SupplierWiki and Confido). They agree on how the code works and how to dispute it. They disagree on the name: SPS Commerce calls it Defective Merchandise Allowance, Confido calls it Spoils Allowance. This is not from Walmart's own documents.",
+    "meaning": "Walmart code 59 is not about a short shipment or a wrong price. It says an allowance you already agreed to give is missing from your invoice. So Walmart keeps that money instead of paying it.\nThe money was always Walmart's to keep. Code 59 is the system catching an invoice that billed full price and never took the allowance off.\n",
+    "meaningPoints": [
+      "Code 59 is an allowance that covers Walmart's cost for defective or spoiled goods returned at the store. Your supplier agreement sets the rate. The code fires when that allowance is missing from the invoice Walmart pays.",
+      "Two independent vendor sources agree on how it works but use different names. SPS Commerce calls it Defective Merchandise Allowance. Confido calls it Spoils Allowance. Both link it to defective or spoiled goods returned at the store.",
+      "Sometimes a code 59 is a mistake you can dispute. That happens when you gave the allowance but put it in the wrong spot, on one line instead of off the whole invoice. Sometimes it is correct, because the allowance never reached the invoice.",
+      "Code 59 is not a shortage or a price code. It is part of the allowance family, codes 50 to 59, which Walmart rarely reverses in APDP. The way to fix it is through your buyer, with the agreement and the invoice in hand."
+    ],
+    "rootCauses": [
+      "Your EDI provider put the allowance on one line item when the agreement says it should come off the whole invoice. You gave the right amount, but from the wrong place. That is what makes the deduction a mistake worth disputing.",
+      "The purchase order had wrong information, and the invoice copied it. So the allowance never reached the line Walmart reads.",
+      "An allowance that was on the PO got dropped from the EDI 810 invoice your system made.",
+      "The allowance was figured on net instead of gross. So the number on the invoice did not match the number in the agreement."
+    ],
+    "evidenceRequired": [
+      "Your supplier agreement, showing the defective-goods allowance rate Walmart gets",
+      "The EDI 810 invoice for that shipment, showing where the allowance went or that it was left off",
+      "Return paperwork that links the allowance to the defective-goods cost it covers"
+    ],
+    "disputable": "You can file a code 59 dispute in Walmart's Accounts Payable Dispute Portal (APDP). But both vendor sources warn you rarely win there. SPS Commerce says Walmart treats codes 50 to 59 as unlikely to be approved in APDP.\nThe kind you can win is the mistake. You show that you already gave the allowance, only on the wrong line. Bring the supplier agreement and the EDI 810 to your buyer and show the right amount came out.\nIf the allowance never reached the invoice, the deduction is correct. You cannot win that one. The fix is in how your system puts allowances on the 810, not in filing a claim you will lose.\n",
+    "prevention": [
+      "Ask your EDI team to check that every allowance in your supplier agreement reaches the EDI 810 invoice. Put it off the whole invoice or off a line item, whichever the agreement says. A right allowance in the wrong spot still looks missing to Walmart.",
+      "Check that allowances on the purchase order carry over to the invoice before you send it. A PO that lists the allowance and an invoice that drops it is the most common code 59 mistake.",
+      "Make sure the allowance uses the same basis, gross or net, in the agreement and on the invoice. A gross-versus-net mismatch gives Walmart a number that looks short.",
+      "Give your buyer clear paperwork for any special deal, and get their approval in writing. The buyer, not APDP, is where allowance deductions get settled."
+    ],
+    "erpPrevention": {
+      "system": "NetSuite / Business Central",
+      "blueprint": "If you run NetSuite or Business Central, a Walmart code 59 comes from how your EDI 810 handles agreed allowances, not from anything on the dock.\nMatch each buyer-specific allowance in the supplier agreement to a set EDI 810 allowance field. Put it off the whole invoice or off a line item, as the agreement says. Hold the invoice from going out until that field is there and its basis, gross or net, matches the agreement.\nThis closes the gap both vendor sources point to behind code 59. The allowance was agreed, and sometimes even taken, but it never showed up on the invoice where Walmart reads it.\n"
+    },
+    "faq": [
+      {
+        "q": "Can I dispute a Walmart code 59 deduction?",
+        "a": "Sometimes, but it is hard to win in APDP. Vendor sources say Walmart treats allowance codes 50 to 59 as unlikely to be approved there. The version you can win is one where you gave the allowance but put it on the wrong line. Bring your supplier agreement and EDI 810 to your buyer, who is where these usually get settled. If the allowance never reached the invoice, the deduction is correct."
+      },
+      {
+        "q": "What is the difference between Walmart code 59 and code 10?",
+        "a": "Code 10 is a price problem: the invoice price did not match the PO price. Code 59 is an allowance problem: a defective-goods allowance in your supplier agreement did not show up on the invoice. Both are in the pricing family, and both usually come from data that drifted between the agreement, the PO, and the EDI 810. But they claim different things."
+      },
+      {
+        "q": "What evidence do I need to dispute a code 59?",
+        "a": "Your supplier agreement with the allowance rate, the EDI 810 invoice for that shipment, and return paperwork that ties the allowance to the defective-goods cost. The agreement and invoice together show your buyer that you already gave the allowance. That is the only version of code 59 worth fighting."
+      },
+      {
+        "q": "Is code 59 the same as a defective-product chargeback?",
+        "a": "No. Code 59 is about matching an allowance, not a quality penalty. It fires because an agreed credit for Walmart's defective returns is missing from your invoice, not because one shipment was defective. The topic is defective goods, but the cause is an allowance that did not make it onto the 810."
+      }
+    ],
+    "verification": {
+      "status": "source-verified",
+      "verifiedBy": "Pixels and Clicks Editorial",
+      "verifiedOn": "2026-11-03T00:00:00.000Z",
+      "sources": [
+        {
+          "label": "SPS Commerce / SupplierWiki: Code 59, Defective Merchandise Allowance (DM)",
+          "url": "https://www.spscommerce.com/community/articles/code-59-defective-merchandise-allowance-dm",
+          "note": "Independent vendor source. Uses the label Defective Merchandise Allowance (DM), defines it as a credit offset against store returns, describes the off-line-item vs off-invoice invalid case, and reports that codes 50-59 are unlikely to be approved in APDP."
+        },
+        {
+          "label": "Confido: Walmart Deduction Guide",
+          "url": "https://www.confidotech.com/resources/walmart-deduction-guide",
+          "note": "Independent vendor source. Lists code 59 under the different label Spoils Allowance, describes it as a deduction for spoiled or defective merchandise, and states it is disputable if the allowance was already given on the invoice. The label disagreement with SPS Commerce is noted in this entry's copy."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "walmart-code-92-returns-overstock",
+    "retailer": "Walmart",
+    "code": "92",
+    "codeName": "Mdse. Return (Overstock/Recall)",
+    "title": "Walmart Deduction Code 92: Merchandise Return (Overstock or Recall)",
+    "description": "Walmart code 92 fires when unsold inventory or recalled product is returned to the supplier. Two independent vendor sources on the trigger, companion charges, and the dispute path.",
+    "pubDate": "2026-09-09T00:00:00.000Z",
+    "draft": false,
+    "family": "Returns",
+    "penalty": "Full cost of returned merchandise, often with companion handling (code 44/60) and return-freight (code 120) charges",
+    "disputableStatus": "Conditional, governed by supplier agreement",
+    "answer": "Walmart deduction code 92, Mdse. Return (Overstock/Recall), fires when Walmart returns unsold inventory or recalled product to the supplier and deducts the merchandise cost from the next check. The overstock trigger means Walmart could not sell the product. The recall trigger means a safety or defect issue was identified. Both typically carry companion handling (codes 44/60) and return-freight (code 120) charges.",
+    "answerQualifier": "Sourced from two independent deduction-management vendor references (SPS Commerce/SupplierWiki and SupplyPike) that converge on the same label, mechanic, and companion-code pattern. Not drawn from Walmart's own documentation.",
+    "meaning": "Walmart code 92 takes the cost of unsold or recalled merchandise off your check.\nHandling and return freight typically land on top of it.\n",
+    "meaningPoints": [
+      "Code 92 (Mdse. Return, Overstock/Recall) fires when Walmart ships product back to you because it could not sell it or because the product was recalled. The deduction covers the full merchandise cost.",
+      "Two independent vendor sources (SPS Commerce and SupplyPike) converge on this label and mechanic.",
+      "Overstock returns mean Walmart's demand for the product fell below what you shipped. Recall returns mean a safety or defect concern triggered a product withdrawal.",
+      "Code 92 rarely arrives alone. SPS Commerce notes that codes 44 (handling), 60 (additional charges), and 120 (return freight) are commonly attached to the same claim, which means the total deduction exceeds the merchandise value itself."
+    ],
+    "rootCauseCategories": {
+      "physical": "Overstock: the product went unsold past Walmart's inventory tolerance for the category. Recall: a safety or quality defect triggered a withdrawal. The withdrawal can be initiated by the supplier, a regulator, or Walmart.",
+      "carrier": "Not a primary cause for code 92. Carrier involvement is limited to the return shipment logistics, which generates the companion code 44 freight charge.",
+      "erp": "The overstock trigger often traces to a demand forecast that overstated sell-through. If your ERP's replenishment logic pushed inventory beyond what Walmart's POS data supported, the surplus eventually returns as a code 92."
+    },
+    "evidenceRequired": [
+      "Supplier agreement (OSA) with overstock liability terms, showing whether the supplier accepted return-to-vendor provisions for unsold inventory",
+      "Recall documentation if the return is recall-driven, showing the recall was not supplier-initiated or that liability is shared",
+      "Receiving records confirming the returned merchandise quantity and condition match the deduction amount"
+    ],
+    "disputable": "Whether a code 92 is disputable depends almost entirely on your supplier agreement. SPS Commerce notes that your OSA defines your overstock liability, and if the agreement does not include a return-to-vendor provision for unsold inventory, the deduction may be invalid.\nSupplyPike confirms that the dispute path for code 92 can go through APDP or the Returns Center, and adds that contacting your buyer is often necessary when the deduction feels like an error.\nWalmart's Returns Center claims (originating from location 9462) follow a separate dispute process from standard APDP claims.\n",
+    "prevention": [
+      "Review the overstock and return-to-vendor clauses in your supplier agreement before the next negotiation cycle. The language in the OSA is what determines whether Walmart can return unsold inventory at your expense, and revising it is cheaper than absorbing recurring code 92 deductions.",
+      "Track sell-through rates by SKU and DC against your shipment volumes. A SKU consistently building inventory at one DC is a code 92 forming in slow motion, and you can adjust future shipments before the return materializes.",
+      "If code 92 arrives with companion charges (codes 44, 60, and 120), dispute the companion charges separately even if the merchandise return itself is valid under your OSA. The handling and freight fees are independently disputable."
+    ],
+    "erpPrevention": {
+      "system": "NetSuite / Business Central",
+      "blueprint": "Build a weekly report comparing your outbound shipment quantities by SKU against Walmart POS sell-through data (available via Retail Link or Luminate). Flag any SKU where cumulative shipped quantity exceeds cumulative sold quantity by more than your agreed safety-stock threshold.\nThat divergence is the earliest signal that overstock is building at a DC, and it gives you time to reduce future allocations before Walmart initiates a return.\nIn NetSuite, this is a saved search joining your item fulfillment records against a custom record holding sell-through imports. In Business Central, it is an analysis view comparing posted shipment quantities against a recurring data-exchange import.\n"
+    },
+    "faq": [
+      {
+        "q": "What is Walmart deduction code 92?",
+        "a": "Code 92, Mdse. Return (Overstock/Recall), fires when Walmart returns unsold inventory or recalled merchandise to the supplier and deducts the full merchandise cost. The overstock trigger means Walmart could not sell the product. The recall trigger means a safety or defect issue was identified."
+      },
+      {
+        "q": "Can I dispute a Walmart code 92 deduction?",
+        "a": "It depends on your supplier agreement. If the OSA does not include a return-to-vendor provision for unsold inventory, the deduction may be invalid. The dispute routes through APDP, the Returns Center (for claims from location 9462), or directly through your buyer. Companion charges under codes 44, 60, and 120 are independently disputable."
+      },
+      {
+        "q": "What other codes show up with code 92?",
+        "a": "SPS Commerce and SupplyPike both note that code 92 commonly arrives with codes 44 (handling), 60 (additional charges), and 120 (return freight). The companion charges can add 10-20% on top of the merchandise cost, and they follow their own dispute process."
+      },
+      {
+        "q": "Is code 92 the same as code 93 or 94?",
+        "a": "No. All three are in the Returns family, but each has a different trigger. Code 92 is overstock or recall (product returned unsold or withdrawn). Code 93 is damaged merchandise (product arrived damaged at receiving, before it reached the floor). Code 94 is defective merchandise (customer purchased it, found it defective, and returned it to the store)."
+      }
+    ],
+    "verification": {
+      "status": "source-verified",
+      "verifiedBy": "Pixels and Clicks Editorial",
+      "verifiedOn": "2026-09-09T00:00:00.000Z",
+      "sources": [
+        {
+          "label": "SPS Commerce / SupplierWiki: Code 92, Mdse. Return (Overstock/Recall)",
+          "url": "https://www.spscommerce.com/community/articles/code-92-mdse-return-overstock-recall",
+          "note": "Independent deduction-management vendor source. Describes code 92 as merchandise returned due to overstock or recall, names companion codes 44, 60, and 120, and references the supplier agreement as the governing document for overstock liability."
+        },
+        {
+          "label": "SupplyPike: Code 92, Mdse. Return (Overstock/Recall)",
+          "url": "https://help.supplypike.com/en/articles/3448931-code-92-mdse-return-overstock-recall",
+          "note": "Second independent vendor source. Confirms the overstock/recall label, describes the APDP and Returns Center dispute paths, and notes that contacting the buyer is often necessary for code 92 disputes."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "walmart-code-93-returns-damaged",
+    "retailer": "Walmart",
+    "code": "93",
+    "codeName": "Mdse. Return (Damaged Merchandise)",
+    "title": "Walmart Deduction Code 93: Merchandise Return (Damaged)",
+    "description": "Walmart code 93 fires when product arrives damaged at receiving and is returned to the supplier. Two independent vendor sources on the trigger, the defective allowance, and the dispute form.",
+    "pubDate": "2026-09-09T00:00:00.000Z",
+    "draft": false,
+    "family": "Returns",
+    "penalty": "Full cost of returned merchandise, typically with companion handling (code 44/60) and return-freight (code 120) charges",
+    "disputableStatus": "Disputable if defective allowance not exceeded",
+    "answer": "Walmart deduction code 93, Mdse. Return (Damaged Merchandise), fires when merchandise arrives at the distribution center in a damaged condition and Walmart returns it to the supplier. The deduction covers the full merchandise cost. Code 93 applies before the product reaches the store floor, unlike code 94 which applies after a customer purchase. Disputable if the supplier's defective allowance has not been exceeded.",
+    "answerQualifier": "Sourced from two independent deduction-management vendor references (SPS Commerce/SupplierWiki and SupplyPike) that converge on the same label, trigger, and dispute process. Not drawn from Walmart's own documentation.",
+    "meaning": "Walmart code 93 takes the cost of damaged merchandise off your check before the product ever reaches the store floor.\n",
+    "meaningPoints": [
+      "Code 93 (Mdse. Return, Damaged Merchandise) fires when product arrives at the DC in a damaged condition that prevents it from being sold. The deduction covers the full merchandise cost.",
+      "Two independent vendor sources (SPS Commerce and SupplyPike) converge on this label and mechanic.",
+      "The damage happened before the product was placed on the store floor. This distinguishes code 93 from code 94 (defective merchandise), which applies after a customer purchases and returns the item.",
+      "SPS Commerce notes that Walmart expects code 93 to be disputed alongside any associated fees on the same claim, specifically codes 44, 60, and 120. Disputing the merchandise deduction alone while ignoring the companion charges is treated as an incomplete claim."
+    ],
+    "rootCauseCategories": {
+      "physical": "Product packaging that does not survive the distribution chain. Pallets that shift in transit. Cases that collapse under stacking weight. Shrink wrap that fails to hold the load. The product may be intact, but if the outer packaging is compromised on arrival, Walmart records it as damaged.",
+      "carrier": "Carrier handling damage in transit. A load that shifted, was dropped, or was exposed to temperature or moisture during transport. The carrier's liability depends on the BOL condition notes at origin versus destination.",
+      "erp": "Packaging spec mismatches between the supplier's ship-ready standards and Walmart's DC receiving requirements. If your ERP's item master does not enforce the correct pallet configuration, case weight limit, or packaging type per Walmart's routing guide, the product is structurally vulnerable before it leaves your dock."
+    },
+    "evidenceRequired": [
+      "Photographic evidence of product condition at the time of shipment, if available (pre-loading dock photos, pallet inspection records)",
+      "Bill of lading with condition notes at origin showing product was undamaged when handed to the carrier",
+      "Defective Merchandise, Handling Fee, and RTV Freight Claim Form (Walmart's required dispute form for returns claims)",
+      "Supplier agreement showing the defective allowance percentage and whether the cost of returns has exceeded it"
+    ],
+    "disputable": "Code 93 is disputable when you can demonstrate either that the merchandise should not have been classified as damaged, or that your defective allowance has not been exceeded.\nSPS Commerce describes the dispute form as the Defective Merchandise, Handling Fee, and RTV Freight Claim Form, filled out with the claim number, invoice date, disputed amount, and reason. Both sources note that Walmart expects the code 93 to be disputed alongside companion fees (codes 44, 60, and 120) on the same claim.\nReturns Center claims from location 9462 follow a dedicated process through Partner Support under Returns > Returns Chargebacks > Defective Merchandise. For other locations, the dispute goes through APDP.\n",
+    "prevention": [
+      "Photograph and document pallet condition at your outbound dock before the carrier takes possession. A BOL signed 'clean' at origin and 'damaged' at destination shifts liability from you to the carrier, and that evidence is the fastest way to reverse a code 93.",
+      "Audit your packaging specs against Walmart's receiving requirements at least quarterly. Case crush-test ratings, pallet configuration, and shrink-wrap specs that were compliant two years ago may not match the current DC handling equipment.",
+      "Track code 93 frequency by carrier lane. A damage rate concentrated on one carrier or one route is a logistics problem, not a product quality problem. Switching carriers on that lane eliminates the deduction at the source."
+    ],
+    "erpPrevention": {
+      "system": "NetSuite / Business Central",
+      "blueprint": "Add a carrier-performance tracking dimension to your fulfillment records. In NetSuite, create a custom record linking each item fulfillment to the carrier, lane, and any return claims filed against that shipment. In Business Central, use a custom field on the Posted Warehouse Shipment tied to the carrier code and route.\nRun a monthly report grouping code 93 deductions by carrier and lane. The pattern almost always concentrates: most suppliers find that 60-80% of their damage claims trace to fewer than 20% of their carrier-lane combinations. Fixing those lanes fixes the deduction.\n"
+    },
+    "faq": [
+      {
+        "q": "What is Walmart deduction code 93?",
+        "a": "Code 93, Mdse. Return (Damaged Merchandise), fires when product arrives at the distribution center damaged and Walmart returns it. The deduction covers the full merchandise cost. It applies before the product reaches the store floor, which distinguishes it from code 94 (defective merchandise returned by a customer after purchase)."
+      },
+      {
+        "q": "How do I dispute a Walmart code 93?",
+        "a": "Fill out the Defective Merchandise, Handling Fee, and RTV Freight Claim Form with your claim number, invoice date, disputed amount, and reason. Walmart expects code 93 disputes to include any companion fee charges (codes 44, 60, 120) on the same claim. Returns Center claims from location 9462 route through Partner Support; other claims go through APDP."
+      },
+      {
+        "q": "What is a defective allowance?",
+        "a": "A percentage of your invoice value that covers the cost of damaged or defective returns, negotiated in your supplier agreement (OSA). If the total cost of code 93 and code 94 returns has not exceeded what you've already paid through the defective allowance, the deduction is disputable because you've already absorbed the cost."
+      },
+      {
+        "q": "Is code 93 the same as code 94?",
+        "a": "No. Code 93 covers merchandise damaged at receiving, before the product reaches the store floor. Code 94 covers merchandise returned by a customer after purchase because it was defective. The timing matters: code 93 is a supply-chain damage problem, code 94 is a product-quality problem."
+      }
+    ],
+    "verification": {
+      "status": "source-verified",
+      "verifiedBy": "Pixels and Clicks Editorial",
+      "verifiedOn": "2026-09-09T00:00:00.000Z",
+      "sources": [
+        {
+          "label": "SPS Commerce / SupplierWiki: Code 93, Mdse. Return (Damaged Merchandise)",
+          "url": "https://www.spscommerce.com/community/articles/code-93-mdse-return-damaged-merchandise",
+          "note": "Independent deduction-management vendor source. Describes code 93 as merchandise returned due to damage, names companion codes 44, 60, and 120, describes the dedicated Returns Center dispute process for location 9462, and names the Defective Merchandise claim form."
+        },
+        {
+          "label": "SupplyPike: Code 93, Mdse. Return (Damaged Merchandise)",
+          "url": "https://help.supplypike.com/en/articles/3448963-code-93-mdse-return-damaged-merchandise",
+          "note": "Second independent vendor source. Confirms the damaged merchandise label, the defective-allowance dispute basis, and the expectation that code 93 disputes include companion fee charges."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "walmart-code-94-returns-defective",
+    "retailer": "Walmart",
+    "code": "94",
+    "codeName": "Goods Returned / Defective Merchandise",
+    "title": "Walmart Deduction Code 94: Goods Returned (Defective)",
+    "description": "Walmart code 94 fires when a customer returns a defective product to the store and Walmart charges the cost back to the supplier. Two independent vendor sources on the trigger, the defective allowance, and what makes it disputable.",
+    "pubDate": "2026-09-09T00:00:00.000Z",
+    "draft": false,
+    "family": "Returns",
+    "penalty": "Full cost of returned merchandise at the defective-return rate defined in the supplier agreement",
+    "disputableStatus": "Disputable if defective allowance not exceeded",
+    "disputeWindow": "90 days from invoice post date",
+    "answer": "Walmart deduction code 94, Goods Returned / Defective Merchandise, fires when a customer returns a defective product and Walmart charges the cost back to the supplier. Unlike code 93 (damaged at receiving), code 94 applies after floor placement and customer purchase. Walmart may create these deductions regardless of whether the supplier already deducts a defective allowance off-invoice. Disputable within 90 days if the allowance has not been exceeded.",
+    "answerQualifier": "Sourced from two independent deduction-management vendor references (SPS Commerce/SupplierWiki and SupplyPike) that converge on the same label, trigger, and defective-allowance dispute basis. Not drawn from Walmart's own documentation.",
+    "meaning": "Walmart code 94 passes the cost of a customer's defective return back to you, after the product was already sold.\n",
+    "meaningPoints": [
+      "Code 94 (Goods Returned / Defective Merchandise) fires when a customer purchases a product, discovers it is defective, and returns it to Walmart. Walmart then charges the merchandise cost back to the supplier.",
+      "Two independent vendor sources (SPS Commerce and SupplyPike) converge on this label and mechanic.",
+      "The critical distinction from code 93: code 94 applies after floor placement and customer purchase. Code 93 applies before the product ever reached the store floor. Same family, different moment in the product's lifecycle.",
+      "SupplyPike notes that Walmart commonly creates code 94 deductions regardless of whether the supplier is already deducting a defective allowance off-invoice. This means code 94 charges can appear on top of what you've already conceded through the allowance, and the dispute hinges on whether cumulative returns exceed the agreed ceiling."
+    ],
+    "rootCauseCategories": {
+      "physical": "A genuine product quality defect: a component that fails under normal use, a manufacturing flaw not caught by QC, or a product that does not perform as the packaging describes. The customer returned it because it did not work.",
+      "carrier": "Not a direct cause for code 94. Carrier damage that is visible on arrival triggers code 93 at receiving. Code 94 applies only after the product was sold, so any carrier-related damage would have passed through receiving undetected.",
+      "erp": "Batch and lot tracking gaps that prevent the supplier from identifying whether a defective return traces to a specific production run. Without lot-level traceability in the ERP, a code 94 pattern affecting one batch looks indistinguishable from a general quality problem, and the supplier cannot scope the issue or negotiate a bounded liability."
+    },
+    "evidenceRequired": [
+      "Supplier agreement (OSA) showing the defective allowance percentage and whether cumulative returns have exceeded it",
+      "Quality control records demonstrating the product passed inspection before shipment",
+      "Lot or batch records tying the returned product to a specific production run, if the defect is alleged to be systemic",
+      "Invoice and deduction comparison if disputing on pricing-discrepancy grounds (deduction amount vs. actual item cost)",
+      "Proof of non-receipt if the agreement required Walmart to return the merchandise and the supplier never received it",
+      "Defective Merchandise, Handling Fee, and RTV Freight Claim Form if disputing through the Returns Center"
+    ],
+    "disputable": "Code 94 is disputable on several grounds, per SupplyPike. The primary basis is the defective allowance itself: the deduction is invalid if the OSA includes a defective allowance and cumulative returns have not exceeded what the supplier already paid through it.\nThree additional dispute scenarios apply. The deduction amount does not match the actual item cost (a pricing discrepancy). The agreement requires Walmart to return the merchandise, but the supplier never received it. Or the returned items qualify as unsafe to ship (hazardous materials, severe leaking, broken glass).\nDisputes must be filed within 90 days of the invoice post date, and claims under $50 are not reviewed.\nSPS Commerce adds that the dispute channel depends on the claim's origin. Returns Center claims from location 9462 follow the Partner Support path, and other claims route through APDP.\nThe defective allowance is the primary defense. The pricing and non-receipt bases catch errors the allowance test alone would miss.\n",
+    "prevention": [
+      "Know your defective allowance number and track cumulative code 94 charges against it in real time, not at quarter-end. If total returns are approaching the allowance cap, every additional code 94 is money you've already paid for, and the dispute is straightforward.",
+      "Invest in outbound quality checks proportional to the product's return rate. A SKU that generates code 94 at twice the category average has a product problem worth finding before more units ship.",
+      "Track code 94 by SKU and by store cluster. A defect rate concentrated in one SKU is a manufacturing issue. A defect rate concentrated in one store cluster may be a merchandising or handling issue on the retail side, and that distinction changes your dispute argument."
+    ],
+    "erpPrevention": {
+      "system": "NetSuite / Business Central",
+      "blueprint": "Build a running defective-allowance tracker in your ERP. In NetSuite, create a saved search that sums all code 94 deduction amounts (imported from your remittance data) against the defective allowance ceiling calculated from your total invoiced value and the OSA percentage.\nSurface the current utilization as a KPI on your supply chain dashboard. When it crosses 80%, flag every subsequent code 94 for immediate dispute, since you've nearly paid for the full allowance already.\nIn Business Central, the same logic runs as a report comparing posted return credit memos against the allowance formula. The point is to dispute in real time, not discover at year-end that you overpaid by 40%.\n"
+    },
+    "faq": [
+      {
+        "q": "What is Walmart deduction code 94?",
+        "a": "Code 94, Goods Returned / Defective Merchandise, fires when a customer returns a defective product to a Walmart store and Walmart charges the merchandise cost back to the supplier. It applies only after the product was placed on the store floor and sold, which distinguishes it from code 93 (damaged merchandise identified at receiving before the floor)."
+      },
+      {
+        "q": "Can I dispute a Walmart code 94 deduction?",
+        "a": "Yes. The primary basis is that your supplier agreement includes a defective allowance and the cumulative cost of returns has not exceeded it. SupplyPike also names three additional grounds: a pricing discrepancy between the deduction and the actual item cost, non-receipt of merchandise that the agreement required Walmart to return, and items that qualify as unsafe to ship. You have 90 days from the invoice post date to file, and claims under $50 are not reviewed."
+      },
+      {
+        "q": "What is the difference between code 93 and code 94?",
+        "a": "Timing and cause. Code 93 fires when product arrives damaged at the DC, before it reaches the store floor. That's a shipping or packaging problem. Code 94 fires after the product was sold to a customer and returned as defective. That's a product quality problem. Both are in the Returns family and both draw against the defective allowance in the supplier agreement, but the evidence and prevention strategies are different."
+      },
+      {
+        "q": "Does Walmart decide whether a return is defective?",
+        "a": "Walmart creates the code 94 deduction based on its own classification process, and SupplyPike notes that Walmart does so regardless of whether the supplier is already deducting a defective allowance off-invoice. Your dispute path runs through the defective allowance in your supplier agreement and the three additional grounds (pricing discrepancy, non-receipt of returned goods, unsafe-to-ship), not through challenging Walmart's classification of the return itself."
+      }
+    ],
+    "verification": {
+      "status": "source-verified",
+      "verifiedBy": "Pixels and Clicks Editorial",
+      "verifiedOn": "2026-09-09T00:00:00.000Z",
+      "sources": [
+        {
+          "label": "SPS Commerce / SupplierWiki: Walmart Returns 101",
+          "url": "https://www.spscommerce.com/community/learn/walmart-returns-101",
+          "note": "Independent deduction-management vendor source. Describes code 94 as goods returned/defective merchandise with the customer-return trigger, explains the defective allowance as the dispute basis, and names the Returns Center and APDP as the two dispute channels."
+        },
+        {
+          "label": "SupplyPike: Code 94, Goods Returned/Defective Merchandise",
+          "url": "https://help.supplypike.com/en/articles/3448967-code-94-goods-returned-defective-merchandise",
+          "note": "Second independent vendor source. Confirms the defective merchandise label, describes four dispute scenarios (allowance not exceeded, pricing discrepancy, non-receipt of returned goods, unsafe-to-ship), names the 90-day dispute window and $50 minimum, and explains that Walmart creates code 94 deductions regardless of whether the supplier deducts a defective allowance off-invoice."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "walmart-shortage-claim",
+    "retailer": "Walmart",
+    "code": "24",
+    "codeName": "Carton Shortage / Freight Bill Signed Short",
+    "title": "Walmart Deduction Code 24: Carton Shortage Explained",
+    "description": "Walmart says it got fewer cartons than your invoice billed. What triggers the code, which of the four usual causes it is, and how to stop it.",
+    "pubDate": "2026-07-28T00:00:00.000Z",
+    "family": "Shortage",
+    "penalty": "Line-item deduction at invoice cost for the counted difference",
+    "answer": "Walmart code 24 means the receiving DC counted fewer cartons than your invoice billed, so Walmart took the difference off your check. It is a shortage claim, not a price or compliance penalty. The usual cause is a pick-pack miscount, a pallet built short, or an ASN that claimed more than shipped. It is rarely theft in transit.",
+    "answerQualifier": "Based on three independent vendor sources (SPS Commerce, 8th & Walton, Confido). They agree on how the code works and on the signed-BOL dispute path. SPS Commerce and 8th & Walton call it Carton Shortage / Freight Bill Signed Short; Confido calls the same code Short-Ships. This is not from Walmart's own documents.",
+    "meaning": "Walmart code 24 takes real money off your check before you know why. It fires on its own from the receiving scan. There is no judgment call for you to argue against.\n",
+    "meaningPoints": [
+      "Code 24 (Carton Shortage / Freight Bill Signed Short) fires when Walmart's receiving DC counts fewer cartons than the invoice you billed. Walmart then takes the difference off at cost.",
+      "The deduction fires on its own from the receiving scan. It posts before anyone at Walmart looks at why the gap exists.",
+      "So you are not arguing a judgment call. You are giving a count that disagrees with theirs. Your own outbound count and ASN decide who is right."
+    ],
+    "rootCauses": [
+      "A pick-and-pack miscount at your 3PL. The pallet left short, and your own outbound count missed it.",
+      "The ASN claimed too much. The EDI 856 listed cartons that were not on the truck. Walmart got what shipped, but you billed for more.",
+      "The pallet was built to a case count that does not match the tie-high on the ASN. That mismatch makes the receiving scan read a full shipment as short.",
+      "A hidden shortage at the DC. The cartons arrived but were miscounted or sent to the wrong place on Walmart's side. This is real, but the rarest of the four and the hardest to prove. A shortage found inside a sealed carton is a different code (code 21), not code 24."
+    ],
+    "disputable": "You can dispute Walmart code 24 when you have a signed bill of lading and a matching outbound count from your 3PL. Together they show the full quantity left your dock.\nFiling takes staff time. It is worth it only when your paperwork and your ASN agree with each other. That agreement is what wins the dispute.\nIf your own ASN claimed too much, the deduction is usually correct. Spend the time fixing the ASN process instead of fighting a claim you will lose.\n",
+    "prevention": [
+      "Match your outbound count against the EDI 856 before the truck leaves, not after a code 24 deduction arrives. Check the ASN at dispatch, and most claims like this never reach Walmart.",
+      "Have your 3PL photograph the built pallet next to the packing list for shipments over a value you set. If a code 24 shows up later, a photo taken at ship time wins the dispute. Paperwork rebuilt sixty days later usually does not.",
+      "Track Walmart code 24 by receiving DC, not all together. A shortage rate stacked at one DC is a different problem than one spread across all of them. Only the stacked pattern is worth raising with Walmart.",
+      "Watch your ASN acceptance rate in NetSuite or Business Central as an early warning for code 24. It moves weeks before the deduction arrives. That gap is the cheapest time to fix it."
+    ],
+    "faq": [
+      {
+        "q": "Is Walmart code 24 the same as a compliance chargeback?",
+        "a": "No. A shortage deduction takes back what Walmart says it did not get, at cost. A compliance chargeback is a penalty for breaking a rule, like a late delivery or a bad label. They show up on the same remittance and often get lumped together. That is why brands misread how much of their deduction load they can prevent."
+      },
+      {
+        "q": "Should I dispute every code 24 deduction?",
+        "a": "No. Brands that dispute everything lose credibility on the claims that matter. Dispute when your bill of lading and ASN agree and show the full quantity shipped. When your own ASN claimed too much, the deduction is correct. Fixing the ASN process pays back more than the recovery you were chasing."
+      },
+      {
+        "q": "Why does the same code keep appearing from one distribution centre?",
+        "a": "A shortage rate stacked at one DC usually points to a receiving process at that site, or a lane and pallet setup that keeps mis-scanning there. All-together reporting hides this. Splitting the code by receiving DC is the fastest way to tell a Walmart problem from your own."
+      },
+      {
+        "q": "If the 3PL built the pallet short, can I recover the deduction from them?",
+        "a": "It depends on what your 3PL agreement says about count accuracy and who pays for outbound shortages. Most mid-market agreements are vaguer on this than brands expect. Read the clause before the next deduction, not after. When the agreement is silent, the cost is yours no matter who made the error."
+      }
+    ],
+    "verification": {
+      "status": "source-verified",
+      "verifiedBy": "Pixels and Clicks Editorial",
+      "verifiedOn": "2026-11-03T00:00:00.000Z",
+      "sources": [
+        {
+          "label": "SPS Commerce: Code 24, Carton Shortage / Freight Bill Signed Short",
+          "url": "https://www.spscommerce.com/community/articles/code-24-carton-shortage-freight-bill-signed-short",
+          "note": "Independent vendor source. States the label, the signed-short-at-receiving trigger, the APDP dispute channel, and the evidence path: a driver-signed BOL with the PO number for collect suppliers, a POD plus drop-trailer stamp for prepaid suppliers, and the EDI 810 and 856 showing the shipped quantity."
+        },
+        {
+          "label": "8th & Walton: List of Walmart Deduction Codes Defined",
+          "url": "https://www.8thandwalton.com/blog/walmart-deduction-codes",
+          "note": "Independent supplier-community vendor source. Lists code 24 as Carton Shortage / Freight Bill Signed Short and marks it disputable through APDP with a stamped proof of delivery showing the shortage."
+        },
+        {
+          "label": "Confido: Walmart Deduction Guide",
+          "url": "https://www.confidotech.com/resources/walmart-deduction-guide",
+          "note": "Independent vendor source. Lists the same code under the variant label Short-Ships, defined as the facility receiving less than what was invoiced. Used to cross-verify the mechanic; the label variant is noted in the answerQualifier."
+        }
+      ]
+    }
+  }
+]

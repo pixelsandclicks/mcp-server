@@ -1,0 +1,1822 @@
+[
+  {
+    "slug": "ai-forecasting-pilot-data-readiness-failures",
+    "title": "Why Your Retail CPG AI Forecasting Pilot Stalls At Day 60",
+    "description": "Three data gaps kill a CPG AI forecasting pilot before day 60: shipments read as demand, a SKU master that churned, net revenue nobody traced.",
+    "pubDate": "2026-10-01T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "AI Forecasting",
+      "Demand Planning",
+      "Data Readiness",
+      "CPG",
+      "POS",
+      "SKU Master",
+      "Returns"
+    ],
+    "readingTime": 9,
+    "cluster": "forecasting",
+    "hub": "supplier-scorecard-for-cpg-suppliers",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/ai-forecasting-pilot-data-readiness-failures-banner.jpg",
+    "imageAlt": "What a CPG AI forecasting pilot needs that a shipment-only dataset cannot give it: weekly POS, a stable SKU master, and a net-of-returns revenue signal",
+    "answer": "An AI forecasting pilot stalls when the data feeding the model does not describe demand. Three failures account for most of it: shipment data substituted for POS, a SKU master that turned over during the training window, and gross-ship numbers that ignore returns and deduction leakage. The model is not wrong. The signal is.",
+    "answerQualifier": "Based on McKinsey research on digital pilot purgatory, McKinsey's State of Food and Beverage data on new-item share of sales at mid-market CPG, Overdeduct and Inmar benchmarks on retail-deduction load, practitioner commentary from TrueGradient and Impact Analytics on AI-forecasting data quality, the bullwhip-effect research from Hau Lee et al. in Sloan Management Review, and public retailer data programs (Walmart Luminate, Amazon Vendor Central). October 2026.",
+    "faq": [
+      {
+        "q": "Why does an AI forecasting pilot miss on exactly the SKUs that matter most?",
+        "a": "The pilot usually misses on your fastest movers and your promoted SKUs. Both share a data gap. A fast mover with a recent stockout trains the model on a demand number lower than real demand. A promoted SKU with no flag in the data trains the model on a baseline inflated by lift. Both failures look like model error on the dashboard. Both are data problems upstream of the model."
+      },
+      {
+        "q": "Can I run an AI forecasting pilot on shipment history alone?",
+        "a": "You can run it. The model will fit the shipment pattern. The forecast will miss sell-through turns by whatever time it takes the retailer to reorder, which is one to four weeks for most CPG categories. Pilots run on shipment-only data commonly show acceptable in-sample accuracy during training and lose it when the retailer's order cadence shifts. If you have access to Walmart Luminate, Target Mindset, or Amazon Vendor Central POS, pull it before the pilot starts."
+      },
+      {
+        "q": "How much SKU turnover is too much for a forecasting pilot?",
+        "a": "McKinsey's State of Food and Beverage data shows new items drive 19 percent of sales at CPG suppliers in the $100 million to $500 million band, which implies continuous SKU addition and retirement in the training window. A pilot that treats a replaced SKU as new, and the retired one as discontinued, splits what is often one continuous demand pattern into two shorter and noisier ones. Document the SKU-replacement map before training. One field linking a new SKU to the one it replaces recovers most of the lost signal."
+      },
+      {
+        "q": "Why do my gross shipments not reconcile to my collected revenue?",
+        "a": "A CPG supplier commonly collects less than the gross shipment value after returns, deduction leakage, and reserve adjustments. Industry benchmarks from Overdeduct and Inmar put deductions and chargebacks at 2 to 15 percent of gross sales across CPG, with mid-market suppliers writing off 1.2 to 2.4 percent of gross revenue each year on unrecovered deductions alone. A forecasting model trained on gross-ship numbers forecasts volume you will not keep. Pull the net number from your AR aging or deduction register and train on that."
+      },
+      {
+        "q": "What should I audit before I commit to an AI forecasting pilot?",
+        "a": "Audit three things first. The demand signal (POS or shipment, weekly or monthly, which retailers provide what). The SKU master history (how many SKUs added, retired, or renumbered in the last 24 months, with a replacement map). And the net-revenue reconciliation (gross ships minus returns minus deductions). All three live in systems you own today. None require the pilot vendor's platform to run."
+      }
+    ]
+  },
+  {
+    "slug": "amazon-1p-vendor-termination-notice",
+    "title": "The Amazon 1P Termination Notice: What 30 Days Actually Buys You",
+    "description": "An Amazon 1P termination email arrives with 30 to 60 days notice. What happens to open POs, pending claims, and the audit posture that would have caught it earlier.",
+    "pubDate": "2026-09-28T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Amazon Vendor Central",
+      "Vendor Terminations",
+      "1P",
+      "Net PPM",
+      "CPG",
+      "Deductions"
+    ],
+    "readingTime": 9,
+    "cluster": "scoping",
+    "hub": "supplier-scorecard-for-cpg-suppliers",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/amazon-1p-vendor-termination-notice-banner.jpg",
+    "imageAlt": "Amazon 1P vendor termination notice: the 90 days of data that predicted it and the audit posture that would have caught it earlier",
+    "answer": "Amazon's 1P termination notice usually gives 30 to 60 days before purchase orders stop, and the decision is almost always algorithmic once it lands. Community operators report the cut is driven by contribution margin and Net PPM, not by revenue alone. A 42% Net PPM account can be terminated if its category is competitive. Open shortage claims stay disputable inside the notice window, and your audit posture is the single lever left.",
+    "answerQualifier": "Based on r/VendorCentral community operators reporting terminations across US and EU accounts in Q2 to Q3 2026, plus public Amazon Vendor Central program guidance, September 2026. Amazon does not publish termination thresholds, so treat the specific figures below as vendor-reported patterns rather than policy.",
+    "faq": [
+      {
+        "q": "How much notice does Amazon give before terminating a 1P vendor account?",
+        "a": "Community operators on r/VendorCentral report notice periods running 30 to 60 days, occasionally two months, before Amazon stops issuing purchase orders. Some accounts get an intermediate ramp-down where PO volume drops sharply before the final cut. The termination email itself names the effective date and the last PO window. Amazon does not publish a standard notice period, so treat any figure as a data point, not a rule."
+      },
+      {
+        "q": "Can you appeal an Amazon 1P vendor termination?",
+        "a": "Rarely, and only when the decision was algorithmic rather than a Vendor Manager judgment. One recovery operator on r/VendorCentral put it plainly: it is a set decision unless you were part of an algorithmic decision and still have contact with a Vendor Manager willing to work with you, because a VM is the only role that can override the system. If a VM already flagged your account as unwilling to work on Net PPM, the appeal path is effectively closed."
+      },
+      {
+        "q": "What criteria triggers an Amazon 1P vendor termination?",
+        "a": "Vendor Managers who spoke on r/VendorCentral describe two main criteria: contribution margin for Amazon and Net PPM trend. Revenue alone does not protect an account. One operator reported a 42% Net PPM account was terminated because its category was highly competitive with many direct substitute vendors. Under-10M annual revenue accounts are reportedly a common target in the current wave. Amazon does not publish the thresholds."
+      },
+      {
+        "q": "What happens to open shortage claims after a 1P termination notice?",
+        "a": "Open shortage and chargeback disputes stay in Vendor Central through the notice window and remain disputable under Amazon's normal rules. The 30-day dispute deadline from the chargeback notification still applies. Any credit that posts before the account closes goes through the final remittance cycle. Anything filed but unresolved at closure may need to be pursued through Amazon's post-termination case queue, which multiple operators report is slower and less responsive."
+      },
+      {
+        "q": "Should you move to 3P selling after a 1P termination?",
+        "a": "Community operators are split. One vendor on r/VendorCentral reported moving to a 1P distributor and calling it a simplification. Another countered that the switch surrenders margin and brand control. The right answer depends on your category, your Net PPM at Amazon's shelf price, your non-Amazon revenue mix, and whether your brand carries independent demand. Talk to at least two operators who have made the transition in your category before deciding."
+      }
+    ]
+  },
+  {
+    "slug": "amazon-closed-shortage-claims-recoverable",
+    "title": "Amazon Marked Your Shortage Claim Closed. Was It Actually Paid?",
+    "description": "A closed shortage claim in Vendor Central does not always mean the money came back. Three failure modes suppliers miss, and the 90-day re-audit that catches them.",
+    "pubDate": "2026-09-25T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Amazon Vendor Central",
+      "Shortage Claims",
+      "Deductions",
+      "1P",
+      "Chargebacks",
+      "CPG"
+    ],
+    "readingTime": 9,
+    "cluster": "recovery",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/amazon-closed-shortage-claims-recoverable-banner.jpg",
+    "imageAlt": "Auditing closed Amazon shortage claims: Vendor Central status versus what actually posted to the remittance",
+    "answer": "Amazon marks a shortage claim closed when it exits the workflow, not when a credit posts to your remittance. Three failure modes leak money past a closed status: no offsetting credit, multi-PO shortages split across claim IDs, and a post-close dispute path most vendors miss. A 90-day re-audit is the highest-ROI hour of the quarter.",
+    "answerQualifier": "Based on public Amazon Vendor Central documentation, SPS Commerce and Inmar deduction benchmarks, and community-reported patterns from 1P suppliers, September 2026. Amazon's specific dispute-window language changes periodically. Confirm current windows in your own Vendor Central case portal before writing off a claim.",
+    "faq": [
+      {
+        "q": "What does closed mean in Amazon Vendor Central?",
+        "a": "Closed means the shortage claim has exited Amazon's active workflow. The claim ID stops appearing in your open-cases queue. It does not confirm that an offsetting credit posted to your remittance. Closed is a workflow status, not a payment status. Cross-check every closed claim against remittance detail before writing it off."
+      },
+      {
+        "q": "Can you dispute an Amazon shortage claim after it's closed?",
+        "a": "Sometimes, but the mechanism changed in 2025. Amazon retired the older support-case path, and the current workflow gives you two chances only: the traditional dispute in Vendor Central, and a re-dispute if the first is denied. Community operators report the re-dispute now routes through a Contact Us case to a Tier 2 team, not the default Dispute Management button. Waiting 35 days after invoice due date before the first dispute is a widely-reported best practice."
+      },
+      {
+        "q": "How do multi-PO shortages get split across claim IDs?",
+        "a": "When one physical shipment covers multiple POs and the receiver books shortages against each PO independently, Amazon can generate one claim ID per PO. If two claims reference the same missing units from opposite sides, only one may get resolved. The other stays open, expires, or closes without payment. Look for related claim IDs before writing off any single closed claim."
+      },
+      {
+        "q": "Is a re-audit of closed shortage claims worth the time?",
+        "a": "For most 1P suppliers, yes. SPS Commerce reports that suppliers dispute only 20 to 30 percent of deductions to begin with, which leaves most closed claims unaudited. A 90-day re-audit catches the three failure modes below without needing new software. One finance analyst, one afternoon, and the remittance detail is enough to find the pattern if it's there."
+      },
+      {
+        "q": "What evidence do I need before reopening a closed claim?",
+        "a": "Match every closed claim to its remittance line. Pull the ASN transmission timestamp, the proof of delivery signed by the receiver, and any related claim IDs on the same PO. If the offsetting credit is missing on the remittance, or if the closed claim references units also disputed under a different open claim, you have grounds to reopen. Amazon reviews reopens on documentation, not on the reopen request alone."
+      }
+    ]
+  },
+  {
+    "slug": "amazon-net-ppm-vs-contribution-margin",
+    "title": "Net PPM vs. Contribution Margin: How Amazon Scores Your Profitability",
+    "description": "What Net PPM, Contribution Margin, and CMLF measure, which one your vendor manager watches, and how to use all three before Annual Vendor Negotiations.",
+    "pubDate": "2026-10-21T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Amazon 1P",
+      "Vendor Central",
+      "Net PPM",
+      "Contribution Margin",
+      "CMLF",
+      "Profitability",
+      "AVN"
+    ],
+    "readingTime": 8,
+    "cluster": "scoping",
+    "hub": "supplier-scorecard-for-cpg-suppliers",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/amazon-net-ppm-vs-contribution-margin-banner.jpg",
+    "imageAlt": "Whiteboard diagram comparing Net PPM, Contribution Margin, and CMLF as three layers of Amazon vendor profitability",
+    "answer": "Net PPM (Net Pure Product Margin) is the metric your vendor manager watches. It measures Amazon's per-ASIN profit as a percentage of shipped revenue, and it drives Buy Box eligibility, PO volume, and the co-op ask at Annual Vendor Negotiations. Contribution Margin layers in Amazon's own variable costs (fulfillment, shipping, storage) and is Amazon's internal P&L view you rarely see. CMLF (likely Contribution Margin Less Funding) appears in vendor community discussions but has no confirmed public definition from Amazon.",
+    "answerQualifier": "Based on the Net PPM formula documented by Amalytix and iNymbus, Contribution Margin definitions from Calbridge Analytics and MerchantSpring, category benchmarks from MerchantSpring and SmartScout, and vendor community discussion on r/VendorCentral. October 2026.",
+    "faq": [
+      {
+        "q": "What is Net PPM and how does Amazon calculate it?",
+        "a": "Net PPM stands for Net Pure Product Margin. It is Amazon's per-ASIN profit metric for 1P vendors. The formula, per Amalytix and iNymbus: (Shipped Revenue - Shipped COGS + Vendor Terms - Sales Discount) / Shipped Revenue. Vendor Terms includes co-op accruals, damage allowances, and freight allowances. Every dollar you fund into those terms lifts Amazon's calculated Net PPM on your catalog."
+      },
+      {
+        "q": "What is Contribution Margin on Amazon and how is it different from Net PPM?",
+        "a": "Contribution Margin is Amazon's internal profitability view that layers variable costs on top of Net PPM. It subtracts fulfillment, shipping, storage, and customer service costs from the product margin. Vendors rarely see Contribution Margin directly. Net PPM is the metric that appears in your Vendor Central reports and drives the AVN conversation."
+      },
+      {
+        "q": "What does CMLF stand for in Amazon vendor discussions?",
+        "a": "CMLF appears in r/VendorCentral threads but has no confirmed public definition from Amazon. Vendor community consensus suggests it stands for Contribution Margin Less Funding, meaning Contribution Margin after subtracting the co-op and marketing allowances vendors pay. Ask your vendor manager to define the term if it appears in your negotiation materials."
+      },
+      {
+        "q": "What is a good Net PPM for Amazon vendors?",
+        "a": "Category benchmarks from MerchantSpring: hardlines 40 to 45%, softlines 30 to 37%, consumables 27 to 35%. Amazon's internal target for your catalog depends on your category average and your negotiation history. Pull your Net PPM report from Vendor Central at the ASIN level to see where you stand."
+      },
+      {
+        "q": "What happens when my Net PPM drops below Amazon's target?",
+        "a": "Amazon may reduce PO volume, restrict advertising eligibility, or flag the ASIN as CRaP (Can't Realize a Profit). At AVN, the vendor manager opens with a margin headwind claim and asks for a higher co-op accrual rate. A sustained Net PPM shortfall is one of the trajectories that can end in a 1P termination notice."
+      }
+    ]
+  },
+  {
+    "slug": "bad-asn-costs-one-shipment-five-chargebacks",
+    "title": "One Bad ASN, Five Chargebacks on the Same Shipment",
+    "description": "A single EDI 856 error on one shipment triggers ASN accuracy, shortage, OTIF, routing, and invoice chargebacks. The prevention step for each.",
+    "pubDate": "2026-09-07T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "EDI",
+      "ASN",
+      "856",
+      "Deductions",
+      "Retail Compliance",
+      "OTIF",
+      "Chargebacks"
+    ],
+    "readingTime": 8,
+    "cluster": "prevention",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/bad-asn-costs-one-shipment-five-chargebacks-banner.jpg",
+    "imageAlt": "One shipment branching into five chargeback types: ASN accuracy, shortage, OTIF, routing, and invoice mismatch",
+    "answer": "A single bad EDI 856 ASN can trigger five separate chargebacks from one shipment: ASN accuracy, shortage, OTIF, routing or appointment exception, and invoice mismatch. Each chargeback has its own code and dispute path, but they share one root cause. Fixing them as five separate events misses the pattern is like playing whack a mole. Fixing the root cause ASN process closes all five.",
+    "answerQualifier": "Based on public EDI and compliance documentation from SPS Commerce, Orderful, BOLD VAN, Inmar, and Consulterce, September 2026. Fee percentages are vendor-reported and vary by retailer and program update.",
+    "faq": [
+      {
+        "q": "Can one shipment really generate five separate chargebacks?",
+        "a": "Yes. A late or inaccurate ASN touches five different compliance categories because the 856 is the document that connects PO fulfillment, warehouse shipment, carrier appointment, retailer receiving, and invoicing. When the ASN is wrong, every system downstream records a different version of the same error, and each version gets its own chargeback code."
+      },
+      {
+        "q": "What is the most common ASN error that triggers multiple chargebacks?",
+        "a": "A carton-count change after ASN generation. The warehouse adjusts the physical shipment, but the already-transmitted 856 carries the original count. The retailer receives a quantity that doesn't match the ASN, which triggers an ASN accuracy chargeback and a shortage claim. If the pick change also delayed the shipment, an OTIF miss follows."
+      },
+      {
+        "q": "How do I know if my deductions share a single root cause?",
+        "a": "Pull five recent deductions and trace them back to the PO number. If two or more chargebacks on the same remittance point to the same PO, they likely started from one shipment failure. The evidence pack for that PO will show where the chain broke."
+      },
+      {
+        "q": "Does fixing the ASN process actually reduce chargebacks from other categories?",
+        "a": "It reduces every chargeback category that depends on the ASN being accurate and on time: shortage claims that started as a count mismatch, OTIF misses that started as a late transmission, and invoice mismatches where the 810 followed the wrong ASN quantity. BOLD VAN reports that focused remediation targeting top chargeback categories reduces chargeback volume by 50 to 80% within one to two quarters."
+      }
+    ]
+  },
+  {
+    "slug": "business-central-edi-failures",
+    "title": "The Five Business Central Settings Driving Retailer Deductions",
+    "description": "Five Business Central EDI failure modes that end as retailer deductions: item references, unit of measure, posting timing, and ship-to mapping.",
+    "pubDate": "2026-08-24T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "EDI",
+      "Business Central",
+      "Dynamics 365",
+      "ERP",
+      "ASN",
+      "856",
+      "Retail Compliance"
+    ],
+    "readingTime": 8,
+    "cluster": "erp-technical",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/business-central-edi-failures-banner.jpg",
+    "imageAlt": "Business Central EDI 856 ASN failures",
+    "answer": "Business Central generates no X12 EDI on its own, so every retailer ASN passes through a connector reading BC records. Five gaps corrupt it before transmission: missing item references, a wrong Qty. per Unit of Measure, a trigger wired to the wrong warehouse posting step, an unmapped ship-to or GLN, and kits that never explode to pack level.",
+    "answerQualifier": "Based on Microsoft Learn documentation for Dynamics 365 Business Central covering item references, item units of measure, outbound warehouse flow, the Ship-to Address table, and assembly items, August 2026. Business Central's own fields and behavior are documented. Which validations a given EDI connector runs before transmission varies by vendor and is not a public standard.",
+    "faq": [
+      {
+        "q": "Does Business Central handle EDI natively?",
+        "a": "No. Business Central ships with a Data Exchange Framework and support for PEPPOL electronic invoices, which is a European e-invoicing standard, not retail X12. For a Walmart or Target ASN you need a connector or middleware layer that reads Business Central records and translates them into X12. That translation layer is where most retail EDI configuration actually lives."
+      },
+      {
+        "q": "Why does a unit-of-measure setting cause a shortage deduction?",
+        "a": "The Qty. per Unit of Measure field on an item's alternate unit tells Business Central how many base units a case contains. If your ASN declares eaches where the retailer's implementation guide expects cases, your reported quantity is off by exactly the case-pack multiplier. The receiving count then reads short or over, and a short read becomes a shortage deduction."
+      },
+      {
+        "q": "When should the ASN transmit relative to Business Central's warehouse posting?",
+        "a": "After the pick is registered and the shipment is posted, not before. In an advanced warehouse configuration, a registered warehouse pick updates Qty. Picked but does not post the shipment, so an ASN fired at pick registration describes intended quantities rather than confirmed ones. Posting the warehouse shipment is the event that reflects what actually left."
+      },
+      {
+        "q": "What is the GLN field on a Business Central ship-to address for?",
+        "a": "GLN is the Global Location Number, a 13-character GS1 identifier for a physical location. Retailers use it to identify the receiving DC on EDI documents. Business Central has a dedicated GLN field on the Ship-to Address table, and leaving it blank forces your connector to derive the DC identity some other way, usually from a mapping table maintained by hand and updated late when a retailer opens a new facility."
+      },
+      {
+        "q": "Do I need to replace Business Central to fix these?",
+        "a": "No. All five gaps are configuration and validation problems inside records Business Central already has: the item card, item references, item units of measure, the ship-to address, and the assembly BOM. The work is deciding which check runs before transmission and where it runs, not changing systems."
+      }
+    ]
+  },
+  {
+    "slug": "cpg-cash-gap-walmart-dependency-data",
+    "title": "Smaller CPG Brands Fund a 68-Day Cash Gap. Two Free Tools Show Yours.",
+    "description": "Brands under $10B carry a 68-day cash gap. The largest CPG companies carry none. Two free SEC-data tools measure yours.",
+    "pubDate": "2026-10-19T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Working Capital",
+      "Cash Conversion Cycle",
+      "Walmart",
+      "Supplier Finance",
+      "Customer Concentration",
+      "Research"
+    ],
+    "readingTime": 7,
+    "cluster": "scoping",
+    "hub": "deduction-management-for-cpg-suppliers",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/cpg-cash-gap-walmart-dependency-data-banner.jpg",
+    "imageAlt": "Hand-drawn whiteboard diagram of cash flowing from retailers to large CPG brands to smaller brands",
+    "answer": "The median CPG company over $10B in revenue has a cash conversion cycle of about -3 days, so it collects before it pays suppliers. The median public CPG company under $10B carries a 68-day gap, per Pixels and Clicks analysis of SEC 10-K filings. Two free tools measure your own gap and customer concentration.",
+    "answerQualifier": "Based on Pixels and Clicks analysis of 10-K filings from 19 retailers and 58 CPG manufacturers, October 2026.",
+    "faq": [
+      {
+        "q": "What is the cash conversion cycle for CPG companies?",
+        "a": "The cash conversion cycle is days to collect from customers, plus days of inventory, minus days payable. In 10-K filings analyzed by Pixels and Clicks, the median CPG company over $10B in revenue runs about -3 days. The median public CPG company under $10B runs 68 days. That company funds more than two months of its own working capital."
+      },
+      {
+        "q": "Does Walmart owe its suppliers more than its inventory is worth?",
+        "a": "Yes, on its balance sheet. At the end of January 2026, Walmart reported $63.1B in accounts payable and $58.9B in inventory. Payables equaled 107% of inventory, up from 84% in January 2009. Accounts payable covers all of Walmart's vendors, not only CPG brands."
+      },
+      {
+        "q": "How dependent are CPG companies on Walmart?",
+        "a": "Pixels and Clicks found 22 public CPG companies that reported Walmart's share of their sales in both 2009 and 2024. Of those, 14 now depend on Walmart more. Their median Walmart share rose from 18.5% to 22%. John B. Sanfilippo reported the largest rise, from 19% of net sales in fiscal 2009 to 41% in fiscal 2026."
+      },
+      {
+        "q": "Is days payable the same as payment terms?",
+        "a": "No. Days payable is a balance-sheet ratio: accounts payable divided by cost of sales, times 365. It shows how long a company holds its bills on average. Payment terms are what a buyer and supplier agree in a contract. The two move together but are not the same number."
+      },
+      {
+        "q": "Where can I download the data?",
+        "a": "Both datasets are free to download as CSV files from The Float and the Walmart Dependency Tracker on pixelsandclicks.net. Every figure links to the 10-K filing it comes from. You can use the charts and data in your own work with a link back."
+      },
+      {
+        "q": "Can I download charts from the research pages?",
+        "a": "Yes. Every chart on The Float and the Walmart Dependency Tracker has a PNG download button. Hover over any chart figure to reveal it. The exported image is 2x resolution with a white background, ready for slides or reports."
+      },
+      {
+        "q": "Can I link to a specific section of a research page?",
+        "a": "Yes. Hover over any section heading to reveal a # link. Click it to copy a direct URL to that section. The recipient lands on that heading."
+      },
+      {
+        "q": "Can I share my Deduction Census benchmark results?",
+        "a": "Yes. After entering your numbers in the benchmark calculator, click 'Copy link to this result.' The URL encodes your deduction rate, disputed share, win rate, revenue, size band, and retailer. Anyone who opens that link sees the same comparison."
+      }
+    ]
+  },
+  {
+    "slug": "data-bridge-full-cost-calculator",
+    "title": "The Real Cost of Manual Data Entry at a Mid-Market CPG",
+    "description": "Re-keying labor is the visible cost. Deductions, reconciliation hours, and rush freight stack on top. Free calculator inside.",
+    "pubDate": "2026-08-18T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Data Entry",
+      "EDI",
+      "ERP",
+      "Free Tools",
+      "Supply Chain Ops"
+    ],
+    "readingTime": 7,
+    "cluster": "erp-technical",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/data-bridge-full-cost-calculator-banner.jpg",
+    "imageAlt": "the visible labor cost of manual data entry versus the hidden cost in deductions, reconciliation, and freight",
+    "answer": "The full annual cost of manual data entry between your WMS, EDI, and ERP is more than copy pasting from one system to another. It also includes deductions from bad ASNs, hours reconciling mismatched reports, and rush freight from stale data, plus margin loss and stockout risk no report captures. In the calculator's default scenario, those three quantifiable lines roughly double the labor-only estimate.",
+    "answerQualifier": "Based on Pixels and Clicks' own manual data entry cost calculator methodology, cross-referenced with the deduction write-off pattern described in this site's EDI 856 coverage and the industry out-of-stock research cited in this site's OTIF coverage, August 2026.",
+    "faq": [
+      {
+        "q": "Why does the manual data entry cost calculator ask for deductions and freight costs, not just labor hours?",
+        "a": "Labor hours are the visible part of what manual data entry costs. The rest lands on other reports under other names: deductions traced to bad ASNs, hours spent reconciling reports that disagree, and rush freight caused by stale data. Adding those in gives the full annual cost, not just the part that shows up on a labor spreadsheet."
+      },
+      {
+        "q": "Where do I find the 'data-error incidents per month' number the calculator asks for?",
+        "a": "Your EDI portal or retailer scorecard. Count last month's rejected 824s, ASN rejections, and manual order corrections across every retailer account you run, and use that total."
+      },
+      {
+        "q": "Is the 2x multiplier in the calculator's example the same for every company?",
+        "a": "No. It's the ratio produced by the calculator's starting defaults: three coordinators, twenty incidents a month, four reconciliation hours a week. Enter your own five numbers and the ratio will move, higher for some operations, lower for others."
+      },
+      {
+        "q": "What if I don't track reconciliation hours or expedite premiums yet?",
+        "a": "Estimate them for a first pass. A rough number beats leaving the field at zero, which understates the total. The standing meeting where two systems disagree and the rush charge on a recent freight invoice are both easy to reconstruct from memory even without a formal log."
+      },
+      {
+        "q": "Does the calculator account for stockouts or lost shelf space?",
+        "a": "No, and that's on purpose. Stockout risk and buyer trust are real costs of manual data entry, but they're not consistent enough dollar figures to model in a calculator. The five inputs it does ask for are all costs you can pull from an existing report, which keeps the output defensible instead of speculative."
+      },
+      {
+        "q": "How is this different from the OTIF calculator?",
+        "a": "The OTIF calculator prices a shipment-performance gap against retailer fine schedules. The manual data entry cost calculator prices the re-entry between your systems: labor, rework, deductions, reconciliation time, and rush freight. That's what often causes the gap in the first place."
+      }
+    ]
+  },
+  {
+    "slug": "deduction-dispute-deadlines-by-retailer",
+    "title": "The Deduction Dispute Windows at Walmart, Target, Amazon, Kroger",
+    "description": "Dispute windows for Walmart, Target, Amazon, and Kroger deductions in one table, with the portal and channel to file through for each.",
+    "pubDate": "2026-08-12T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Deductions",
+      "Dispute Deadlines",
+      "Walmart",
+      "Target",
+      "Amazon",
+      "Kroger",
+      "APDP",
+      "Synergy",
+      "Vendor Central",
+      "Lavante"
+    ],
+    "readingTime": 9,
+    "cluster": "prevention",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/deduction-dispute-deadlines-by-retailer-banner.jpg",
+    "imageAlt": "Hand-drawn whiteboard-style reference table with four retailer columns labeled Walmart, Target, Amazon, and Kroger, each with a clock icon showing a different dispute deadline window, a stick figure holding a calendar with question marks, and a bold hand-lettered headline reading Dispute Deadlines",
+    "answer": "Walmart gives up to two years to dispute most AP deductions through APDP, with shorter windows for chargebacks and shortages. Target allows 18 months prepaid and 9 months collect, through Synergy. Amazon chargebacks must be disputed within 30 days. Kroger gives 180 days through Supplier Connect, and reportedly 60 on an MCB fee.",
+    "answerQualifier": "Compiled from six independent vendor sources (SPS Commerce/SupplierWiki, iNymbus, Glimpse, Confido, Adbrew, Consulterce), cross-referenced against each other, August 2026.",
+    "faq": [
+      {
+        "q": "How long do I have to dispute a Walmart deduction?",
+        "a": "It depends on the type. Up to two years for general AP deductions, 12 months for shortage claims, and 15 to 30 days for chargebacks, all through APDP per SPS Commerce and Glimpse. OTIF compliance chargebacks route through HighRadius instead, with a window closer to 30 days."
+      },
+      {
+        "q": "What is Target's dispute deadline for shortages?",
+        "a": "Target's AP deduction window is 18 months from the document date on the check remittance for prepaid shipments. Collect shipments get 9 months from the shipping date, per SPS Commerce and iNymbus. Disputes go through Synergy, and a case returned as awaiting documentation auto-denies after 5 business days without a response."
+      },
+      {
+        "q": "Can I dispute an Amazon chargeback more than once?",
+        "a": "Some chargeback types allow a second dispute after the first rejection, per Adbrew and Consulterce. The initial dispute must be filed within 30 days of the chargeback notification in Vendor Central. Sources differ on whether there is a hard cap on attempts."
+      },
+      {
+        "q": "Where do I file a Kroger deduction dispute?",
+        "a": "You file through Supplier Connect, the PRGX-built platform that replaced the Lavante portal in late 2025, per iNymbus. The standard window is 180 days from the deduction date, per SPS Commerce and Confido. An MCB compliance fee is the exception, reportedly allowing 60 days and filing through the Kroger Supplier Hub instead. Once submitted, changes are not allowed, so documentation should be complete before filing."
+      },
+      {
+        "q": "Do these deadlines ever change?",
+        "a": "Yes. Retailers update programs, rename portals, and adjust windows. This table was last reviewed in August 2026 and will be updated as sources report changes. If a deadline listed here does not match what you see in your own portal, let us know so we can correct it."
+      }
+    ]
+  },
+  {
+    "slug": "deduction-management-for-cpg-suppliers",
+    "title": "Deduction Management for CPG Suppliers: Stop the Leak at the Source",
+    "description": "Deduction management is how CPG suppliers track, dispute, and prevent retail chargebacks. The codes, the dispute clock, and the root-cause fix that stops them from recurring.",
+    "pubDate": "2026-11-07T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Deduction Management",
+      "Retail Chargebacks",
+      "Deductions",
+      "CPG",
+      "Supply Chain"
+    ],
+    "readingTime": 4,
+    "cluster": "recovery",
+    "draft": false,
+    "hideToc": true,
+    "pillarOrder": 2,
+    "pillarLabel": "Deduction Management",
+    "pillarBlurb": "The end-to-end system for tracking, disputing, and preventing retail deductions.",
+    "image": "/images/articles/deduction-management-banner.jpg",
+    "imageAlt": "Hand-drawn whiteboard diagram of the deduction lifecycle: a coded remittance line decoded, validated, disputed with evidence, and the root cause fixed upstream",
+    "answer": "Deduction management is the process a CPG supplier uses to track, validate, dispute, and prevent the chargebacks and shortages retailers pull off their payments. It covers decoding each remittance line, gathering shipment evidence, filing disputes before the deadline, and fixing the root cause in the ERP or EDI setup so the same deduction stops recurring.",
+    "answerQualifier": "Based on retailer deduction and dispute processes documented across this site's Walmart, Target, Amazon, and Kroger coverage, November 2026. Programs and dispute windows change; confirm current terms in your own vendor portal.",
+    "faq": [
+      {
+        "q": "What is deduction management?",
+        "a": "Deduction management is how a supplier handles the chargebacks, shortages, and compliance fines a retailer deducts from its payments. It runs across four stages: decode the coded remittance line, validate whether the charge is real, dispute the invalid ones with evidence before the deadline, and fix the root cause so the deduction does not recur. Done well, it is a prevention discipline, not just a recovery chase."
+      },
+      {
+        "q": "What are chargebacks in retail?",
+        "a": "A retail chargeback is a deduction a retailer takes off a supplier's payment for a shipment or document that broke a rule: a late delivery, a short count, a bad label, or a mismatched EDI file. It posts as a coded line on the remittance weeks after delivery and is separate from a product return. Each retailer uses its own code set and dispute portal."
+      },
+      {
+        "q": "Is deduction management software or a service better?",
+        "a": "Software automates tracking and dispute filing, which helps at high volume, but most tools stop at recovery: chasing deductions after they post. For a mid-market CPG supplier the larger win is root cause, closing the ERP and EDI gaps that generate the charge in the first place. That is a service and process question, not only a software one, so the two are complements rather than substitutes."
+      },
+      {
+        "q": "How do you reduce retail deductions?",
+        "a": "Start by separating the pattern from the noise: which code, at which retailer, from which cause. Validate before you pay, because a share of deductions are duplicates or invalid. Dispute the recoverable ones inside the window. Then fix the upstream data or document gap, since many deductions trace to an ASN, invoice, or unit-of-measure mismatch rather than a warehouse failure."
+      },
+      {
+        "q": "How long do you have to dispute a deduction?",
+        "a": "The clock is set per retailer and it is unforgiving. Walmart disputes run through APDP in Retail Link, Amazon through Vendor Central, and Target and Kroger through their own portals, each with a different window. Miss the deadline and a preventable, disputable charge becomes permanent, so the dispute clock usually matters more than the merits of the case."
+      }
+    ]
+  },
+  {
+    "slug": "demand-forecasting-data-readiness",
+    "title": "Is Your Data Ready for Netstock, o9, or Blue Yonder?",
+    "description": "The six data-readiness checks that decide whether a Netstock, o9, or Blue Yonder pilot ships a working forecast at your SKU catalog.",
+    "pubDate": "2026-08-18T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Demand Forecasting",
+      "S&OP",
+      "Data Readiness",
+      "MAPE",
+      "CPG",
+      "Inventory Planning"
+    ],
+    "readingTime": 8,
+    "cluster": "forecasting",
+    "hub": "supplier-scorecard-for-cpg-suppliers",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/demand-forecasting-data-readiness-banner.jpg",
+    "imageAlt": "what demand forecasting for CPG requires",
+    "answer": "CPG demand-forecasting data readiness means your SKU history, unit-of-measure consistency, promotional flagging, and master-data hygiene can support a statistical model before you buy one. A platform can run a technically correct forecast on messy inputs and still produce numbers you shouldn't order against. The six checks: history depth, UOM consistency, promo/baseline separation, master-data change control, stockout-vs-zero-demand distinction, and accuracy tracking.",
+    "answerQualifier": "Based on Oracle NetSuite's demand-planning documentation, the Institute of Business Forecasting's MAPE reference, and CPG-specific trade-promotion forecasting guidance (Vividly), August 2026.",
+    "faq": [
+      {
+        "q": "How many years of sales history does a demand-forecasting platform need?",
+        "a": "There's no universal number, and Oracle's own NetSuite demand-planning documentation doesn't state a minimum. What matters is continuity: enough clean periods to separate a real trend or seasonal pattern from ordinary noise. A seasonal category typically needs at least two full cycles to tell the two apart. Less than a year, or a year full of gaps, is the tier our own readiness quiz scores as not ready."
+      },
+      {
+        "q": "What is MAPE, and what counts as a good score?",
+        "a": "MAPE (Mean Absolute Percentage Error) averages the absolute percentage gap between what you forecast and what actually sold. There's no universal \"good\" threshold; it depends on category, volatility, and horizon length. What matters more than the number itself is whether you're tracking it consistently enough to know if it's improving."
+      },
+      {
+        "q": "Can I run a forecasting platform if my promotional and base demand aren't separated yet?",
+        "a": "You can run it, but expect the forecast to be wrong in a predictable direction. A quarter with a major promotion inflates what the model treats as your steady-state baseline, so the next quarter's forecast inherits demand that isn't there, and you over-buy against it. Separate the two before go-live if you can; if you can't, treat the first two quarters of forecasts as suspect."
+      },
+      {
+        "q": "What's the difference between a stockout and real zero demand in forecasting data?",
+        "a": "A stockout is demand that existed and went unmet; a zero-demand period is demand that genuinely wasn't there. Sales history records both as the same zero. A model that can't tell them apart learns that an item sells less than it does, and forecasts accordingly, training itself cycle after cycle to keep you understocked on exactly the items that stocked out before."
+      }
+    ]
+  },
+  {
+    "slug": "edi-810-invoice-mismatch-deductions",
+    "title": "EDI 810: How One Pack-Size Field Becomes a Shortage Deduction",
+    "description": "One pack-size mismatch in your item file, carried through the 850, 856, and 810, becomes a shortage deduction for goods that actually arrived.",
+    "pubDate": "2026-08-27T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "EDI",
+      "810",
+      "Invoice",
+      "Shortage",
+      "Three-Way Match",
+      "ERP",
+      "Retail Compliance"
+    ],
+    "readingTime": 8,
+    "cluster": "erp-technical",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/edi-810-invoice-mismatch-deductions-banner.jpg",
+    "imageAlt": "EDI 810 invoice document chain: 850 to 856 to 810 three-way match producing a shortage deduction",
+    "answer": "The retailer's AP department compares three records before releasing payment: the 850 purchase order, the receiving scan (staged by the 856 ASN), and the 810 invoice. When the quantities across those three disagree, the system records a shortage, not a data error. Most shortage deductions trace to a stale item-file field, a wrong unit of measure or an outdated case-pack count, that traveled through every document unchallenged until the receiving scan disagreed with the invoice.",
+    "answerQualifier": "Based on the public X12 810 transaction-set structure (Stedi, BOLD VAN, Celigo, SignalEDI documentation), SPS Commerce shortage-cause references, and Microsoft Learn three-way-match documentation, August 2026. Segment names are the public standard; individual retailer tolerance rules and match thresholds vary.",
+    "faq": [
+      {
+        "q": "What is an EDI 810?",
+        "a": "The EDI 810 is the electronic invoice a supplier transmits after shipping. It carries the invoice number, PO reference, line-item quantities, unit prices, and the total amount due. The retailer's AP department compares it against the original purchase order (850) and the advance ship notice (856) before releasing payment."
+      },
+      {
+        "q": "Why did I get a shortage deduction when everything shipped?",
+        "a": "The retailer's three-way match compares what you invoiced against what their receiving scan recorded, not against what physically arrived. If your 810 bills 120 eaches and their system expected 10 cases of 12, the match fails even though the same goods are on the dock. The mismatch is in the data, not the warehouse."
+      },
+      {
+        "q": "What is a three-way match in retail AP?",
+        "a": "A three-way match compares three records before paying an invoice: the purchase order (what was ordered), the receiving record (what the warehouse counted, staged by the ASN), and the invoice (what the supplier billed). Any disagreement among the three becomes a short-pay or a deduction code on the remittance."
+      },
+      {
+        "q": "What's the difference between an 810 and an 856?",
+        "a": "The 856 Advance Ship Notice describes what's in a shipment before or as it moves. The 810 invoice bills for it afterward. They should describe the same quantities, and when they don't, that gap is where most shortage-code deductions originate. For the full 856 breakdown, see [EDI 856 (ASN): why retailers reject it](/articles/edi-856-asn-rejections.html)."
+      },
+      {
+        "q": "Can I dispute an invoice-adjustment deduction?",
+        "a": "Usually yes, if you have the evidence: a signed bill of lading or proof of delivery showing the correct quantity, the original PO, and the ASN. The dispute window varies by retailer. See the [dispute-deadline reference table](/articles/deduction-dispute-deadlines-by-retailer.html) for reported timelines."
+      }
+    ]
+  },
+  {
+    "slug": "edi-824-rejection-codes",
+    "title": "EDI 824: How to Read the Rejection Codes",
+    "description": "The EDI 824 tells you why a transmission failed, not just whether it arrived. How OTI and TED segments work, and why an unresolved 824 becomes a deduction.",
+    "pubDate": "2026-08-04T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "EDI",
+      "824",
+      "Application Advice",
+      "ERP",
+      "Retail Compliance"
+    ],
+    "readingTime": 7,
+    "cluster": "erp-technical",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/edi-824-rejection-codes-banner.jpg",
+    "imageAlt": "Hand-drawn whiteboard-style diagram explaining the EDI 824 Application Advice: a document flowing through an OTI segment check and a TED error-code segment, labeled with arrows, showing how an unresolved rejection turns into a deduction weeks later",
+    "answer": "The EDI 824 Application Advice tells a trading partner why a document's content, not its syntax, failed: a duplicate invoice, an out-of-balance total, a missing reference. It arrives after a clean 997 confirms only that the transmission was structurally valid. An unresolved 824 rejection routinely becomes a deduction on the remittance weeks later, with nothing connecting the two.",
+    "answerQualifier": "Based on the public X12 824 transaction-set structure (Stedi's EDI reference), Kroger's public EDI portal error-code documentation, and LearnEDI.org's 824 reference, August 2026. Segment names and the OTI/TED structure are the public standard; individual retailers layer their own longer error-code catalogs on top.",
+    "faq": [
+      {
+        "q": "What's the difference between a 997 and an 824?",
+        "a": "The 997 Functional Acknowledgment confirms a transmission arrived and parsed as valid EDI syntax, nothing about whether the business content makes sense. The 824 Application Advice is what tells you the content itself was rejected or flagged: a duplicate invoice, a total that doesn't balance, a reference the retailer's system doesn't recognize. For the full side-by-side comparison, see [EDI 997 vs. 824](https://www.pixelsandclicks.net/articles/edi-997-vs-824.html)."
+      },
+      {
+        "q": "Is an 824 rejection the same as a chargeback?",
+        "a": "Not directly. The 824 is a data-validation response, not a deduction. But an 824 you don't act on routinely becomes one. If the underlying document (an invoice or ASN) never gets corrected and resent, the mismatch it flagged shows up as a shortage or pricing deduction on a later remittance."
+      },
+      {
+        "q": "Do all retailers send 824s?",
+        "a": "No. Some retailers validate content and simply deduct silently if something doesn't match, with no 824 program at all. Where an 824 program exists, it's the closest thing to a free early-warning system a supplier gets before a deduction shows up."
+      },
+      {
+        "q": "What does TED01 mean on an 824?",
+        "a": "TED01 is the numeric error condition code inside the Technical Error Description segment. It's a small, generic list, things like 006 (Duplicate) or 007 (Missing Data). Read it together with TED02, the free-text field where the retailer explains what specifically triggered it."
+      }
+    ]
+  },
+  {
+    "slug": "edi-856-asn-rejections",
+    "title": "EDI 856 (ASN): Why Retailers Reject It",
+    "description": "What the EDI 856 Advance Ship Notice carries, the six most common reasons retailers reject it, and which deduction it becomes if you don't catch it.",
+    "pubDate": "2026-08-02T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "EDI",
+      "ASN",
+      "856",
+      "ERP",
+      "Retail Compliance"
+    ],
+    "readingTime": 7,
+    "cluster": "erp-technical",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/edi-856-asn-rejections-banner.jpg",
+    "imageAlt": "Hand-drawn whiteboard-style diagram explaining the EDI 856 Advance Ship Notice: a truck and a shipment carton labeled with carton counts, SSCC labels, and item quantities, with an arrow showing a rejected ASN turning into a shortage deduction",
+    "answer": "The EDI 856 Advance Ship Notice tells a retailer what's in a shipment before it physically arrives: carton counts, SSCC labels, and item quantities in a hierarchical structure. When it's late, mismatched, or structurally wrong, the retailer's system doesn't record a data error. It records a shortage or a chargeback that shows up weeks later on a remittance.",
+    "answerQualifier": "Based on the public X12 856 transaction-set structure (Stedi's EDI reference, SupplyPike/SPS Commerce documentation), August 2026. Segment names and hierarchy are the public standard; individual retailer implementation guides vary in which segments are required.",
+    "faq": [
+      {
+        "q": "What happens if an 856 is rejected?",
+        "a": "Depends on the retailer's system. Some reject the transmission outright and send back a 997 or 824 flagging the error, which you can fix and resend before the truck arrives. But a clean 997 by itself only confirms the file parsed, not that the content was accepted (see [EDI 997 vs. 824](https://www.pixelsandclicks.net/articles/edi-997-vs-824.html)). Others accept a structurally valid but inaccurate 856, and the mismatch surfaces later as a receiving discrepancy: no error message, just a deduction weeks after the fact."
+      },
+      {
+        "q": "How late can an ASN be before it counts against you?",
+        "a": "There's no single standard window. Each retailer sets its own. Most require transmission before the shipment physically arrives, not before it leaves your dock."
+      },
+      {
+        "q": "Does a rejected 856 always mean a deduction?",
+        "a": "No, but it removes your best evidence. The ASN is the record of what you say you shipped. Without it, you're arguing a shortage or pricing dispute with no proof on your side."
+      },
+      {
+        "q": "What's the difference between an 856 and an 810?",
+        "a": "The 856 is the Advance Ship Notice, sent before or as the shipment moves. The [810 is the invoice](/articles/edi-810-invoice-mismatch-deductions.html), generated afterward to bill for it. They should describe the same quantities, and when they don't, that gap is where most shortage-code deductions originate."
+      }
+    ]
+  },
+  {
+    "slug": "edi-997-vs-824",
+    "title": "EDI 997 vs. 824: What Flags a Failure",
+    "description": "A clean 997 only confirms your EDI transmission parsed, not that the retailer accepted the content. What each acknowledgment actually checks.",
+    "pubDate": "2026-08-10T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "EDI",
+      "997",
+      "824",
+      "Functional Acknowledgment",
+      "Application Advice",
+      "ERP"
+    ],
+    "readingTime": 7,
+    "cluster": "erp-technical",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/edi-997-vs-824-banner.jpg",
+    "imageAlt": "Hand-drawn whiteboard-style diagram comparing the EDI 997 Functional Acknowledgment and 824 Application Advice: a document passing a syntax check labeled 997, then a content check labeled 824, with a branch showing what happens when no 824 exists",
+    "answer": "The EDI 997 Functional Acknowledgment confirms only that a transmission parsed as valid syntax, not that the retailer accepted the content. The EDI 824 Application Advice reports that separately, later, and only where a retailer chooses to send one. A clean 997 with no follow-up 824 is not proof of acceptance.",
+    "answerQualifier": "Based on the public X12 997 and 824 transaction-set structure (Stedi's EDI reference), Kroger's public EDI portal documentation, and LearnEDI.org's acknowledgment references, August 2026. Segment names and the two-document structure are the public standard; which retailers run an 824 program at all is implementation-specific and not universal.",
+    "faq": [
+      {
+        "q": "What's the difference between a 997 and an 824?",
+        "a": "The 997 Functional Acknowledgment confirms a transmission arrived and parsed as valid EDI syntax, nothing about the business content. The 824 Application Advice reports whether that content was actually accepted, once the retailer's system tries to process it. That content might be an invoice total, a PO reference, or a shipment quantity. They answer different questions and neither substitutes for the other."
+      },
+      {
+        "q": "If I get a clean 997, does that mean my EDI document was accepted?",
+        "a": "No. It means the envelope was structurally valid, right segments, right order, right delimiters. Whether the retailer's system did anything useful with the content inside is a separate question. Where an 824 exists, it answers that question later. Where it doesn't, the question goes unanswered."
+      },
+      {
+        "q": "Do all retailers send an 824?",
+        "a": "No. Some retailers validate content and simply deduct against the remittance if something doesn't match, with no application-advice program at all. Where that's the case, a clean 997 is the only acknowledgment you'll ever get, and it was never designed to tell you what you're using it for."
+      },
+      {
+        "q": "Is a rejected 824 the same as a chargeback?",
+        "a": "Not directly. It's a data-validation response, not a deduction. But an 824 rejection that goes uncorrected routinely becomes one. The gap between the two is usually 30 or more days, with nothing on the remittance connecting the eventual deduction back to the written warning that preceded it."
+      },
+      {
+        "q": "What should I actually monitor if I only get 997s?",
+        "a": "Watch the receiving and payment signals downstream of the document itself, since there's no earlier warning coming. That means tracking invoice-to-payment variance, unexpected remittance deduction codes, and receiving discrepancies as the de facto acknowledgment, weeks later than an 824 would have told you."
+      }
+    ]
+  },
+  {
+    "slug": "erp-says-shipped-retailer-says-short",
+    "title": "Why Your ERP Says Shipped and the Retailer Says Short",
+    "description": "Four quantities from four systems create one shortage deduction. Trace from PO to ERP to WMS to ASN to receipt, find the first mismatch, and stop guessing.",
+    "pubDate": "2026-09-15T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "ERP",
+      "Shortage",
+      "Deductions",
+      "NetSuite",
+      "Business Central",
+      "ASN",
+      "EDI",
+      "UOM",
+      "Retail Compliance"
+    ],
+    "readingTime": 9,
+    "cluster": "erp-technical",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/erp-says-shipped-retailer-says-short-banner.jpg",
+    "imageAlt": "Four quantities from four systems creating one shortage deduction: PO, ERP, WMS, and retailer receipt diverging into a gap",
+    "answer": "A shortage deduction usually comes from a mismatch between four numbers: ordered quantity (from the PO), picked quantity (from the WMS), ASN quantity (from the EDI 856), and received quantity (from the retailer portal). Your ERP may show shipped because the shipment was posted. That doesn't prove the retailer received the same units, cases, or cartons. It also doesn't prove the ASN matched the physical shipment. To fix the deduction, trace one SKU through the full chain and find the first place the numbers diverge.",
+    "answerQualifier": "Based on public documentation from Oracle NetSuite (item fulfillment, units of measure), Microsoft Learn (Business Central item references, warehouse posting, units of measure), SPS Commerce (EDI chargebacks), BOLD VAN (EDI mapping failures), Endless Commerce (shortage deduction benchmarks), and Confido (deduction recovery), September 2026. Individual ERP configurations and retailer receiving rules vary.",
+    "faq": [
+      {
+        "q": "Why does my ERP say shipped when the retailer deducted for shortage?",
+        "a": "A posted shipment means the ERP transaction moved forward. It doesn't prove the truck carried that exact quantity. The gap usually comes from one of four places: a pick exception posted after order release, a 3PL edit made in a portal your ERP doesn't see, a unit-of-measure mismatch between your system and the retailer's, or an ASN that transmitted a different quantity than the physical shipment."
+      },
+      {
+        "q": "Can a unit-of-measure mismatch cause a shortage deduction even when nothing is physically missing?",
+        "a": "Yes. If your ASN declares 120 eaches and the retailer's system expected 10 cases of 12, the quantities are mathematically identical but the formats don't reconcile. The receiving count reads short. The retailer files a shortage deduction for goods that physically arrived. The fix is in your item master, not on the truck."
+      },
+      {
+        "q": "How do I find the root cause of a shortage deduction?",
+        "a": "Pick one deducted PO and trace one SKU. Pull the retailer PO, ERP sales order, pick ticket, ASN file, 997 and 824 responses, BOL, POD, retailer receiving record, invoice, and remittance line. Put the quantities in one row. The first place they diverge is your root cause."
+      },
+      {
+        "q": "Does a NetSuite or Business Central shipment posting prove in-full delivery?",
+        "a": "No. A posted shipment confirms the ERP transaction completed. It doesn't confirm the warehouse picked that exact quantity, the ASN transmitted the same number, or the retailer received it. The gap between the ERP posting and the retailer's receiving record is where most shortage deductions originate."
+      }
+    ]
+  },
+  {
+    "slug": "free-cpg-supplier-tools-deduction-scorecard",
+    "title": "5 Free CPG Supplier Tools: Deduction Code Decoder, Scorecard Risk Checker, and More",
+    "description": "Five free tools for CPG suppliers: decode any deduction code, look up dispute deadlines, check scorecard risk, size annual deduction leakage, or track your scorecard with custom weights.",
+    "pubDate": "2026-11-09T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Free Tools",
+      "Deduction Management",
+      "Supplier Scorecard",
+      "OTIF",
+      "Deduction Code",
+      "CPG Suppliers"
+    ],
+    "readingTime": 7,
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/free-cpg-supplier-tools-banner.jpg",
+    "imageAlt": "Hand-drawn black ink whiteboard sketch of five labeled tool boxes (Deduction Code Decoder, Dispute Lookup, Scorecard Risk Checker, Deduction Leakage Calc, Scorecard Template) around a central stick figure, with arrows converging into a box labeled FREE at pixelsandclicks.net",
+    "answer": "Five free tools are now live for CPG suppliers: a Retail Deduction Code Decoder, a Deduction Dispute Deadline Lookup, a Supplier Scorecard Risk Checker, a Deduction-Leakage Calculator, and a fillable Supplier Scorecard Template. We also updated the OTIF Calculator with Kroger's corrected 93% ORAD on-time threshold. No login, no trial, no form required for any of them.",
+    "answerQualifier": "Pixels and Clicks site update, November 2026.",
+    "faq": [
+      {
+        "q": "What is the Retail Deduction Code Decoder?",
+        "a": "A free lookup tool. Type any Walmart, Target, Amazon, or Kroger deduction code and get the retailer's label, what they're claiming, the most likely cause on the fulfillment or EDI side, and whether the deduction can be disputed and how to file. Entries sourced from vendor references rather than a retailer's own documentation are tagged Provisional."
+      },
+      {
+        "q": "What is the Deduction Dispute Deadline Lookup?",
+        "a": "A free tool where you pick a retailer and deduction type and get the dispute window, the date the clock starts (invoice date, posting date, shipping date, or notification date — it varies by retailer), the portal to file through, and any internal timers that can close a case before the published deadline. Each window carries a confidence tag based on how many sources agree."
+      },
+      {
+        "q": "What is the Supplier Scorecard Risk Checker?",
+        "a": "A free diagnostic tool that scores your on-time delivery, fill rate, and ASN accuracy against each retailer's reported thresholds and returns a composite risk score and risk band (green, amber, or red) with a per-metric breakdown. Answer 12 questions in about four minutes and get your score: no login required."
+      },
+      {
+        "q": "What does the Deduction-Leakage Calculator do?",
+        "a": "It estimates how much retail deductions reduce your annual revenue. Enter your revenue by retailer and your known deduction rate. The calculator sizes total annual leakage and splits it into recoverable (through disputes) and preventable (through ERP and EDI fixes) portions."
+      },
+      {
+        "q": "What changed in the OTIF Calculator for Kroger?",
+        "a": "The Kroger threshold was corrected to 93% under the ORAD program. ORAD stands for Order Receipt and Acknowledgement Date, the timestamp Kroger creates when it confirms your delivery booking. If you modeled Kroger fine exposure with the old version, run it again."
+      },
+      {
+        "q": "What is the Supplier Scorecard Template?",
+        "a": "A free, fillable browser tool. Set the weight for each metric (on-time delivery, fill rate, ASN accuracy, compliance), enter your actual scores, and get a weighted composite. Download as CSV to track month over month in your own spreadsheet or reporting tool."
+      }
+    ]
+  },
+  {
+    "slug": "holiday-forecast-trap-otif-risk",
+    "title": "The Retailer's Peak Forecast Will Cost You OTIF in November",
+    "description": "Peak-season retailer forecasts overstate demand. Accepting one without a counter-model stacks OTIF risk in November and inventory write-downs in January.",
+    "pubDate": "2026-09-01T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Forecasting",
+      "OTIF",
+      "Peak Season",
+      "Walmart",
+      "Retail Compliance",
+      "Q4"
+    ],
+    "readingTime": 8,
+    "cluster": "forecasting",
+    "hub": "supplier-scorecard-for-cpg-suppliers",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/holiday-forecast-trap-otif-risk-banner.jpg",
+    "imageAlt": "Whiteboard-style diagram of a CPG supplier receiving an inflated Q4 forecast from a retailer, showing the branching risks of accepting it uncritically: OTIF fine in November, shortage claims in December, and markdown deductions in January",
+    "answer": "Retailer peak-season forecasts routinely overstate demand by 10 to 25 percent, and accepting one without running a supplier-side counter-forecast commits you to inventory and capacity you may not clear. The trap is not the forecast. The trap is treating it as an order commitment. Build a POS-driven counter-forecast, flag any line where the retailer number sits more than 15 percent above your own, and negotiate the delta before you cut a purchase order to your co-packer.",
+    "answerQualifier": "Based on public forecasting and retailer-compliance documentation from SPS Commerce, BOLD VAN, Endless Commerce, and Supply Chain Dive, September 2026. Retailer forecast tools and thresholds vary by program.",
+    "faq": [
+      {
+        "q": "Why do retailer peak-season forecasts overstate demand?",
+        "a": "Category buyers face asymmetric risk. An out-of-stock at peak costs them shelf space and a sales miss. An overstock at peak costs them a markdown that hits the supplier through code 10 or a return. The rational buyer forecast leans high because the downside falls on your P&L, not theirs. This shows up most in first-year holiday programs and in categories with new SKU launches."
+      },
+      {
+        "q": "What should I do when a retailer forecast is 20% above my POS trend?",
+        "a": "Send a counter-forecast referencing your own POS data, last year's sell-through at the same account, and any current velocity signal. Ask the buyer for the assumption behind the peak lift. Do not decline. Propose a stepped commitment: firm on the first half, flexible on the second, with a case-pack contingency plan. Buyers negotiate this every year. Suppliers who accept without pushing back carry the write-down alone."
+      },
+      {
+        "q": "How does an inflated peak forecast create OTIF risk?",
+        "a": "Two paths. The first: you commit inventory, freight, and DC space to the inflated line, then a mid-November PO cut leaves the balance stranded. Your OTIF drops on the next PO because you rerouted capacity to hit the peak plan. The second: the retailer holds the forecast, sell-through underperforms, and the retailer marks down or returns the excess in January. That comes back as code 10 or codes 92, 93, 94."
+      },
+      {
+        "q": "Can I dispute an OTIF fine caused by a retailer forecast miss?",
+        "a": "The OTIF fine is a program-level chargeback measured on your aggregate on-time and in-full rate, not a per-shipment dispute. A forecast miss that damaged your fill rate is not disputable as an OTIF line. You can dispute the underlying shortage codes on the specific POs, but not the scorecard math. The prevention is upstream, before the forecast becomes an order."
+      },
+      {
+        "q": "What is the cost of accepting a peak forecast without a counter-model?",
+        "a": "It varies with category and lift, but a typical outcome for a $50 million CPG supplier accepting a 20 percent inflated Q4 forecast: two to three points of OTIF drop in November, 60 to 90 days of unproductive inventory carrying cost, and a January markdown deduction of 1 to 3 percent of the affected receipts. The forecast decision in September is a working-capital decision as much as a fill-rate decision."
+      }
+    ]
+  },
+  {
+    "slug": "home-depot-routing-guide-compliance",
+    "title": "The Home Depot Routing Guide Rules That Cost Suppliers Most",
+    "description": "Home Depot's rules for carrier selection, ASN timing, and labeling. What routing, BOL, and on-time violations cost suppliers at each tier.",
+    "pubDate": "2026-08-15T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Home Depot",
+      "Routing Guide",
+      "Supplier Compliance",
+      "TMS",
+      "ASN",
+      "Chargebacks"
+    ],
+    "readingTime": 9,
+    "cluster": "prevention",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/home-depot-routing-guide-compliance-banner.jpg",
+    "imageAlt": "Home Depot distribution compliance guide retailers",
+    "answer": "Home Depot's routing guide requires suppliers to book collect shipments through its assigned carriers and TMS, hit a reported 90% on-time threshold, transmit an EDI 856 ASN before the shipment reaches the DC, and label cartons to GS1-128 spec. Violations, including using the wrong carrier on an on-time shipment, post as chargebacks deducted from the next payment.",
+    "answerQualifier": "Compiled from public freight, EDI, and logistics vendor documentation (DTS One, WarehouseQuote, Productiv, SPS Commerce, Crstl, Foundational, plus one vendor blog, iNymbus, flagged inline), August 2026. No figure confirmed against Home Depot's own Supplier Hub.",
+    "faq": [
+      {
+        "q": "What is Home Depot's routing guide?",
+        "a": "It's the document and TMS ruleset, published through Home Depot's Supplier Self-Service portal, that assigns which carrier a supplier must use for a given collect shipment based on the ship method listed on the PO. It covers shipments into the continental US, Canada, and Puerto Rico, per DTS One."
+      },
+      {
+        "q": "How much is a Home Depot routing guide violation?",
+        "a": "DTS One reports a $250 penalty for using a carrier other than the one Home Depot's routing guide assigns, applied even when the shipment itself arrives on time. No second public source confirms this exact figure, so treat it as reported, not verified."
+      },
+      {
+        "q": "Do I have to use Home Depot's assigned carrier even if my own carrier is cheaper or faster?",
+        "a": "Yes, for collect shipments. Per Productiv, using any other carrier triggers a routing non-compliance deduction regardless of delivery performance. The routing guide grades carrier choice, not delivery outcome."
+      },
+      {
+        "q": "What is Home Depot's on-time delivery requirement?",
+        "a": "DTS One and WarehouseQuote both report a 90% on-time accuracy threshold. Prepaid shipments count as on time if Home Depot receives the PO by the expected delivery date; collect shipments count as on time only if the supplier marks the PO ready to ship in the TMS by 11am local time, two days before pickup."
+      },
+      {
+        "q": "How do I dispute a Home Depot compliance violation?",
+        "a": "Through the Vendor Compliance Support process inside the Supplier Hub. SPS Commerce reports the standard dispute window opens the second Wednesday of a fiscal month and closes the second Tuesday of the following month. One vendor blog, iNymbus, separately claims a $25 minimum before a chargeback is disputable at all."
+      }
+    ]
+  },
+  {
+    "slug": "how-to-dispute-walmart-deductions",
+    "title": "How to Dispute a Walmart Deduction: APDP, HighRadius, and the Timer That Closes Cases Early",
+    "description": "Step-by-step guide to disputing Walmart deductions through APDP and HighRadius, with documentation requirements and the 14-day draft timer that closes valid claims before the posted deadline.",
+    "pubDate": "2026-11-11T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Deductions",
+      "Walmart",
+      "Dispute Process",
+      "APDP",
+      "Chargebacks",
+      "OTIF",
+      "Deduction Management"
+    ],
+    "readingTime": 9,
+    "cluster": "recovery",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/how-to-dispute-walmart-deductions-banner.jpg",
+    "imageAlt": "Hand-drawn black ink whiteboard with HOW TO DISPUTE WALMART DEDUCTIONS in bold uppercase at the top, a flowchart splitting a remittance notice into two paths — APDP inside Retail Link for AP deductions and HighRadius for OTIF chargebacks — with a clock labeled 14-DAY DRAFT TIMER and a documentation stack labeled SIGNED POD, BOL, INVOICE",
+    "answer": "Walmart AP deductions and shortage claims dispute through APDP inside Retail Link. OTIF compliance chargebacks go to HighRadius — a separate system outside Retail Link. APDP has a 14-day internal draft timer: a case you open but don't submit within 14 days auto-closes without warning. The posted windows are 2 years for general AP deductions, 12 months for shortage claims, and 15 to 30 days for compliance chargebacks. Filing in the wrong portal, or leaving a case as a draft, is how valid disputes expire before the posted deadline.",
+    "answerQualifier": "Portal and window data from SPS Commerce, Glimpse, and Confido, cross-referenced August 2026. Walmart adjusts programs through Retail Link without public announcements; confirm windows in your own portal before filing.",
+    "faq": [
+      {
+        "q": "What is APDP and where do I find it?",
+        "a": "APDP stands for Accounts Payable Deduction Portal. It's Walmart's primary dispute filing system, accessible from inside Retail Link. Most deduction types — AP deductions, shortage claims, billing errors, routing chargebacks — route through APDP. OTIF compliance chargebacks are the exception and go to HighRadius instead."
+      },
+      {
+        "q": "How do I know if a Walmart deduction goes to APDP or HighRadius?",
+        "a": "OTIF compliance chargebacks route to HighRadius. All other deduction types — shortages, AP deductions, invoice errors, routing chargebacks — go to APDP. Filing an OTIF chargeback in APDP results in rejection without review. The HighRadius window is 30 days from the chargeback notice. Use the Deduction Code Decoder to confirm which portal your code uses before you open a case."
+      },
+      {
+        "q": "What is the 14-day draft timer in APDP?",
+        "a": "When you open a dispute case in APDP, it saves as a draft. If you don't submit the draft within 14 days, the case auto-closes. APDP doesn't send a warning before it closes. The draft timer runs from when you first open the case, not from when you attach documents or think you've hit submit. This timer is separate from the posted dispute window and can expire a valid claim weeks before the published deadline."
+      },
+      {
+        "q": "What documentation does Walmart require for a shortage claim?",
+        "a": "At minimum: a signed proof of delivery, bill of lading, carrier confirmation of delivery, and the original invoice. For a quantity shortage, packing slips showing what physically shipped also help. Walmart can deny a shortage dispute if the POD isn't signed by a receiver at the DC. Gather the full package before you open the case in APDP — the 14-day draft timer starts the moment you open it."
+      },
+      {
+        "q": "How long does it take Walmart to resolve a dispute?",
+        "a": "AP deduction disputes through APDP take 60 to 90 days on average. Shortage claims run longer if Walmart opens an internal receiving investigation. HighRadius OTIF disputes typically resolve faster but within the tight 30-day window. APDP shows status codes — Pending, Under Review, Additional Documentation Requested — but doesn't estimate a resolution date."
+      },
+      {
+        "q": "Can I reopen a closed APDP dispute?",
+        "a": "No. A case that closes — either because the 14-day draft timer expired or because Walmart denied it — can't be reopened through APDP. Some suppliers escalate through their Walmart buyer or category manager. The cleaner path is submitting complete documentation before the internal timer expires."
+      }
+    ]
+  },
+  {
+    "slug": "kroger-supplier-deductions-guide",
+    "title": "Kroger Deduction Codes 2-9 and the 180-Day Dispute Clock",
+    "description": "Kroger deduction codes 2 through 9, the ORAD and MCB compliance fees, and the Supplier Connect dispute path. 180 days to file, 60 on MCB.",
+    "pubDate": "2026-08-25T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Kroger",
+      "Vendor Compliance",
+      "Deductions",
+      "Chargebacks",
+      "Lavante",
+      "Supplier Connect",
+      "ORAD",
+      "Deduction Codes"
+    ],
+    "readingTime": 7,
+    "cluster": "prevention",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/kroger-supplier-deductions-guide-banner.jpg",
+    "imageAlt": "Hand-drawn whiteboard-style diagram showing a Kroger remittance line with a numeric deduction code circled, an arrow pointing to a stack of vendor-source PDFs labeled SPS Commerce, iNymbus, and Confido, and a second arrow pointing to a portal window labeled Supplier Connect (formerly Lavante), with a stick figure holding a magnifying glass and a bold hand-lettered headline reading Kroger Deductions",
+    "answer": "Kroger bills suppliers on two tracks. AP codes 2 through 9 cover shortages, cost differences, and promotional allowances, with 180 days to dispute. Compliance fees like ORAD and MCB post as AR deductions instead, and an MCB fee reportedly allows only 60 days. Disputes file through Supplier Connect, which replaced Lavante in late 2025.",
+    "answerQualifier": "Compiled from six independent public vendor sources (SPS Commerce, iNymbus, Confido, WarehouseQuote, ClearChain, SupplierWiki/SupplyPike), August 2026. Kroger does not publish this itself, so every figure here is vendor-reported and flagged where sources disagree. Confirm the code and window on your own Supplier Connect remittance detail.",
+    "faq": [
+      {
+        "q": "What deduction codes does Kroger use on a remittance?",
+        "a": "Vendor sources describe eight primary AP codes (2 through 9) covering promotional allowance differences, cost mismatches, shortages, EDI non-compliance, unit shortages, overages, net-dollar catch-alls, and pickup allowances. Letter codes like SH (shortage), LC (list cost), and SD (shorted deals) appear alongside the numeric list. Compliance fees like ORAD (late delivery) and MCB (merchandising) post separately as AR deductions, not AP."
+      },
+      {
+        "q": "How long do I have to dispute a Kroger deduction?",
+        "a": "180 days from the deduction date for standard AP deductions, per SPS Commerce and Confido. An MCB compliance fee reportedly allows only 60 days from the MCB issue date and files through the Kroger Supplier Hub instead, per ClearChain. Once a claim is submitted it cannot be modified, so documentation has to be complete before filing."
+      },
+      {
+        "q": "What is the difference between Lavante and Supplier Connect?",
+        "a": "Lavante was Kroger's previous PRGX-hosted dispute portal. Supplier Connect is the replacement Kroger rolled out in late 2025 with the same operator, migrated historical data, and Partner Pass single sign-on, per iNymbus. The 180-day window and PRGX review did not change. Guidance published before mid-2026 still names Lavante, so treat it as stale on portal mechanics."
+      },
+      {
+        "q": "What is a Kroger ORAD fine?",
+        "a": "ORAD stands for Original Requested Arrival Date, the delivery date on your Kroger PO. Miss it and Kroger applies a late-shipment fine. Per iNymbus, ORAD is tracked against a 98% on-time threshold with a 95% case fill rate on every shipment. ORAD fines post as AR deductions on a different claim path than the numeric AP codes, per SPS Commerce."
+      },
+      {
+        "q": "How does Kroger's deduction program compare to Walmart's?",
+        "a": "Walmart runs roughly 90 AP codes, disputes through APDP, and allows up to two years on general deductions. Kroger runs eight numeric codes plus letter codes, disputes through Supplier Connect, and allows 180 days. Kroger also splits compliance fees onto a separate AR track, whereas Walmart deducts everything through the same AP flow."
+      }
+    ]
+  },
+  {
+    "slug": "monday-morning-deduction-triage",
+    "title": "The 30-Minute Deduction Triage Before Your OTIF Meeting",
+    "description": "Nine checks before the weekly OTIF meeting, four timestamps that replace carrier blame, and a script that turns scorecard panic into one next action per PO.",
+    "pubDate": "2026-09-13T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "OTIF",
+      "Deductions",
+      "Retail Compliance",
+      "Scorecard",
+      "ASN",
+      "EDI",
+      "Carrier"
+    ],
+    "readingTime": 9,
+    "cluster": "prevention",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/monday-morning-deduction-triage-banner.jpg",
+    "imageAlt": "OTIF deduction triage checklist with nine checks before the Monday scorecard meeting",
+    "answer": "Before blaming the carrier for an OTIF deduction, check nine things in order: PO version match, pick completion, ASN-to-pick match, ASN send time against the retailer cutoff, 997 acknowledgment, 824 content response, appointment request timing, carrier arrival time, and retailer receiving record. The first mismatch you find is your root cause. Pull four timestamps for each flagged PO before the meeting starts: pick confirm, ASN send, appointment confirmation, and retailer receipt.",
+    "answerQualifier": "Based on public EDI and compliance documentation from SPS Commerce, BOLD VAN, Confido, Endless Commerce, and DOSS, September 2026. Individual retailer scoring rules, dispute windows, and chargeback thresholds vary by program.",
+    "faq": [
+      {
+        "q": "What should I check before blaming the carrier for an OTIF deduction?",
+        "a": "Check nine things: whether the PO changed after confirmation, whether the warehouse picked the full quantity, whether the ASN matched the pick, whether the ASN transmitted before the retailer's cutoff, whether the 997 came back clean, whether an 824 flagged a content error, whether the delivery appointment was requested on time, whether the carrier arrived inside the window, and whether the retailer's receiving record matched the ASN. The first mismatch tells you where to work."
+      },
+      {
+        "q": "How do I run a 30-minute OTIF deduction meeting?",
+        "a": "Use this order: Finance shows the deduction line and dollar amount. Ops pulls the affected POs. Warehouse shows pick completion and short-pick exceptions. The EDI owner shows ASN send time, 997, and 824 status. Logistics shows the appointment and delivery trail. Then tag each PO as dispute, fix, carrier, or unknown, and assign one next action per PO."
+      },
+      {
+        "q": "What four timestamps should I pull before an OTIF meeting?",
+        "a": "Pick confirm time (when the warehouse finished the order), ASN send time (when the retailer was told what was coming), appointment confirmation time (whether the delivery slot was real), and arrival or receipt time (whether freight hit the window). If those four don't line up, you don't have a freight issue yet. You have a timeline issue."
+      },
+      {
+        "q": "Can a clean 997 mean my ASN still failed?",
+        "a": "Yes. A 997 confirms the file parsed without syntax errors. It doesn't confirm the retailer accepted the business content: quantities, item identifiers, pack hierarchy, or shipment date. Business-level rejection comes back on the 824, if the retailer sends one. A clean 997 with no 824 follow-up is not proof of acceptance."
+      }
+    ]
+  },
+  {
+    "slug": "netsuite-edi-856-failures",
+    "title": "The Five NetSuite Settings Behind Your ASN Rejections",
+    "description": "Five NetSuite-specific reasons the EDI 856 ASN comes out wrong: item cross-references, UOM conversion, pick timing, subsidiary mapping, kit explosion.",
+    "pubDate": "2026-08-13T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "EDI",
+      "856",
+      "NetSuite",
+      "ERP",
+      "ASN",
+      "Retail Compliance"
+    ],
+    "readingTime": 8,
+    "cluster": "erp-technical",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/netsuite-edi-856-failures-banner.jpg",
+    "imageAlt": "NetSuite's EDI 856 document failure",
+    "answer": "A NetSuite-generated EDI 856 that's wrong at transmission becomes a shortage or no-merchandise deduction thirty to sixty days later. Five NetSuite-specific gaps cause it: item cross-references, eaches-to-cases unit conversion, pick-confirm timing, OneWorld subsidiary routing, and kit or assembly explosion into pack-level detail. Each is catchable pre-transmission with a saved search or SuiteFlow validation.",
+    "answerQualifier": "Based on Oracle NetSuite's own help documentation (item records, units of measure, item fulfillment, OneWorld) and EDI-connector vendor documentation (Orderful, Celigo), August 2026. NetSuite's native fields and statuses are documented. Which specific validations a given connector runs pre-transmission varies by vendor and is not a public standard.",
+    "faq": [
+      {
+        "q": "Does NetSuite generate the EDI 856 natively, or does it need a connector?",
+        "a": "NetSuite's Item Fulfillment record holds most of the data an 856 needs, but NetSuite does not natively speak X12. An EDI connector (Orderful, Celigo, SPS Commerce, TrueCommerce, and others) reads the fulfillment record and maps it into the transaction set. Several connectors add custom fields to capture pallet/carton detail that Item Fulfillment does not represent on its own."
+      },
+      {
+        "q": "Can a unit-of-measure mismatch cause a shortage deduction even when the physical count was correct?",
+        "a": "Yes. If the 856 declares a quantity in eaches where the retailer's implementation guide expects cases, the receiving count looks short or over by exactly the case-pack multiplier. Nothing is physically wrong. It reads as a shortage code on the remittance regardless."
+      },
+      {
+        "q": "Why does a kit or assembly item break an 856 that a simple inventory item doesn't?",
+        "a": "A retailer's system expects pack-level detail: which item, in what quantity, in which carton. A kit item is one line in NetSuite but multiple physical components on the truck. As a result, the 856 has to explode the kit into its components at the pack level. That explosion logic lives in the connector, not in NetSuite's native fulfillment screen."
+      },
+      {
+        "q": "Does a NetSuite OneWorld subsidiary structure affect EDI routing?",
+        "a": "It can. Each OneWorld transaction generally posts to one subsidiary, and each subsidiary has its own locations. If a trading-partner or ship-to mapping points to the wrong subsidiary's location, the fulfillment record can carry the wrong facility or tax jurisdiction into the outbound 856. That's an error a receiving DC has no way to catch on its end."
+      },
+      {
+        "q": "What's the fastest way to start catching these before they become deductions?",
+        "a": "Pick the one failure mode you have already seen on a remittance and build a saved search for it first: unmapped vendor item codes, fulfillments missing a UOM conversion, or kit lines with no component detail. A single working validation beats a five-point plan that never ships."
+      }
+    ]
+  },
+  {
+    "slug": "peak-season-routing-guide-changes",
+    "title": "What Changes in the Routing Guide From October to December",
+    "description": "What tightens in retailer routing guides from October through December: MABD tolerance, appointment cutoffs, and ASN timing shifts, retailer by retailer.",
+    "pubDate": "2026-09-09T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Routing Guide",
+      "Peak Season",
+      "Walmart",
+      "Target",
+      "Home Depot",
+      "Kroger",
+      "OTIF",
+      "Retail Compliance"
+    ],
+    "readingTime": 10,
+    "cluster": "prevention",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/peak-season-routing-guide-changes-banner.jpg",
+    "imageAlt": "Whiteboard-style matrix comparing peak-season routing guide changes across Walmart, Target, Home Depot, and Kroger, with columns for MABD tolerance, appointment cutoff, ASN cutoff, and receiving behavior",
+    "answer": "The core routing rules do not always change for peak season, but the tolerance around them almost always does. Walmart holds the Must Arrive By Date window through peak but runs it against higher volume, so misses compound. Target compresses appointment windows in the last two weeks of November and December at high-volume DCs. Home Depot publishes peak-period addenda through its Vendor Compliance program. Kroger tightens receiving appointment cadence at high-volume DCs during peak. The pattern across all four is that measurement rules stay the same, and enforcement gets stricter.",
+    "answerQualifier": "Based on public routing guide and vendor compliance documentation from Walmart, Target, Home Depot, Kroger, and industry vendor sources including SPS Commerce, SupplyPike, Confido, and Supply Chain Dive, September 2026. Retailer routing guides are updated by supplier portal notice and are not always publicly documented in full. Confirm current specifics in the relevant retailer portal before acting.",
+    "faq": [
+      {
+        "q": "What is a retailer routing guide, and why does it change for peak season?",
+        "a": "A retailer routing guide is the retailer's rulebook for how freight arrives at its DCs: MABD dates, appointment procedures, carrier selection, load consolidation, and ASN cutoffs. The rules themselves rarely change for peak. What changes is the tolerance: fewer late-appointment overrides, tighter enforcement of load-consolidation rules, faster dock rejections when paperwork is off. Peak is when the routing guide gets enforced to the letter, not when the letter gets rewritten."
+      },
+      {
+        "q": "Does Walmart change MABD tolerance in November and December?",
+        "a": "Walmart's MABD window and OTIF measurement thresholds have been publicly reported through the Retail Link portal rather than external press. Public reporting suggests Walmart holds the 90 percent on-time and 95 percent in-full targets for prepaid suppliers across the year, but the aggregate volume denominator during peak means small absolute misses cost more OTIF points than the same misses in June. Suppliers who track the fine dollar exposure rather than the percentage often see a threefold peak-to-mid-year variance without any rule change."
+      },
+      {
+        "q": "How much lead time does Target require for peak appointments?",
+        "a": "Target's OTIF program uses MABD-based on-time measurement and appointment procedures documented in its vendor portal. Public vendor coverage indicates Target compresses appointment windows at high-volume DCs during peak, particularly in the two weeks leading up to Thanksgiving and Christmas. Specific cutoff hours are not publicly documented in full and vary by DC. Confirm the current Target Vendor Standards Manual and any peak addenda through Target Partners Online before shipping."
+      },
+      {
+        "q": "What does Home Depot publish about peak-period routing?",
+        "a": "Home Depot maintains a Vendor Compliance program with a Supplier Expectation Rating (SER) and disputes route through Vendor Compliance Support. Home Depot publishes peak-period addenda to its supplier community through Vendor Standards updates. Public vendor coverage suggests these addenda cover appointment window compression at high-volume DCs from October through December, plus stricter enforcement of load-tender response times. Full addendum contents are not publicly documented; check Home Depot's supplier portal for current specifics."
+      },
+      {
+        "q": "Does Kroger tighten routing rules for peak?",
+        "a": "Kroger operates supplier compliance through its supplier hub and Sync platform, with deduction and chargeback programs tied to shipment execution against the PO and MABD. Kroger runs a large peak grocery period around Thanksgiving and Christmas, and public vendor coverage indicates receiving appointment cadence tightens at high-volume DCs during that window. Kroger does not publish peak-specific addenda as broadly as some other retailers; the current shipment and routing rules are documented in the Kroger Supplier Hub."
+      }
+    ]
+  },
+  {
+    "slug": "q4-deduction-cliff-calendar",
+    "title": "The Q4 Deduction Cliff: A Month-by-Month Calendar",
+    "description": "Retailer deductions do not spike evenly across Q4. OTIF fines hit in November, shortages pile up in December, the returns wave crests in January. The calendar.",
+    "pubDate": "2026-09-05T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Deductions",
+      "Q4",
+      "Peak Season",
+      "OTIF",
+      "Retail Compliance",
+      "Chargebacks"
+    ],
+    "readingTime": 10,
+    "cluster": "prevention",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/q4-deduction-cliff-calendar-banner.jpg",
+    "imageAlt": "Whiteboard-style calendar diagram of the Q4 deduction cliff for CPG suppliers, showing OTIF fines peaking in November, shortage claims peaking in December, and returns and markdown deductions peaking in January and February",
+    "answer": "The Q4 deduction cliff runs October through February and hits three separate waves. OTIF fines and ASN failures peak in November when volume is highest against the tightest routing windows. Shortage and receiving claims peak in December when DC receiving speeds up and error rates rise. Markdown deductions under code 10 and returns under codes 92, 93, and 94 peak in January and February, after post-holiday sell-through gets counted. A supplier that plans against one flat Q4 chargeback rate underestimates the risk in each specific window.",
+    "answerQualifier": "Based on public deduction and OTIF documentation from BOLD VAN, Endless Commerce, SPS Commerce, SupplyPike, and Supply Chain Dive, September 2026. Retailer deduction volumes and program details vary by account and year.",
+    "faq": [
+      {
+        "q": "Which deduction types actually spike in Q4?",
+        "a": "Three families spike, at different times. OTIF fines and ASN-related chargebacks peak in November because peak volume runs against tighter routing windows. Shortage and receiving deductions like Walmart code 22 and Target SIFR peak in December because DC receiving throughput rises and error rates rise with it. Markdown deductions like Walmart code 10 and returns under codes 92, 93, and 94 peak in January and February, when the retailer counts through post-holiday sell-through and returns."
+      },
+      {
+        "q": "When does the peak-season OTIF fine window end?",
+        "a": "The measurement window and the payment window are different. The measurement window at Walmart, Target, and Kroger typically covers the receiving month, so a November miss shows up on your November scorecard. The fine itself often lands on the following month's remittance, so a November scorecard fine may not hit your check until late December or January. If your team measures deduction risk by remittance date rather than shipment date, the November miss looks like a January problem, and the root cause looks blurry."
+      },
+      {
+        "q": "Why do returns deductions land in January instead of during the holiday?",
+        "a": "Retailers batch returns processing. Consumer returns from Black Friday and December sales sit in stores or reverse-logistics centers for weeks before they process against your account. Walmart returns codes 92, 93, and 94 typically show up on remittances 30 to 90 days after the Christmas peak. That is why the January remittance often runs materially larger than any month in Q4 itself. The volume is there, it is just not counted yet."
+      },
+      {
+        "q": "Should I reserve dispute capacity for Q4, or spread it evenly?",
+        "a": "Do not spread it evenly. Endless Commerce reports dispute win rates of 75 to 80 percent when filed within seven days and 15 to 20 percent after 60 days. Your November OTIF fine hits your check in December. Your December shortage claim hits in January. Your January returns hit in February. If your dispute team is running at capacity through the peak, they miss the seven-day window on the exact deductions with the highest recovery odds. Staff the dispute window to the calendar, not to an average month."
+      },
+      {
+        "q": "How large is a typical Q4 deduction cliff for a $50M CPG supplier?",
+        "a": "Deduction burden varies with retailer mix and program details, but a common pattern for a $50 million CPG supplier at a Walmart, Target, Amazon 1P, and Kroger mix: November through February deductions run 1.5 to 3 times the mid-year monthly average, driven by OTIF, shortage, and returns codes in sequence. That is $50,000 to $150,000 of additional exposure across the four-month window compared to a mid-year baseline, before any specific program change lands."
+      }
+    ]
+  },
+  {
+    "slug": "read-walmart-remittance-advice",
+    "title": "How to Read a Walmart Remittance and Spot the Disputes",
+    "description": "Where the invoice number, PO number, and deduction code live on a Walmart remittance, and how to spot which lines are worth disputing.",
+    "pubDate": "2026-08-09T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Walmart",
+      "Remittance Advice",
+      "Deduction Codes",
+      "APDP",
+      "Retail Compliance"
+    ],
+    "readingTime": 8,
+    "cluster": "prevention",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/read-walmart-remittance-advice-banner.jpg",
+    "imageAlt": "Hand-drawn whiteboard-style diagram explaining how to read a Walmart remittance advice: the payment total, invoice reference block, and deduction code line labeled with arrows, plus a checklist equation for matching a code to a claim type",
+    "answer": "A Walmart remittance advice is the payment document, an EDI 820, showing what was paid against each invoice and what was subtracted first. Deduction lines carry a numeric code, a dollar amount, and a reference back to the invoice or PO. Reading one means matching that code to a claim type, then deciding if the line is worth disputing.",
+    "answerQualifier": "Based on the public X12 820 transaction-set structure (SPS Commerce's EDI reference), vendor guides to Walmart's Accounts Payable Dispute Portal and APIS search fields (SPS Commerce, iNymbus), and a 2025 industry benchmark on deduction write-off rates (Finortal, cited via OverDeduct), August 2026.",
+    "faq": [
+      {
+        "q": "Why is my Walmart check short?",
+        "a": "It's not a check for the invoice total. It's a check for the invoice total minus every deduction line Walmart's system applied first. Each deduction carries a code and a reason, and the check reflects the net after all of them."
+      },
+      {
+        "q": "Where do I find what a Walmart deduction code means?",
+        "a": "The code itself appears on the remittance line, next to the amount and a reference back to the invoice or PO. What the code means isn't printed there. Look it up separately, in Walmart's own Retail Link documentation or a fact-checked reference like this site's deduction-code hub."
+      },
+      {
+        "q": "Should I dispute every deduction on a Walmart remittance?",
+        "a": "No. Vendor sources point to frequency as the better signal, not size. One or two deductions in a cycle usually means a one-off error, worth a quick dispute. The same code every cycle points to a process problem upstream, worth fixing at the root."
+      },
+      {
+        "q": "How long do I have to respond once I open a Walmart dispute?",
+        "a": "Per vendor documentation of the Accounts Payable Dispute Portal, a draft dispute expires automatically after 14 days if not submitted. A case Walmart marks 'Supplier Action' auto-closes if you don't respond within 7 days. The overall claim-dispute deadline for a given code is separate and varies. It isn't confirmed here."
+      }
+    ]
+  },
+  {
+    "slug": "reduce-amazon-vendor-central-chargeback-fees",
+    "title": "The Five Amazon 1P Chargebacks That Cost Vendors Most",
+    "description": "The five Amazon 1P chargeback categories that generate the most fees, what triggers each, the prevention step for each, and which you can still dispute.",
+    "pubDate": "2026-09-11T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Amazon 1P",
+      "Vendor Central",
+      "Chargebacks",
+      "OTIF",
+      "ASN",
+      "Compliance",
+      "Deductions"
+    ],
+    "readingTime": 9,
+    "cluster": "prevention",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/reduce-amazon-vendor-central-chargeback-fees-banner.jpg",
+    "imageAlt": "Amazon 1P chargeback categories: PO on-time, ASN accuracy, carton labels, barcodes, and prep, each with a prevention step",
+    "answer": "You reduce Amazon Vendor Central chargeback fees by fixing the root cause of each recurring defect, not by disputing charges one at a time. Five categories generate most of the money: PO On-Time Accuracy, ASN Accuracy, Carton Content Accuracy, Non-Compliant Barcode, and prep or packaging failures. Each is preventable before the shipment leaves your dock.",
+    "answerQualifier": "Compiled from public vendor-compliance sources (SPS Commerce / SupplierWiki, Consulterce, iNymbus, RT7 Digital, SalesDuo, Endless Commerce, Amazowl), September 2026. Fee percentages and per-unit amounts are vendor-reported, vary by region and program update, and are flagged inline. Confirm the figure that applies to you in Vendor Central under Operational Performance.",
+    "faq": [
+      {
+        "q": "How much do Amazon vendor chargebacks cost?",
+        "a": "Vendor recovery firms report total chargeback exposure running as high as 5% of Amazon revenue, roughly $5,000 per $100,000, for vendors with unaddressed defects (SalesDuo). Individual fees vary by type: PO On-Time Accuracy is reported at 3% of product cost, rising to 10% for units never shipped (Amazowl, Consulterce). ASN Accuracy is reported at 2 to 6% of cost of goods (Consulterce). A case-pack barcode defect is reported at $26 per non-compliant unit (SPS Commerce). Your own Operational Performance report in Vendor Central has the figures that apply to your account."
+      },
+      {
+        "q": "Can you dispute an Amazon vendor chargeback?",
+        "a": "Yes. Amazon gives you 30 days from the chargeback notification to dispute it in Vendor Central, and two dispute attempts per chargeback. Multiple vendor sources confirm both. RT7 Digital reports a roughly 70% success rate when the dispute includes a complete evidence set: EDI transmission logs, carrier proof of delivery, and appointment confirmations."
+      },
+      {
+        "q": "What is the most common Amazon vendor chargeback?",
+        "a": "PO On-Time Accuracy and ASN Accuracy are the two categories vendors cite most often. PO On-Time Accuracy fires when confirmed units miss the delivery window. ASN Accuracy fires when the Advance Ship Notice does not match what the fulfillment center receives at the unit level. Both hit shipments that otherwise look clean."
+      },
+      {
+        "q": "What is OTIF for Amazon vendors?",
+        "a": "OTIF means on-time, in-full. For Amazon 1P it maps to PO On-Time Accuracy: the units Amazon confirmed on the purchase order have to arrive inside the required window and match the confirmed quantity. A short shipment and a late shipment are measured separately, and a single delivery can fail both. See [what OTIF actually costs](/articles/what-is-otif.html)."
+      },
+      {
+        "q": "Does disputing a chargeback stop it from happening again?",
+        "a": "No. A dispute recovers one fee. It does nothing to the process that produced it. If your ERP builds the ASN from the order quantity instead of the confirmed pick, the next shipment carries the same defect and the same chargeback. Reducing the fee means changing where the data comes from, not winning the dispute."
+      }
+    ]
+  },
+  {
+    "slug": "retail-deduction-evidence-pack",
+    "title": "The Six Documents You Need Before Disputing a Deduction",
+    "description": "The six documents that turn a deduction dispute into a case: what each one proves, what it doesn't, and the order to pull them before the window closes.",
+    "pubDate": "2026-09-03T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Deductions",
+      "Retail Compliance",
+      "EDI",
+      "ASN",
+      "OTIF",
+      "Dispute"
+    ],
+    "readingTime": 9,
+    "cluster": "prevention",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/retail-deduction-evidence-pack-banner.jpg",
+    "imageAlt": "Deduction evidence checklist: PO, pick ticket, ASN, BOL, POD, invoice, and retailer receipt linked in a chain",
+    "answer": "A retail deduction evidence pack is the set of documents you assemble before filing a dispute: purchase order, pick ticket, EDI 856 ASN, bill of lading, proof of delivery, EDI 997 and 824 acknowledgments, invoice, and retailer receiving record. Each document proves one link in the chain. A POD proves the truck arrived. It doesn't prove the ASN was accepted or the invoice matched the PO. You need the full chain.",
+    "answerQualifier": "Based on the public X12 EDI standard, SPS Commerce and Orderful supplier documentation, and Inmar and OverDeduct industry benchmarks, September 2026. Individual retailer dispute requirements vary by program.",
+    "faq": [
+      {
+        "q": "What documents do I need to dispute a retail deduction?",
+        "a": "You need the purchase order, pick ticket or warehouse shipment record, EDI 856 ASN, EDI 997 functional acknowledgment, EDI 824 application advice (if the retailer sends one), bill of lading, proof of delivery, invoice, and the retailer's own receiving record. Each proves one link. The gap between any two adjacent documents is where the deduction started."
+      },
+      {
+        "q": "Does a proof of delivery prove a shortage deduction is wrong?",
+        "a": "A POD proves delivery happened. It doesn't prove the delivered quantity matched the ASN, the invoice, or the purchase order. A shortage deduction compares multiple quantities: ordered, picked, ASN'd, and received. The POD covers only one of those. You still need the other documents to show where the count diverged."
+      },
+      {
+        "q": "Does a clean EDI 997 mean the retailer accepted my ASN?",
+        "a": "A 997 confirms the file parsed without syntax errors. It doesn't confirm the retailer accepted the business content, the quantities, the item identifiers, or the pack hierarchy. Business-level acceptance or rejection comes back on the EDI 824, if the retailer uses one. Treating the 997 as approval is one of the most common evidence gaps in deduction disputes."
+      },
+      {
+        "q": "How long do I have to dispute a retail deduction?",
+        "a": "Dispute windows vary by retailer. Walmart uses multiple windows depending on claim type: up to 2 years from invoice date for general AP deductions, 12 months for shortage claims, and 15 to 30 days for AP chargebacks. Amazon gives 30 days with two dispute attempts. Target and Kroger each set their own windows by claim type. See our deduction dispute deadlines by retailer for the current reported windows."
+      }
+    ]
+  },
+  {
+    "slug": "retail-ready-vs-distribution-ready",
+    "title": "You Shipped to the DC. Why Are Deductions Already Stacking Up?",
+    "description": "In distribution does not mean retail-ready. The six operational gaps that turn a first retail PO into deductions, and how to close them before shipment.",
+    "pubDate": "2026-09-17T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Retail Compliance",
+      "OTIF",
+      "EDI",
+      "Deductions",
+      "CPG",
+      "Supply Chain"
+    ],
+    "readingTime": 10,
+    "cluster": "prevention",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/retail-ready-vs-distribution-ready-banner.jpg",
+    "imageAlt": "Two side-by-side checklists comparing distribution-ready and retail-ready CPG supplier operations",
+    "answer": "A CPG supplier is distribution-ready when it can ship product to a warehouse. It is retail-ready when every shipment meets a retailer's specific compliance rules for EDI, labeling, packaging, delivery windows, and invoicing. The gap between the two is where deductions start. Deductions run 5 to 15% of gross sales across the CPG sector, and most trace back to operational mismatches, not product defects. Closing the six gaps before the first PO ships is cheaper than disputing chargebacks after.",
+    "answerQualifier": "Based on public vendor compliance documentation from Bravo CPG, SPS Commerce, Productiv, Inmar, and OverDeduct benchmarks, September 2026. Individual retailer compliance thresholds and penalty structures vary by program.",
+    "faq": [
+      {
+        "q": "What is the difference between distribution-ready and retail-ready?",
+        "a": "Distribution-ready means your product can reach a warehouse: you have packaging, a logistics partner, and a way to take orders. Retail-ready means every shipment meets the retailer's specific operational rules for EDI transmission, labeling format, packaging configuration, delivery timing, and invoicing accuracy. The difference is compliance, not capability."
+      },
+      {
+        "q": "What percentage of revenue do CPG brands lose to retail deductions?",
+        "a": "Inmar reports that deductions account for 5 to 15% of gross sales in the CPG sector. For mid-market brands, Finortal's 2025 benchmark puts the write-off rate at 1.2 to 2.4% of gross revenue annually. On a $15M brand, that write-off alone is $180K to $360K per year."
+      },
+      {
+        "q": "What are the most common retail compliance failures for new CPG suppliers?",
+        "a": "The most common failures are ASN accuracy mismatches between the advance ship notice and physical shipment, routing guide violations from not reading retailer-specific requirements, incomplete or incorrect labeling, missed delivery windows, and invoice discrepancies against the purchase order. Each failure generates its own chargeback category."
+      },
+      {
+        "q": "How do I make my CPG brand retail-ready before the first PO?",
+        "a": "Map six areas before the first shipment: EDI capability and testing, GS1-128 labeling compliance, retailer-specific packaging configuration, delivery window and OTIF threshold awareness, invoice-to-PO matching rules, and a dispute process for when chargebacks arrive anyway. One person owning the weekly PO review reportedly reduces chargebacks without requiring infrastructure changes."
+      }
+    ]
+  },
+  {
+    "slug": "retail-vendor-compliance",
+    "title": "Retail Vendor Compliance: The Rulebook That Decides Your Margin",
+    "description": "Retail vendor compliance is the routing-guide rulebook that turns a shipping, labeling, or EDI miss into a chargeback. What retailers grade, what it costs, and where to fix it.",
+    "pubDate": "2026-11-07T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Vendor Compliance",
+      "Retail Compliance",
+      "Chargebacks",
+      "CPG",
+      "Supply Chain"
+    ],
+    "readingTime": 4,
+    "cluster": "prevention",
+    "draft": false,
+    "hideToc": true,
+    "pillarOrder": 1,
+    "pillarLabel": "Vendor Compliance",
+    "pillarBlurb": "The retailer rulebook: what gets graded, and how a single miss becomes a chargeback.",
+    "image": "/images/articles/retail-vendor-compliance-banner.jpg",
+    "imageAlt": "Hand-drawn whiteboard diagram showing a retailer routing guide, a shipment scanned at receiving, a flagged violation, and the resulting deduction on a remittance",
+    "answer": "Retail vendor compliance is the set of rules a retailer publishes in its routing guide and vendor agreement covering how you ship, label, pack, and invoice. Break a rule and the retailer issues a chargeback, a deduction pulled off your payment, even when the product itself arrived complete and on time.",
+    "answerQualifier": "Based on retailer compliance terms documented across this site's OTIF and EDI coverage, plus industry description from SPS Commerce, November 2026. Routing guides change without notice; confirm current terms in your own vendor portal.",
+    "faq": [
+      {
+        "q": "What is vendor compliance in retail?",
+        "a": "Vendor compliance is shipping to the specification a retailer publishes in its routing guide and vendor agreement: the delivery window, the pallet and carton configuration, the labels, the EDI documents, and the invoice format. Each retailer writes its own rulebook, so a supplier selling into Walmart, Target, Kroger, and Amazon manages four separate compliance programs at once."
+      },
+      {
+        "q": "What is a vendor compliance chargeback?",
+        "a": "A chargeback is a deduction the retailer takes off your payment when a shipment breaks a routing-guide rule. It posts as a coded line on your remittance weeks after delivery. Unlike a product return, it has nothing to do with whether the goods were good. It is a fine for how the shipment or its paperwork failed to match the spec."
+      },
+      {
+        "q": "How much do retail compliance chargebacks cost?",
+        "a": "Per-shipment penalties commonly run 1% to 5% of the affected invoice. Walmart applies 3% of cost of goods to non-compliant cases and Target applies 5% with a $150 minimum. Deduction-recovery vendors estimate the total drag at 2% to 5% of gross revenue across a supplier's book, and that 40% to 60% of the charges are preventable or invalid."
+      },
+      {
+        "q": "What are the most common vendor compliance violations?",
+        "a": "The five domains retailers grade are EDI and ASN accuracy, on-time delivery, in-full quantity, labeling and carton configuration, and routing and packaging. Many of these trace back to a data or document mismatch in the ERP or EDI setup rather than anything that happened on the warehouse floor."
+      },
+      {
+        "q": "How do you dispute a vendor compliance chargeback?",
+        "a": "Each retailer runs its own dispute portal and deadline clock, from Walmart's APDP in Retail Link to Amazon's Vendor Central. You need the shipment evidence, meaning the ASN, the bill of lading, and proof of delivery, filed before the window closes. The dispute deadline is the difference between a recoverable charge and a permanent one."
+      }
+    ]
+  },
+  {
+    "slug": "retailer-vs-distributor-deductions-where-pnc-fits",
+    "title": "Retailer vs. Distributor Deductions: Which Ones Your Supply Chain Team Can Actually Fix",
+    "description": "Both say 'shortage' on the remittance. One traces to your ASN, the other to a promotional agreement your broker negotiated. A sorting guide for CPG suppliers selling through both channels.",
+    "pubDate": "2026-10-13T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Deductions",
+      "CPG",
+      "Distributors",
+      "KeHE",
+      "UNFI",
+      "Walmart",
+      "Amazon",
+      "Scoping",
+      "OTIF",
+      "ASN",
+      "EDI",
+      "Trade Promotion"
+    ],
+    "readingTime": 7,
+    "cluster": "scoping",
+    "hub": "deduction-management-for-cpg-suppliers",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/retailer-vs-distributor-deductions-where-pnc-fits-banner.jpg",
+    "imageAlt": "Two remittance printouts side by side labeled retailer and distributor with a small overlap circle below",
+    "answer": "Retailer deductions trace to compliance scorecards, ASN discrepancies, and EDI failures you can diagnose from your own warehouse and shipping data. Distributor deductions trace to promotional agreements, manufacturer chargebacks, and trade-fund contracts that need a trade-promotion audit. The overlap is small: distributor fill-rate or labeling compliance fees that borrow retailer mechanics.",
+    "answerQualifier": "Based on published supplier compliance documentation from SPS Commerce, SupplyPike/SupplierWiki, KeHE supplier policies, UNFI supplier compliance guides, and retailer program documentation from Walmart, Amazon, Target, and Kroger. October 2026.",
+    "faq": [
+      {
+        "q": "What is the difference between a retailer deduction and a distributor deduction?",
+        "a": "A retailer deduction comes from a retailer like Walmart or Amazon and references a compliance scorecard, a receiving count, or an EDI document. A distributor deduction comes from a distributor like KeHE or UNFI and references a promotional agreement, a manufacturer chargeback, a trade-fund contract, or a broker settlement. The backing documents, the dispute paths, and the specialists who resolve them are different."
+      },
+      {
+        "q": "Can a distributor charge an OTIF-style fine?",
+        "a": "Yes. KeHE's GBB 2.0 scorecard weights fill rate at roughly 12.5 percent of the overall supplier grade, and UNFI charges a reported $250 fee for shipments arriving more than 30 minutes late. These are operational compliance fees that borrow the retailer's OTIF mechanics. They are the small overlap between the two categories."
+      },
+      {
+        "q": "Does Pixels and Clicks diagnose distributor deductions?",
+        "a": "Pixels and Clicks diagnoses operational deductions that trace to your warehouse, your ASN, or your EDI configuration. Most distributor deductions trace to contracts, promotional agreements, and broker settlements instead. Pixels and Clicks can help with the narrow overlap: a distributor's fill-rate or labeling compliance fee that behaves like a retailer OTIF fine. For the rest, a trade-promotion management firm or a broker reconciliation team is the right specialist."
+      },
+      {
+        "q": "What types of deductions does KeHE take from suppliers?",
+        "a": "KeHE groups its deductions into three categories: KeHE fees (MCB chargebacks, extra-performance fees, CONNECT BI allowances), unsaleables (underperforming, non-conforming, or spoiled product with a per-unit processing fee), and invoice adjustments. KeHE also charges an 8 percent fee on manufacturer chargebacks with a $65 per-DC minimum, per SPS Commerce."
+      },
+      {
+        "q": "Should I use the same firm for retailer and distributor deduction recovery?",
+        "a": "Usually not. Retailer deductions need access to your warehouse management system, your EDI transaction history, and the retailer's compliance scorecard. Distributor deductions need access to the trade-promotion agreement, the broker's settlement reports, and the distributor's invoice detail. Different data, different resolution paths, different expertise."
+      }
+    ]
+  },
+  {
+    "slug": "supplier-scorecard-for-cpg-suppliers",
+    "title": "Supplier Scorecard: How Retailers Grade You, and What a Bad Score Costs",
+    "description": "A supplier scorecard is how a retailer grades your OTIF, fill rate, and ASN accuracy. What Walmart, Target, and Amazon measure, the thresholds that trigger review, and how a bad score becomes deductions.",
+    "pubDate": "2026-11-07T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Supplier Scorecard",
+      "Vendor Scorecard",
+      "OTIF",
+      "CPG",
+      "Retail Compliance"
+    ],
+    "readingTime": 4,
+    "cluster": "scoping",
+    "draft": false,
+    "hideToc": true,
+    "pillarOrder": 3,
+    "pillarLabel": "Supplier Scorecard",
+    "pillarBlurb": "How retailers grade you, and how a bad score turns into deductions and delisting.",
+    "image": "/images/articles/supplier-scorecard-banner.jpg",
+    "imageAlt": "Hand-drawn whiteboard diagram of a retailer supplier scorecard grading on-time delivery, fill rate, and ASN accuracy, with a low score flagging into review and deductions",
+    "answer": "A supplier scorecard is the report card a retailer keeps on each vendor, grading on-time delivery, in-full fill rate, ASN and EDI accuracy, and compliance. Walmart, Target, and Amazon each run their own version. A low score triggers review, fines, and eventually delisting, so the scorecard is the leading indicator of a supplier's deduction risk.",
+    "answerQualifier": "Based on retailer scorecard metrics documented across this site's OTIF, fill-rate, and ASN coverage, November 2026. Each retailer sets its own thresholds and changes them; confirm current terms in your own vendor portal.",
+    "faq": [
+      {
+        "q": "What is a supplier scorecard?",
+        "a": "A supplier scorecard, also called a vendor scorecard, is how a retailer measures a vendor's performance over time. It grades delivery, fill rate, documentation accuracy, and compliance, usually against a target the retailer sets. The score drives whether you keep favorable terms, land on a corrective-action plan, or face review and deductions, so it is the retailer's single clearest signal of how you are doing as a supplier."
+      },
+      {
+        "q": "What metrics are on a supplier scorecard?",
+        "a": "The core metrics are on-time delivery, in-full fill rate, and ASN or EDI accuracy, often rolled up as OTIF. Retailers add compliance measures for labeling, routing, and packaging, and some include quality and invoice accuracy. On-time and in-full usually carry the most weight, because they predict whether the shelf gets filled when the retailer expects it."
+      },
+      {
+        "q": "What is a good supplier scorecard score?",
+        "a": "It depends on the retailer's own threshold, and the bar is high: fill-rate and on-time targets in the high nineties are common, and falling below the line triggers fines rather than a warning. The practical read is simpler than the exact number. A score trending down is an early signal of deductions coming, and a score below the retailer's threshold means they are already posting."
+      },
+      {
+        "q": "What is the Walmart supplier scorecard?",
+        "a": "Walmart grades suppliers on OTIF, the on-time and in-full standard enforced through its fine program, visible to vendors in Retail Link. It is one example of the pattern every major retailer follows: a measured target, a penalty for missing it, and a portal where the score lives. Target and Amazon run comparable scorecards with their own metrics and thresholds."
+      },
+      {
+        "q": "How do you improve a supplier scorecard?",
+        "a": "Work the metric that carries the most weight first, usually on-time-in-full, then ASN accuracy. Most scorecard misses are not warehouse failures; they trace to a data or document gap between the ASN, the invoice, and the physical shipment. Closing that gap in the ERP and EDI setup lifts the score and cuts the deductions that follow from it at the same time."
+      }
+    ]
+  },
+  {
+    "slug": "target-vendor-chargebacks-guide",
+    "title": "Target Vendor Chargebacks: What Each VC Code Costs",
+    "description": "Target tracks violations, not AP codes like Walmart. What each VC violation type costs, how the VC prefix works, and how to dispute one.",
+    "pubDate": "2026-08-21T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Target",
+      "Vendor Compliance",
+      "Chargebacks",
+      "Synergy",
+      "OTFR",
+      "Deduction Codes"
+    ],
+    "readingTime": 9,
+    "cluster": "prevention",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/target-vendor-chargebacks-guide-banner.jpg",
+    "imageAlt": "Target retail vendor chargeback guide",
+    "answer": "Target doesn't deduct by a single AP code list like Walmart. It tracks compliance violations, such as late shipping, missed fill rate, or ASN errors, and converts an unexempted one into a coded chargeback (prefix VC) after two weeks. Vendor sources disagree on the exact percentage charged, but agree on the mechanism and the Synergy dispute path.",
+    "answerQualifier": "Compiled from five independent public vendor sources (SPS Commerce, iNymbus, Distribution Alternatives, WarehouseQuote, Productiv), August 2026. Penalty percentages conflict between sources and are flagged inline. Confirm the exact rate for your violation against your own Partners Online chargeback detail.",
+    "faq": [
+      {
+        "q": "What does the VC code on a Target chargeback mean?",
+        "a": "VC stands for Vendor Compliance, per iNymbus's deduction-prefix guide. It covers on-time shipping, pickup adherence, fill rate, and ASN availability. SPS Commerce separately describes filing a dispute \"by VC number,\" which lines up with iNymbus's table. If your remittance shows a different prefix, it likely falls under CB (invoice-match), TRT (freight), RTVS (returns), or VIAP/VONL (vendor income) instead."
+      },
+      {
+        "q": "How much does a Target compliance violation cost?",
+        "a": "Vendor sources disagree. Distribution Alternatives reports a flat 5% of cost of goods with a $150 minimum across on-time and fill-rate violations. WarehouseQuote reports a tiered structure instead: 1.5% for a general performance-adherence miss, 3% for on-time collect, on-time prepaid, and fill-rate-original violations. Confirm the rate on your own chargeback detail in Partners Online."
+      },
+      {
+        "q": "What's the difference between a Target violation and a chargeback?",
+        "a": "A violation is a system-generated flag, not yet a deduction. Per SPS Commerce, it stays open for two weeks, during which a supplier can request an exemption if the violation is invalid. If it goes unexempted through that window, it converts to a chargeback and comes off the next payment."
+      },
+      {
+        "q": "How do I dispute a Target vendor chargeback?",
+        "a": "Through the Synergy Vendor Dispute app inside the Partners Online (POL) portal, per SPS Commerce. Disputes are filed individually by VC number with supporting documentation, such as a proof of delivery, bill of lading, or screenshot. SupplyPike's help documentation separately reports a roughly 90-day dispute window for compliance chargebacks."
+      },
+      {
+        "q": "How is Target's chargeback system different from Walmart's?",
+        "a": "Walmart deducts directly against a remittance line, coded to one of a fixed set of AP codes like 22 or 25. Target's compliance program works as a two-step pipeline instead. A violation posts first, and a supplier can get it exempted. Only an unexempted violation converts into a coded chargeback. The dispute portals, the code prefixes, and even the vocabulary differ between the two retailers."
+      }
+    ]
+  },
+  {
+    "slug": "vendor-central-to-seller-central-what-changes",
+    "title": "From Vendor Central to Seller Central: What Actually Changes",
+    "description": "The operational shift from Amazon 1P to 3P: what changes in ordering, fees, pricing control, and margin when you move from Vendor Central to Seller Central.",
+    "pubDate": "2026-10-18T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Amazon 1P",
+      "Amazon 3P",
+      "Vendor Central",
+      "Seller Central",
+      "FBA",
+      "Deductions",
+      "Supply Chain"
+    ],
+    "readingTime": 10,
+    "cluster": "scoping",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/vendor-central-to-seller-central-what-changes-banner.jpg",
+    "imageAlt": "Side-by-side comparison of Amazon Vendor Central and Seller Central flows showing purchase orders versus direct listings",
+    "answer": "Moving from Vendor Central to Seller Central replaces Amazon's wholesale purchase-order model with a direct listing model. You gain pricing control and 14-day payment cycles but take on inventory risk, advertising spend, and per-unit FBA fees. Gross margin per unit is usually higher on 3P. Net margin depends on your referral rate, FBA tier, and ad spend.",
+    "answerQualifier": "Based on Amazon's published fee schedules, Jungle Scout marketplace research, vendor community experience on r/VendorCentral, and industry reporting from SupplyKick and Mars United on Amazon's Vendor Central termination waves. October 2026.",
+    "faq": [
+      {
+        "q": "Can I keep my ASINs when moving from Vendor Central to Seller Central?",
+        "a": "Your ASINs stay. They belong to the Amazon catalog, not to your seller or vendor account. You create Seller Central offers against the same ASINs. The product detail pages, reviews, and sales rank carry over. What changes is who owns the Buy Box listing. Your 3P offer competes with every other seller on the same ASIN, including Amazon itself if they still hold inventory."
+      },
+      {
+        "q": "Is selling on Amazon more profitable as 1P or 3P?",
+        "a": "Gross margin per unit is typically higher on 3P because you set the retail price and pay a percentage referral fee instead of accepting a wholesale discount. Net margin depends on your category's referral rate, your average selling price, FBA fees per unit, advertising spend, and return rate. Low-ASP products with heavy FBA fees can net less on 3P than on 1P."
+      },
+      {
+        "q": "Can I sell on both Vendor Central and Seller Central at the same time?",
+        "a": "Yes. Many brands run a hybrid model. They keep high-volume SKUs on Vendor Central where Amazon's purchase orders provide predictable volume and list long-tail or higher-margin SKUs on Seller Central for pricing control. The risk is that Amazon's 1P offer on the same ASIN usually wins the Featured Offer, which limits your 3P sales on overlapping products."
+      },
+      {
+        "q": "How long does it take to transition from Vendor Central to Seller Central?",
+        "a": "A basic Seller Central account setup takes a few days. Building the operational infrastructure to manage listings, FBA shipments, advertising, and customer service takes 60 to 90 days for most brands. Plan for a gap period where sales volume drops while your 3P listings build ranking and advertising momentum."
+      },
+      {
+        "q": "What fees does Amazon charge on Seller Central vs Vendor Central?",
+        "a": "Seller Central charges a per-unit referral fee (typically 15% of the sale price), FBA fulfillment fees (starting at $3.65 for the smallest standard-size items), monthly storage fees, and optional advertising costs. Vendor Central takes a wholesale discount (typically 40 to 60% off retail), plus chargebacks for compliance failures, plus co-op and marketing allowances. The fee structures are completely different."
+      }
+    ]
+  },
+  {
+    "slug": "walmart-otif-fine-explained",
+    "title": "The Walmart OTIF Fine, the 3% Rate, and What Drives a Miss",
+    "description": "Walmart's OTIF fine is a program-level chargeback, not a per-shipment dispute. Current thresholds, how the 3% rate applies, and what drives a miss.",
+    "pubDate": "2026-08-02T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Walmart",
+      "OTIF",
+      "Retail Compliance"
+    ],
+    "readingTime": 6,
+    "cluster": "prevention",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/walmart-otif-fine-explained-banner.jpg",
+    "imageAlt": "Hand-drawn whiteboard-style diagram explaining Walmart's OTIF fine: a delivery truck against a clock and a percentage sign labeled 3%, with a checklist equation showing on-time plus in-full compliance versus a chargeback",
+    "answer": "Walmart's OTIF fine is a program-level chargeback: 3% of the cost of goods on cases that miss the on-time or in-full window, not a per-shipment claim like a deduction code. Since February 2024, prepaid suppliers need 90% on-time and 95% in-full, and collect suppliers need 98% collect-ready. That's down from a unified 98% requirement in place since 2020.",
+    "answerQualifier": "Fact-checked against named trade-press reporting, not Walmart's own documentation. Walmart announced this change via the gated Retail Link portal only, with no public press release. Percentages and effective date current as of August 2026. Retailer programs change without notice.",
+    "faq": [
+      {
+        "q": "Is the OTIF fine the same thing as a deduction code like Walmart code 24?",
+        "a": "No. A deduction code like code 24 disputes a specific shipment's counted quantity. It's tied to one PO. The OTIF fine is a program-level chargeback calculated from your aggregate on-time and in-full rate across a measurement period. There's no single code number to look up on a remittance."
+      },
+      {
+        "q": "Is the 3% rate applied to all of my shipments, or just the ones that miss?",
+        "a": "Just the non-compliant cases. The 3% chargeback applies to the value of cases that missed the on-time or in-full threshold, not your total shipment value. That's part of why reported aggregate fine burden across suppliers runs far below the headline 3% rate: roughly 0.16% of cost of goods sold, per Uber Freight data cited by Forbes."
+      },
+      {
+        "q": "Do prepaid and collect suppliers have the same OTIF targets?",
+        "a": "No. Prepaid suppliers, who arrange their own freight, are held to a 90% on-time target measured against the Must Arrive By Date. Collect suppliers, where Walmart arranges freight, are measured on a 98% collect-ready standard instead. Both supplier types share the same 95% in-full target."
+      },
+      {
+        "q": "Why did Walmart lower the OTIF threshold from 98% in 2024?",
+        "a": "Walmart hasn't published its own reasoning publicly. The change was announced through the Retail Link supplier portal rather than a press release. Public reporting frames it as splitting one blended 98% target into two separate, more specific metrics, on-time and in-full, rather than a straightforward loosening of the bar."
+      }
+    ]
+  },
+  {
+    "slug": "what-is-otif",
+    "title": "What Is OTIF? On-Time-In-Full Explained",
+    "description": "OTIF measures whether a supplier delivered the full quantity inside the retailer's window. How retailers calculate it, and what a miss costs.",
+    "pubDate": "2026-08-05T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "OTIF",
+      "Retail Compliance",
+      "CPG",
+      "Supply Chain"
+    ],
+    "readingTime": 9,
+    "cluster": "prevention",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/what-is-otif-banner.jpg",
+    "imageAlt": "Hand-drawn whiteboard-style diagram explaining OTIF: stacked delivery boxes labeled On Time (Schedule), In Full (Quality), and Accurate (Details), with a checklist equation showing on-time plus in-full equals OTIF success",
+    "answer": "OTIF stands for On-Time-In-Full. It is the metric major retailers use to measure whether a supplier delivered the correct quantity (in-full) within the agreed delivery window (on-time). Walmart, Target, Kroger, and Amazon each run their own version, with penalty rates between 1% and 5% of cost of goods on non-compliant shipments.",
+    "answerQualifier": "Based on publicly reported retailer thresholds (Forbes/Steve Banker for Walmart, vendor compliance documentation for Target, WarehouseQuote for Kroger, Front Row Group and Commerce Canal for Amazon), a McKinsey/Trading Partner Alliance out-of-stock study, and FourKites/Supply Chain Dive coverage of Kraft Heinz's OTIF improvement initiative, August 2026. Retailer programs change without notice; confirm current thresholds in your own portal.",
+    "faq": [
+      {
+        "q": "What does OTIF stand for?",
+        "a": "On-Time-In-Full. It is a compound metric: the on-time rate measures whether shipments arrived within the retailer's delivery window, and the in-full rate measures whether the shipped quantity matched the purchase order. Most retailers track and penalize these two components separately."
+      },
+      {
+        "q": "What is a good OTIF score?",
+        "a": "Above 95% is generally considered acceptable by most major retailers. Walmart requires 90% on-time and 95% in-full for prepaid suppliers. Target fines any unit outside the ship window and expects a 95% fill rate. The top quartile of CPG suppliers typically runs above 97%, according to industry benchmarks."
+      },
+      {
+        "q": "Is OTIF the same as fill rate?",
+        "a": "No. Fill rate measures only the quantity dimension: what percentage of ordered units you shipped. OTIF adds the time dimension. A shipment that arrives complete but two days late has a 100% fill rate and a 0% on-time rate. Retailers penalize both."
+      },
+      {
+        "q": "How are OTIF fines calculated?",
+        "a": "Each retailer applies a percentage of cost of goods (COGS) to non-compliant cases. Walmart charges 3% on cases that miss. Target charges 5%. Kroger starts at 1% of invoice value or $250 per order, whichever is greater. The fine applies only to the non-compliant portion, not your total shipment value."
+      },
+      {
+        "q": "Do all retailers measure OTIF the same way?",
+        "a": "No. They agree on the concept but differ on every operational detail: what counts as the delivery window, whether it's measured at the case or PO level, how the in-full threshold works, and what the penalty rate is. A supplier shipping to all four major US retailers manages four different compliance programs."
+      }
+    ]
+  },
+  {
+    "slug": "when-a-deduction-isnt-an-ops-problem",
+    "title": "When the Deduction on Your Remittance Isn't an Ops Problem",
+    "description": "Four deduction families trace to contracts, not operations. Three trace to your warehouse and your data. One question on a remittance line tells you which is which.",
+    "pubDate": "2026-10-10T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Deductions",
+      "CPG",
+      "Trade Promotion",
+      "Scoping",
+      "Chargebacks",
+      "OTIF",
+      "ASN",
+      "EDI"
+    ],
+    "readingTime": 6,
+    "cluster": "scoping",
+    "hub": "deduction-management-for-cpg-suppliers",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/when-a-deduction-isnt-an-ops-problem-banner.jpg",
+    "imageAlt": "Stick figure at a fork in the road holding a remittance printout, left path labeled ops problem and right path labeled contract problem",
+    "answer": "Seven deduction families appear on a CPG remittance. Four of them, promo billback, trade-fund and MDF, price-protection and holdback, and slotting and co-op, trace to a contract your sales team signed. Three of them, OTIF and compliance, ASN and shortage, and EDI and data-integrity, trace to your warehouse, your shipping data, or your EDI configuration. The sorting question is whether the deduction references a compliance scorecard or a contractual clause.",
+    "answerQualifier": "Based on McKinsey and Forrester research on CPG trade-promotion spending, retailer compliance documentation from Walmart, Amazon, Kroger, and Target, and published deduction-resolution practitioner guidance. October 2026.",
+    "faq": [
+      {
+        "q": "How do I tell whether a deduction on my remittance is a contract problem or an operations problem?",
+        "a": "Pull the reason code and the backing document from the remittance line. If the code references a promo fund, an MDF agreement, a price-protection clause, or a slotting fee, the deduction traces to a contract your sales or trade-marketing team negotiated. If it references an OTIF scorecard, an ASN discrepancy, a shortage count, or an EDI rejection, it traces to your warehouse or your data. The first group needs a trade-promotion auditor or a broker. The second group needs an operational diagnostic."
+      },
+      {
+        "q": "What deduction types does a diagnostic firm like Pixels and Clicks not cover?",
+        "a": "Pixels and Clicks does not diagnose promo billback, trade-fund or MDF deductions, price-protection or holdback chargebacks, or slotting and co-op fees. All four trace to a contract, not to a shipping or data failure. The specialists for those are trade-promotion management firms, broker reconciliation teams, and pricing-dispute counsel."
+      },
+      {
+        "q": "What percentage of CPG revenue goes to trade-promotion deductions?",
+        "a": "CPG manufacturers spend roughly 20 percent of gross revenue on trade promotion, per McKinsey and Forrester research, with some categories running as high as 25 percent. The bulk of that spend flows through promo billback and trade-fund mechanisms, which are contract-driven and outside the scope of an operational deduction diagnostic."
+      },
+      {
+        "q": "What deduction types trace to warehouse or shipping data problems?",
+        "a": "Three families trace to operations. OTIF and compliance deductions come from missed delivery windows or failed scorecard thresholds. ASN and shortage deductions come from what the retailer counted versus what your ASN declared. EDI and data-integrity deductions come from rejected or mismatched electronic documents like the 856, 810, or 997. All three are diagnosable from your own shipping records, ASN logs, and EDI transaction history."
+      },
+      {
+        "q": "Should I hire one firm to handle all my retail deductions?",
+        "a": "Probably not. Contract-driven deductions require access to the trade-promotion agreement and the broker's records. Operational deductions require access to your warehouse management system, your EDI logs, and the retailer's compliance scorecard. The skill sets, the data sources, and the resolution paths are different. Hiring one firm for both usually means one side gets the B team."
+      }
+    ]
+  },
+  {
+    "slug": "why-growing-with-walmart-shrinks-margin",
+    "title": "Why Growing With Walmart Can Shrink Your Margin",
+    "description": "The price on your Walmart PO is gross, not net. Trade promotions, deductions, fees, and a 68-day cash gap can turn rising sales into a shrinking margin, and some accounts into a loss.",
+    "pubDate": "2026-11-04T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "Margin",
+      "Trade Spend",
+      "Gross to Net",
+      "Walmart",
+      "Deductions",
+      "Working Capital",
+      "Research"
+    ],
+    "readingTime": 9,
+    "cluster": "scoping",
+    "hub": "deduction-management-for-cpg-suppliers",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/why-growing-with-walmart-shrinks-margin-banner.jpg",
+    "imageAlt": "Hand-drawn whiteboard diagram of a Walmart dollar shrinking through trade spend, deductions, fees, and a cash gap into net margin",
+    "answer": "Growing with Walmart can shrink your margin because the purchase order price is gross, not net. Trade promotions, deductions and compliance fines, fees, and a long cash gap each take a cut before the money reaches your bank. Scale them far enough and an account can grow while it loses money.",
+    "answerQualifier": "Based on Pixels and Clicks analysis of SEC 10-K filings, a Nielsen trade-promotion review reported by FoodNavigator, and Pixels and Clicks research pages. November 2026.",
+    "faq": [
+      {
+        "q": "What is the gross-to-net gap for CPG brands?",
+        "a": "The gross-to-net gap is the difference between a product's list or PO price and the revenue a brand keeps. Trade promotions, retailer deductions and compliance fines, contractual fees, and the cash tied up before a retailer pays each reduce the gross number. On a CPG income statement, the result is reported as net sales."
+      },
+      {
+        "q": "Why does revenue grow faster than profit at a CPG brand?",
+        "a": "Revenue often grows faster than profit because the cuts between gross and net scale with volume. More units mean more trade spend funded, more shipments exposed to deductions and OTIF fines, and more cash tied up waiting for payment. A bigger retail account multiplies all three at once, so net margin can stay flat while gross sales climb."
+      },
+      {
+        "q": "Why do most trade promotions lose money?",
+        "a": "In a review of 39 million US promotional events, almost three-quarters did not break even, per Nielsen as reported by FoodNavigator. A promotion that costs more in discount and funding than it returns in extra units is a loss. Run enough of them through one account and its growth can stop paying for itself."
+      },
+      {
+        "q": "What is a negative run rate on a retail account?",
+        "a": "A negative run rate is when extra volume through an account adds revenue but subtracts margin. Each incremental promoted case carries the full stack of trade spend, deductions, fees, and cash carry. Past a point, the next case clears less than it costs, so the account grows and loses money at the same time."
+      },
+      {
+        "q": "Which part of the gross-to-net gap can a supplier recover?",
+        "a": "Trade terms, fees, and payment days move only when a supplier renegotiates with the buyer. Disputed deductions are the exception. A deduction a retailer took in error is cash it already holds, and each one traces to a cause in the ASN, the invoice, or the item file. Those are recoverable without changing the contract."
+      }
+    ]
+  },
+  {
+    "slug": "wrong-upc-after-erp-migration-shortage-claim",
+    "title": "Why Amazon Deducts After Your ERP Migration",
+    "description": "Two weeks after ERP go-live, Amazon deducts on shipments you sent complete. The cases scanned fine. The unit UPCs did not. What broke, and how to catch it.",
+    "pubDate": "2026-09-28T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "ERP",
+      "UPC",
+      "GTIN",
+      "Migration",
+      "NetSuite",
+      "Business Central",
+      "Amazon 1P",
+      "Shortage",
+      "ASN"
+    ],
+    "readingTime": 8,
+    "cluster": "erp-technical",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/wrong-upc-after-erp-migration-shortage-claim-banner.jpg",
+    "imageAlt": "The four item-master barcode fields a NetSuite or Business Central migration can map wrong: primary UPC, additional barcode, item alias GTIN, and unit-of-measure item reference",
+    "answer": "After an ERP migration, your cases can ship with the correct case label but the wrong unit-level UPC. Amazon's fulfillment center scans the unit. If the scan resolves to a different item than your ASN declared, Amazon posts a shortage on your ASIN and an overage on the mystery item. The remittance signature: a matched shortage and overage on the same PO.",
+    "answerQualifier": "Based on Oracle NetSuite's own help documentation (UPC Code field, item aliases, GTIN 01 identifier), Microsoft Learn's Business Central item-reference documentation, public GS1 and Amazon barcode-requirement guidance, and a pattern that supplier operators have described publicly on r/VendorCentral (linked in the piece). September 2026.",
+    "faq": [
+      {
+        "q": "Why does a shortage claim show up when the shipment left complete?",
+        "a": "Amazon's fulfillment center scans at the unit level, not just the case. If the case label scans to the correct ASIN but the unit label inside scans to a different real ASIN, Amazon books zero receipt on your item and an unexpected receipt on the mystery item. The first is a shortage. The second is an overage. Both hit the same PO."
+      },
+      {
+        "q": "Why did our cutover UAT pass without catching a wrong UPC?",
+        "a": "UAT test data is usually seeded with UPCs the test scripts already know are correct. Nothing in the test compares the new item master against physical labels on inventory produced under the old master. The mismatch only surfaces when Amazon scans real pre-cutover inventory against the new master's expectation of what the label should be."
+      },
+      {
+        "q": "Which item-master field usually breaks in a NetSuite or Business Central migration?",
+        "a": "The field that stores the scannable identifier at the unit of measure Amazon actually receives. In NetSuite, that is the UPC Code on the item record or a GTIN in the item aliases table. In Business Central, that is an Item Reference of type Barcode tied to the correct unit of measure. A migration that maps the each-level UPC to the case-level record, or the reverse, ships product whose labels do not match the item master."
+      },
+      {
+        "q": "How do I catch this at pallet scan instead of after the deduction lands?",
+        "a": "Before the pallet leaves the dock, scan one unit-level barcode. Look up the value in your ERP's item-reference or alias table. Compare the result against the item the ASN is about to declare for that PO. If they do not match, block the ASN. NetSuite item aliases and Business Central item references both support this lookup natively."
+      },
+      {
+        "q": "How do I tell a UPC-migration failure apart from a real shortage?",
+        "a": "A physical shortage shows up as one line: units expected, units received short. A UPC-migration failure shows up as two lines on the same PO: a shortage line for your ASIN and an unexpected-item overage line for a different ASIN at the same case count. The matched pair is the signature."
+      }
+    ]
+  },
+  {
+    "slug": "your-team-after-ai-what-agencies-miss",
+    "title": "Your Team After AI: What Most Agencies Never Plan For",
+    "description": "Most AI agencies sell a deployment. The harder question is what happens to your team and your workflows after the system goes live. That determines whether the project works or gets abandoned.",
+    "pubDate": "2026-10-16T00:00:00.000Z",
+    "author": "Pixels and Clicks",
+    "tags": [
+      "AI Implementation",
+      "Change Management",
+      "CPG",
+      "Productivity",
+      "Working Philosophy"
+    ],
+    "readingTime": 8,
+    "cluster": "scoping",
+    "draft": false,
+    "hideToc": true,
+    "image": "/images/articles/your-team-after-ai-banner.jpg",
+    "imageAlt": "Stick figure at a crossroads between unused tool and team upgrade, with a workflow chart and upward arrow",
+    "answer": "AI implementation succeeds or fails based on what happens to your team after the system goes live. The automation has to target the real bottleneck, freed capacity has to be redeployed to higher-value work, and the team has to adopt the new workflow. Most agencies plan for the first. Almost none plan for the other two.",
+    "answerQualifier": "Based on the working methodology of Pixels and Clicks, Gartner research on GenAI project abandonment (2024), and McKinsey data on transformation program outcomes. October 2026.",
+    "faq": [
+      {
+        "q": "How does Pixels and Clicks approach AI implementation differently from other agencies?",
+        "a": "Pixels and Clicks starts with a paid assessment that maps how work actually gets done before proposing any build. The assessment deliverable is a process map showing every step the team takes, the time each step costs, and where the gaps are between what leadership described and what operations does. The assessment also includes a go/no-go recommendation."
+      },
+      {
+        "q": "Does Pixels and Clicks replace employees with AI?",
+        "a": "Pixels and Clicks automates low-value repetitive work so existing employees can move to higher-value tasks like deduction tracing, dispute management, and root-cause analysis. Every engagement includes a redeployment plan that names the specific higher-value work and sequences it by priority."
+      },
+      {
+        "q": "What are the first, second, and third order effects of AI implementation?",
+        "a": "First order: the automated task gets faster and more accurate. Second order: the person who did that task moves to judgment-heavy work that compounds value. Third order: the organization starts questioning inefficiencies it used to accept as cost of doing business."
+      },
+      {
+        "q": "Why does Pixels and Clicks run a paid assessment before building anything?",
+        "a": "The real bottleneck rarely matches what leadership describes. Building an automation from a description of the workflow rather than mapping how the team actually works produces tools the team ignores. The assessment maps the real process and costs before any build decision. We've walked away from paid build work after an assessment showed the manual process cost less than the automation would."
+      },
+      {
+        "q": "What does change management look like in a Pixels and Clicks engagement?",
+        "a": "Every automated workflow gets a named owner inside the company, picked during the build. The workflow ships with a one-page runbook covering what the system does, what it replaced, what to check when something looks wrong, and who to call. Walkthroughs are live calls. Training runs alongside the build."
+      }
+    ]
+  }
+]

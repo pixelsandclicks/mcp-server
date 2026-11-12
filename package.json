@@ -1,0 +1,54 @@
+{
+  "name": "@pixelsandclicks_/mcp-server",
+  "version": "1.0.2",
+  "type": "module",
+  "description": "MCP server for retail deduction codes, dispute evidence, and supplier-ops knowledge from Pixels and Clicks",
+  "bin": {
+    "mcp-server": "dist/cli.js",
+    "pixelsandclicks-mcp": "dist/cli.js"
+  },
+  "main": "./dist/server.js",
+  "scripts": {
+    "build": "tsc && node scripts/bundle-content.js",
+    "dev": "tsc --watch",
+    "start": "node dist/cli.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "zod": "^3.23.8"
+  },
+  "optionalDependencies": {
+    "gray-matter": "^4.0.3"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.0",
+    "@types/node": "^20.14.0"
+  },
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "retail",
+    "deductions",
+    "chargebacks",
+    "walmart",
+    "amazon",
+    "target",
+    "kroger",
+    "supplier",
+    "supply-chain",
+    "cpg",
+    "otif",
+    "dispute"
+  ],
+  "license": "MIT",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pixelsandclicks/mcp-server"
+  },
+  "homepage": "https://pixelsandclicks.net/mcp-server.html"
+}
